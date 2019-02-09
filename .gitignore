@@ -1,0 +1,5 @@
+*.retry
+.directory
+*/.directory
+root_pwd.yaml
+slack_token.yaml
