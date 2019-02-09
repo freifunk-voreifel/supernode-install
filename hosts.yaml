@@ -1,0 +1,7 @@
+---
+all:
+    children:
+        supernodes:
+            hosts:
+                voreifel[1:2].freifunk-rhein-sieg.net:
+...
