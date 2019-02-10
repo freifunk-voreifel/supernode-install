@@ -5,6 +5,8 @@ The ansible playbook is stored in *install.sn.yml*. The inventory is placed in h
 
 # Prerequisite
 
+These scripts are testet with and require ansible >= 2.7
+
  1. You need a public ssh key in /root/.ssh/authorized_keys
  2. You need a file *root_pwd.yaml* for a root password.  The file is ignored by git so you will see only an example in this repository. The password must be hashed.
 
