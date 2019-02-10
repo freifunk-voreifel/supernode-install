@@ -5,47 +5,48 @@
 - name: Install Freifunk Voreifel super node
   hosts: all
   user: root
-  gather_facts: False
+  gather_facts: True
   vars:
     snversion: master_v0.1.0
     common_required_packages:
-      - git
-      - make
-      - gcc
+      - batctl
+      - batman-adv
+      - bind9
+      - bird
+      - bridge-utils
       - build-essential
-      - pkg-config
-      - libgps-dev
-      - libnl-3-dev
-      - libjansson-dev
+      - curl
+      - dnsutils
+      - ebtables
+      - ethtool
+      - gcc
+      - git
+      - htop
+      - iftop
+      - iproute
+      - iptables-persistent
       - isc-dhcp-server
       - libcap-dev
-      - iproute
-      - libnetfilter-conntrack3
-      - python-dev
       - libevent-dev
-      - ebtables
-      - python-virtualenv
-      - iptables-persistent
-      - iftop
-      - screen
-      - bridge-utils
-      - tcpdump
-      - bind9
-      - radvd
-      - curl
-      - htop
-      - psmisc
-      - dnsutils
-      - ntp
-      - libnl-genl-3-dev
-      - virtualenv
-      - batman-adv
-      - batctl
       - libffi-dev
+      - libgps-dev
+      - libjansson-dev
       - libnetfilter-conntrack-dev
+      - libnetfilter-conntrack3
       - libnfnetlink-dev
+      - libnl-3-dev
+      - libnl-genl-3-dev
+      - make
+      - ntp
+      - pkg-config
+      - psmisc
+      - python-dev
+      - python-virtualenv
+      - radvd
+      - screen
       - speedtest-cli
-      - ethtool
+      - tcpdump
+      - virtualenv
     modules_required:
       - batman-adv
       - nf_conntrack_netlink
@@ -69,12 +70,26 @@
       - logrotate.conf
 
   tasks:
+# (thomas) 
+# Add ssh keys for admins move to this position 
+# to allow all admins to connect  
+    - name: Import root password
+      include_vars: "{{ root_password_file }}"
+    - name: Change root password
+      user:
+       name: root
+       password: "{{ sn_rootpasswd }}"
+    - import_tasks: tasks/tsk_ssh_adminteam.yaml
+# (thomas) end
+
+# Install additional packages
     - name: Remove cdrom in sources.list
       raw: "sed -i '/deb cdrom/c\\#' /etc/apt/sources.list"
     - name: Make this server ansible compatible
       raw: "apt-get update && apt-get install python apt-transport-https dirmngr -y"
     - name: Adding Freifuck GPG Key
       raw: "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B2522557E6AB9BF5"
+  
 # Historisch, umstellen auf apt-key
 #      apt_key:
 #             id: B2522557E6AB9BF5
@@ -83,18 +98,23 @@
 #             url: https://sks.pod01.fleetstreetops.com
 #             state: present
 
-    - name: Import Slack token
-      include_vars: "{{ slack_token_file }}"
-    - name: Import root password
-      include_vars: "{{ root_password_file }}"
     - name: Add Freifuck repo to source list
-      apt_repository: repo='deb https://freifuck.de/debian stretch main' state=present 
+      apt_repository: repo='deb https://freifuck.de/debian stretch main' state=present
     - name: Add backport repo to source list
       apt_repository: repo='deb http://http.debian.net/debian stretch-backports main' state=present
     - name: Update apt cache
       apt: update_cache=yes
+    - name: Install common required packages
+      apt:
+        name: "{{ common_required_packages }}"
+        state: present
+        update_cache: yes
+      register: aptupdates
     - name: Gathering facts
       setup:
+#
+# Packages installed
+#
     - name: Set IPv4 in hostfile
       lineinfile: dest=/etc/hosts regexp='^{{ ansible_default_ipv4.address }}' line='{{ ansible_default_ipv4.address }} {{ sn_hostname }}.{{ sn_fqdn }} {{ sn_hostname }}' owner=root group=root mode=0644 state=present
     - name: Set IPv6 in hostfile
@@ -109,6 +129,9 @@
     - name: Update grub
       shell: update-grub2
       when: grubnosmp.changed
+#
+# Time for a reboot
+#
     - name: Reboot the server
       shell: sleep 2 && shutdown -r now "Ansible updates triggered, no SMP"
       async: 1
@@ -124,12 +147,6 @@
                    timeout=300
 #     when: hosts.changed
       when: sethostname.changed
-    - name: Install common required packages
-      apt:
-        name: "{{ common_required_packages }}"
-        state: present
-        update_cache: yes
-      register: aptupdates
     - name: Set clock # t assure valid time
       shell: /etc/init.d/ntp stop && /usr/sbin/ntpd -q -g && /etc/init.d/ntp start
     - name: Get Tunneldigger
@@ -159,14 +176,14 @@
       with_items: "{{ modules_required }}"
       register: modules_req
     - name: Tunneldigger reload
-      command: "{{item}}"
+      command: "{{ item }}"
       with_items:
       - systemctl daemon-reload
       - systemctl enable tunneldigger.service
       when: tunneldigger.changed
     - name: Copy logrotate config
       copy: src=./files/{{ item }} dest=/etc/ owner=root group=root mode=0500
-      with_items: "{{logrotate_config}}"
+      with_items: "{{ logrotate_config }}"
     - name: Create freifunk directory
       file: path=/opt/freifunk state=directory mode=0755
     - name: Copy dhcpd template file
@@ -190,15 +207,22 @@
       cron: name=startup special_time=reboot job="/opt/freifunk/sn_startup.sh"
     - name: Copy backbone script
       template: src=./files/l2tp_backbone.sh.exit.j2 dest=/opt/freifunk/l2tp_backbone.sh owner=root group=root mode=0544
+
+# Startup script benötigt Slack
+    - name: Import Slack token
+      include_vars: "{{ slack_token_file }}"
     - name: Exit node startup script super- and exitnode
       template: src=./files/sn_startup.exit.sh.j2 dest=/opt/freifunk/sn_startup.sh owner=root group=root mode=0500
       when: sn_exit is defined
     - name: Exit node startup script super- and exitnode # local fuer lokales testen 
       template: src=./files/sn_startup.local.exit.sh.j2 dest=/opt/freifunk/sn_startup.sh owner=root group=root mode=0500
       when: sn_local_exit is defined
-    - name: SSH authorized_keys
-      copy: src=./files/{{ item }} dest=/root/.ssh owner=root group=root mode=0400
-      with_items: "{{ authorized_keys }}"
+
+#   Replaced by separate playbook and move up 
+#   Playbooks adds but not overrides existing ssh-keys 
+#    - name: SSH authorized_keys
+#      copy: src=./files/{{ item }} dest=/root/.ssh owner=root group=root mode=0400
+#      with_items: "{{ authorized_keys }}"
     - name: Bind9, activate ff zone
       lineinfile: dest=/etc/bind/named.conf line='include "/etc/bind/ff/ff.conf";' state=present
     - name: Copy option template
@@ -215,9 +239,12 @@
       template: src=./files/radvd.conf.j2 dest=/etc/radvd.conf owner=radvd group=root mode=0444
     - name: Interface configuration with ffrl gre tunnel
       template: src=./files/interfaces-{{ sn_hostname }}.j2 dest=/etc/network/interfaces owner=root group=root mode=0544
-    - apt: update_cache=yes
-    - name: Install bird
-      apt: state=present pkg=bird
+#
+# Obsolet: Bird included in required packages
+#
+#    - apt: update_cache=yes
+#    - name: Install bird
+#      apt: state=present pkg=bird
     - name: Bird configuration
       copy: src=./files/bird-{{ sn_hostname }}.conf dest=/etc/bird/bird.conf owner=bird group=bird mode=0444
     - name: Bird configuration
@@ -249,10 +276,6 @@
       shell: cp /opt/mesh-announce/respondd.service /etc/systemd/system
     - name: Enable respondd service
       shell: systemctl daemon-reload && systemctl enable respondd
-    - name: Copy Slacktee Config
-      template: src=./files/slacktee.conf.j2 dest=/etc/slacktee.conf owner=root group=root mode=0544
-    - name: Copy Slacktee
-      copy: src=./files/slacktee.sh dest=/usr/local/bin/slacktee.sh owner=root group=root mode=0744
     - name: set netfilter rules
       lineinfile:
         dest: /etc/sysctl.conf
@@ -269,10 +292,6 @@
       when: modprobe1.stat.exists == False
     - name: check /etc/modprobe.conf
       lineinfile: dest=/etc/modprobe.conf line="options ip_conntrack hashsize=65536"
-    - name: Change root password
-      user:
-       name: root
-       password: "{{ sn_rootpasswd }}"
     - name: Logrotate rights
       file: path=/etc/logrotate.conf mode=0644 owner=root group=root
     - name: Write version information
@@ -292,7 +311,14 @@
                    delay=20
                    timeout=300
       when: tunneldigger.changed
-# We don't use slack for information
+# Slack we don't use slack
+#    - name: Import Slack token
+#      include_vars: "{{ slack_token_file }}"
+#    - name: Copy Slacktee Config
+#      template: src=./files/slacktee.conf.j2 dest=/etc/slacktee.conf owner=root group=root mode=0544
+#    - name: Copy Slacktee
+#      copy: src=./files/slacktee.sh dest=/usr/local/bin/slacktee.sh owner=root group=root mode=0744
+#
 #    - name: Send notification message via Slack
 #      local_action:
 #        module: slack
