@@ -1,0 +1,15 @@
+---
+# tasks ssh_adminteam.yaml
+# Add ssh keys for admins
+- name: Add multiple authorized keys for admin team
+  authorized_key:
+    user: root
+    state: present
+    key: "{{ lookup('file', lookup('env','PWD') + '/public_keys/{{ item }}' ) }}"
+  with_items:
+    - hagen.pub
+    - localadmin.pub
+    - roman.pub
+    - stefan.pub
+    - thomas.pub
+...
