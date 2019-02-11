@@ -22,22 +22,28 @@ These scripts are testet with and require ansible >= 2.7
     See *root_pwd.yaml.example*. 
  
  3. To use slack you need a file *slack_token.yaml* in the inventory directory.
-    The file is ignored by git so you will see onlie an example in this repository.
+    The file is ignored by git so you will see online an example in this repository.
  
 
 # Installation
 
+The  installation requires a file *root_pwd.yaml* with the encrypted root password. The file is excluded from git pull in *.gitignore* . You have to provide this file. To create this file with an random password, use *root_pwd.sh*.
+
+    `root_pwd.sh`
+
+
+## supdernode installation
 Install both supernodes with:
 
-`ansible-playbook install.sn.yaml -i hosts.yaml`
-
+    `ansible-playbook install.sn.yaml -i hosts.yaml`
+    
 Limit to supernode 1:
 
-`ansible-playbook install.sn.yaml -i hosts.yaml --limit voreifel1.*`
+    `ansible-playbook install.sn.yaml -i hosts.yaml --limit voreifel1.*`
 
 Limit to supernode 2:
 
-`ansible-playbook install.sn.yaml -i hosts.yaml --limit voreifel2.*`
+    `ansible-playbook install.sn.yaml -i hosts.yaml --limit voreifel2.*`
 
 # Miscellaneous
 
@@ -45,12 +51,8 @@ You can use the inventory for automatic changes
 
 ## Gether information
 
-`ansible all -i hosts.yaml -m setup -u root`
+    `ansible all -i hosts.yaml -m setup -u root`
 
 ## Check time on all servers
 
-`ansible all -i hosts.yaml -m command -a 'date' -u root`
-
-
-
-
+    `ansible all -i hosts.yaml -m command -a 'date' -u root`
