@@ -1,0 +1,15 @@
+# Slack we don't use slack
+- name: Import Slack token
+  include_vars: "{{ slack_token_file }}"
+- name: Copy Slacktee Config
+    template: src=./files/slacktee.conf.j2 dest=/etc/slacktee.conf owner=root group=root mode=0544
+- name: Copy Slacktee
+  copy: src=./files/slacktee.sh dest=/usr/local/bin/slacktee.sh owner=root group=root mode=0744
+- name: Send notification message via Slack
+  local_action:
+    module: slack
+    token: "{{ slack_token }}"
+    msg: "{{ inventory_hostname }} completed with {{ snversion }}"
+    channel: "#technik"
+    username: "Ansible on {{ inventory_hostname }}"
+    parse: 'none'

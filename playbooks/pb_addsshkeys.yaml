@@ -2,6 +2,6 @@
 - name: Install admin ssh keys
   hosts: all
   tasks:
-    - include_tasks: '../tasks/ssh_adminteam.yaml'
+    - include_tasks: '../tasks/tsk_ssh_adminteam.yaml'
 
 ...
