@@ -1,0 +1,13 @@
+---
+# Mini playbook vor testing tasks
+# Thomas Arend
+# Stand: 2019-02-11
+#
+# Display 
+- name: Test connection
+  hosts: all
+  tasks:
+    - name: Default IPv4 Interface 
+      debug:
+        msg: "System {{ inventory_hostname }} has alias of default network adapter {{ ansible_default_ipv4.alias }}"
+      when: ansible_default_ipv4.gateway is defined

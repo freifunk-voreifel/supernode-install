@@ -1,4 +1,5 @@
 ---
+# Super node 2
 sn_number: 2
 sn_hostname: voreifel2
 sn_dhcp_range: 10.152.81.0 10.152.94.254
@@ -13,6 +14,5 @@ sn_mesh_MAC: a2:8c:ae:6f:f7:02
 ul_mesh_MAC: a2:8c:ae:6f:f7:20
 sn_ffrl_IPv4: 185.66.193.102
 sn_local_exit: 1
-sn_interface_name: ens18
 yanic_domain: voreifel2
 ...

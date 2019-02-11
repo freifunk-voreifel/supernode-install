@@ -5,19 +5,20 @@ source /etc/network/interfaces.d/*
 
 # The loopback network interface
 auto lo
+# (thomas) sinn und zweck ist mir im Moment nicht einsichtig.
 iface lo inet loopback
         up ip address add 185.66.193.2/32 dev lo
 
+# (thomas) sinn und zweck ist mir im Moment nicht einsichtig.
 iface lo inet6 loopback
         up ip address add 2a03:2260:121:2000::2/52 dev lo
 
-
 # The primary network interface
-allow-hotplug {{ sn_interface_name }}
-iface {{ sn_interface_name }} inet static
-        address 46.4.156.122
+allow-hotplug {{ ansible_default_ipv4.alias }}
+iface {{ ansible_default_ipv4.alias }} inet static
+        address {{ ansible_default_ipv4.address }}
         netmask 255.255.255.0
-        gateway 46.4.156.113
+        gateway {{ ansible_default_ipv4.gateway }}
         post-up iptables -P OUTPUT ACCEPT
         post-up iptables -A OUTPUT -o $IFACE -d 10.0.0.0/8 -j DROP
         post-up iptables -A OUTPUT -o $IFACE -d 172.16.0.0/12 -j DROP
@@ -26,7 +27,7 @@ iface {{ sn_interface_name }} inet static
         post-up iptables -t nat -A POSTROUTING -o $IFACE -j MASQUERADE
 auto 6to4
 	iface 6to4 inet6 6to4
-        local 46.4.156.122
+        local {{ ansible_default_ipv4.address }}
 
 # GRE Tunnel zum Rheinland Backbone
 # - Die Konfigurationsdaten werden vom Rheinland Backbone vergeben und zugewiesen
@@ -36,7 +37,7 @@ auto gre-bb-a.ak.ber
 iface gre-bb-a.ak.ber inet static
         address 100.64.2.151
         netmask 255.255.255.254
-        pre-up ip tunnel add $IFACE mode gre local 46.4.156.122 remote 185.66.195.0 ttl 255
+        pre-up ip tunnel add $IFACE mode gre local {{ ansible_default_ipv4.address }} remote 185.66.195.0 ttl 255
         post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
         post-up ip link set $IFACE mtu 1400
@@ -53,7 +54,7 @@ auto gre-bb-b.ak.ber
 iface gre-bb-b.ak.ber inet static
         address 100.64.2.153
         netmask 255.255.255.254
-        pre-up ip tunnel add $IFACE mode gre local 46.4.156.122 remote 185.66.195.1 ttl 255
+        pre-up ip tunnel add $IFACE mode gre local {{ ansible_default_ipv4.address }} remote 185.66.195.1 ttl 255
         post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
         post-up ip link set $IFACE mtu 1400
@@ -71,7 +72,7 @@ auto gre-bb-a.ix.dus
 iface gre-bb-a.ix.dus inet static
         address 100.64.2.155
         netmask 255.255.255.254
-        pre-up ip tunnel add $IFACE mode gre local 46.4.156.122 remote 185.66.193.0 ttl 255
+        pre-up ip tunnel add $IFACE mode gre local {{ ansible_default_ipv4.address }} remote 185.66.193.0 ttl 255
         post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
         post-up ip link set $IFACE mtu 1400
@@ -89,7 +90,7 @@ auto gre-bb-b.ix.dus
 iface gre-bb-b.ix.dus inet static
         address 100.64.2.157
         netmask 255.255.255.254
-        pre-up ip tunnel add $IFACE mode gre local 46.4.156.122 remote 185.66.193.1 ttl 255
+        pre-up ip tunnel add $IFACE mode gre local {{ ansible_default_ipv4.address }} remote 185.66.193.1 ttl 255
         post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
         post-up ip link set $IFACE mtu 1400
