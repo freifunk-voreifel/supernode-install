@@ -9,11 +9,15 @@ sn_mesh_IPv6_xfer: 2a03:2260:121:1000::2
 sn_mesh_IPv4: 10.152.64.1
 sn_mesh_IPv4_brcast: 10.152.79.255
 sn_mesh_IPv4_net: 10.152.64.0
+sn_mesh_IPv4_netmask: 255.255.240.0
+
 sn_mesh_IPv4_xfer: 10.152.64.2
 sn_mesh_MAC: a2:8c:ae:6f:f7:01
 ul_mesh_MAC: a2:8c:ae:6f:f7:10
+
 sn_ffrl_IPv4: 185.66.193.101
+
 sn_local_exit: 1
-# sn_interface_name: ens18
+
 yanic_domain: voreifel1
 ...
