@@ -1,11 +1,12 @@
 /**
  * This is the BIRD bird.con ansible template 
  *
- * Author: Thoams Arend
+ * Author: Thomas Arend
  * Date: 2019-02-12
  *
  *
  **/
+
 ## Configure logging
 #log syslog { debug, trace, info, remote, warning, error, auth, fatal, bug };
 #log stderr all;
@@ -98,13 +99,6 @@ template bgp uplink {
 
 protocol bgp ffrl_bb_a_ak_ber from uplink {
 
-## source address ip
-##
-## Define local address we should use as a source address
-## for the BGP session. 
-## Default: the address of the local end of the interface our neighbor is connected to. 
-##
-        source address 100.64.6.13;
         
 ## neighbor [ip] [port number] [as number]
 
@@ -115,9 +109,11 @@ protocol bgp ffrl_bb_a_ak_ber from uplink {
 ## sub-options. 
 ## This parameter is mandatory.         
 ##
-  
-        neighbor 100.64.6.12 as {{ sn_backbone.asn }};
         
+#        neighbor 100.64.6.12 as {{ sn_backbone.asn }};
+        
+        neighbor {{ sn_backbone.back_end.ipv4.address }}  as {{ sn_backbone.asn }};
+    
 ## source address ip ;
 ##
 ## Define local address we should use as a source address
@@ -125,8 +121,7 @@ protocol bgp ffrl_bb_a_ak_ber from uplink {
 ## Default: the address of the local end of the interface our neighbor is connected to. 
 ##
 
-        source address {{ sn_backbone.ipv4.address }} ;
-        
+        source address {{ sn_backbone.local_end.ipv4.address }} ;
         
 ## interface string ;
 
@@ -166,4 +161,3 @@ protocol bgp ffrl_bb_b_fra3_fra from uplink {
         source address 100.64.6.21;
         neighbor 100.64.6.20 as 201701;
 };
-
