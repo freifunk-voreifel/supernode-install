@@ -2,10 +2,11 @@
 # Install FF Voreifel super node from playbooks
 # pb_install-all.yaml
 #
-# Stand: 2019-02-10
+# Stand: 2019-02-12
+- import_playbook: pb_change_root_pwd.yaml
 - import_playbook: pb_addsshkeys.yaml
 - import_playbook: pb_packages.yaml
 - import_playbook: pb_slack.yaml
-- import_playbook: pb_bird.yaml
-- import_playbook: pb_tunneldigger.yaml
+# - import_playbook: pb_bird.yaml
+# - import_playbook: pb_tunneldigger.yaml
 

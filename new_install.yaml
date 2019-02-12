@@ -1,6 +1,29 @@
-# First install ssh-key at remote computer
-# In case of python error start:
-# ansible troisdorf4 -u root -m raw -a "apt-get update && apt-get install python -y"
+#
+# Main playbook to install a supernode
+# 
+
+#
+# Tasks moved into playbooks from here
+#
+# Separate playbooks 
+#
+
+# Install required packages an make server ansible compatible
+
+- import_playbook: playbooks/pb_packages.yaml
+
+# add shh-keys for admin team
+
+- import_playbook: playbooks/pb_addsshkeys.yaml
+
+# reset root password  stored in root_pwd.yaml
+
+- import_playbook: playbooks/pb_change_root_pwd.yaml
+
+
+#
+# old stuff from here
+#
 
 - name: Install Freifunk Voreifel super node
   hosts: all
@@ -8,45 +31,6 @@
   gather_facts: True
   vars:
     snversion: master_v0.1.0
-    common_required_packages:
-      - batctl
-      - batman-adv
-      - bind9
-      - bird
-      - bridge-utils
-      - build-essential
-      - curl
-      - dnsutils
-      - ebtables
-      - ethtool
-      - gcc
-      - git
-      - htop
-      - iftop
-      - iproute
-      - iptables-persistent
-      - isc-dhcp-server
-      - libcap-dev
-      - libevent-dev
-      - libffi-dev
-      - libgps-dev
-      - libjansson-dev
-      - libnetfilter-conntrack-dev
-      - libnetfilter-conntrack3
-      - libnfnetlink-dev
-      - libnl-3-dev
-      - libnl-genl-3-dev
-      - make
-      - ntp
-      - pkg-config
-      - psmisc
-      - python-dev
-      - python-virtualenv
-      - radvd
-      - screen
-      - speedtest-cli
-      - tcpdump
-      - virtualenv
     modules_required:
       - batman-adv
       - nf_conntrack_netlink
@@ -70,26 +54,6 @@
       - logrotate.conf
 
   tasks:
-# (thomas) 
-# Add ssh keys for admins move to this position 
-# to allow all admins to connect  
-    - name: Import root password
-      include_vars: "{{ root_password_file }}"
-    - name: Change root password
-      user:
-        name: root
-        password: "{{ sn_rootpasswd }}"
-#  Install SSH keys
-    - import_tasks: tasks/tsk_ssh_adminteam.yaml
-# (thomas) end
-
-#
-# Install additional packages
-#
-    - import_playbook: pb_slack.yaml
-#
-# Packages installed
-#
     - name: Set IPv4 in hostfile
       lineinfile: dest=/etc/hosts regexp='^{{ ansible_default_ipv4.address }}' line='{{ ansible_default_ipv4.address }} {{ sn_hostname }}.{{ sn_fqdn }} {{ sn_hostname }}' owner=root group=root mode=0644 state=present
     - name: Set IPv6 in hostfile
@@ -104,9 +68,11 @@
     - name: Update grub
       shell: update-grub2
       when: grubnosmp.changed
+      
 #
 # Time for a reboot
 #
+
     - name: Reboot the server
       shell: sleep 2 && shutdown -r now "Ansible updates triggered, no SMP"
       async: 1
@@ -159,6 +125,9 @@
     - name: Copy logrotate config
       copy: src=./files/{{ item }} dest=/etc/ owner=root group=root mode=0500
       with_items: "{{ logrotate_config }}"
+#
+#
+#
     - name: Create freifunk directory
       file: path=/opt/freifunk state=directory mode=0755
     - name: Copy dhcpd template file
@@ -184,6 +153,7 @@
       template: src=./files/l2tp_backbone.sh.exit.j2 dest=/opt/freifunk/l2tp_backbone.sh owner=root group=root mode=0544
 
 # Startup script benötigt Slack
+
     - name: Import Slack token
       include_vars: "{{ slack_token_file }}"
     - name: Exit node startup script super- and exitnode
@@ -193,11 +163,8 @@
       template: src=./files/sn_startup.local.exit.sh.j2 dest=/opt/freifunk/sn_startup.sh owner=root group=root mode=0500
       when: sn_local_exit is defined
 
-#   Replaced by separate playbook and move up 
-#   Playbooks adds but not overrides existing ssh-keys 
-#    - name: SSH authorized_keys
-#      copy: src=./files/{{ item }} dest=/root/.ssh owner=root group=root mode=0400
-#      with_items: "{{ authorized_keys }}"
+# bind9
+
     - name: Bind9, activate ff zone
       lineinfile: dest=/etc/bind/named.conf line='include "/etc/bind/ff/ff.conf";' state=present
     - name: Copy option template
@@ -210,20 +177,29 @@
         - ff.conf
     - name: Copy ff Zone config template
       template: src=./files/ff/db.ff.j2 dest=/etc/bind/ff/db.ff owner=bind group=root mode=0444
+
+#
+# radvd
+#
+
     - name: Copy radvd config template
       template: src=./files/radvd.conf.j2 dest=/etc/radvd.conf owner=radvd group=root mode=0444
     - name: Interface configuration with ffrl gre tunnel
       template: src=./files/interfaces-{{ sn_hostname }}.j2 dest=/etc/network/interfaces owner=root group=root mode=0544
+
 #
-# Obsolet: Bird included in required packages
+# bird
 #
-#    - apt: update_cache=yes
-#    - name: Install bird
-#      apt: state=present pkg=bird
+
     - name: Bird configuration
       copy: src=./files/bird-{{ sn_hostname }}.conf dest=/etc/bird/bird.conf owner=bird group=bird mode=0444
     - name: Bird configuration
       copy: src=./files/bird6-{{ sn_hostname }}.conf dest=/etc/bird/bird6.conf owner=bird group=bird mode=0444
+
+#
+# yanic
+#
+
     - name: Create Yanic user
       user:
          name: yanic
@@ -232,6 +208,11 @@
       file: path=/opt/freifunk/yanic state=directory mode=0755 owner=yanic group=yanic
     - name: Copy Yanic config template
       template: src=./files/yanic.conf.j2 dest=/etc/yanic.conf owner=yanic group=yanic mode=0444
+
+#
+# Go
+#
+
     - name: Shit go stuff
       shell: cd /usr/local && wget https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz -O go-release-linux-amd64.tar.gz && tar xvf go-release-linux-amd64.tar.gz && rm go-release-linux-amd64.tar.gz
     - name: Adjust path for go
@@ -245,12 +226,23 @@
       shell: go get -v -u github.com/Freifunk-Troisdorf/yanic
     - name: Copy and enable yanic service
       shell: cp /opt/go/src/github.com/Freifunk-Troisdorf/yanic/contrib/init/linux-systemd/yanic.service /lib/systemd/system/yanic.service && systemctl daemon-reload && systemctl enable yanic
+
+      
+#
+# respondd
+#
+
     - name: Get respondd
       git: repo=https://github.com/Freifunk-Troisdorf/mesh-announce.git dest=/opt/mesh-announce
     - name: Copy respondd service template
       shell: cp /opt/mesh-announce/respondd.service /etc/systemd/system
     - name: Enable respondd service
       shell: systemctl daemon-reload && systemctl enable respondd
+
+#
+# netfilter
+#
+
     - name: set netfilter rules
       lineinfile:
         dest: /etc/sysctl.conf
@@ -259,6 +251,11 @@
                - net.ipv4.netfilter.ip_conntrack_generic_timeout = 240
                - net.ipv4.netfilter.ip_conntrack_tcp_timeout_established = 54000
                - net.netfilter.nf_conntrack_max = 65536
+
+#
+# netfilter
+#
+
     - name: check modprobe.conf
       stat: path=/etc/modprobe.conf
       register: modprobe1
@@ -267,11 +264,26 @@
       when: modprobe1.stat.exists == False
     - name: check /etc/modprobe.conf
       lineinfile: dest=/etc/modprobe.conf line="options ip_conntrack hashsize=65536"
+
+#
+# logrotate
+#
+
     - name: Logrotate rights
       file: path=/etc/logrotate.conf mode=0644 owner=root group=root
+
+#
+# Version info ( ToDo: make use of ansible
+#
+
     - name: Write version information
       shell: echo {{ snversion }} > /etc/sn_version
 #     shell: touch /etc/sn_version && echo {{ snversion }} > /etc/sn_version
+
+#
+# Final boot
+#
+
     - name: Reboot the server finally
       shell: sleep 2 && shutdown -r now "Ansible updates triggered"
       async: 1
@@ -286,6 +298,11 @@
                    delay=20
                    timeout=300
       when: tunneldigger.changed
+#
+# Final boot
+#
+
+
 # Slack we don't use slack
 #    - name: Import Slack token
 #      include_vars: "{{ slack_token_file }}"
