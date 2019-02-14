@@ -1,12 +1,11 @@
+---
 # Playbook to change root password
 #
 #
 - name: Change root password on FF super nodes
-  hosts: supernodes
+  hosts: all
   user: root
   gather_facts: False
-  vars: 
-    - include_vars: "{{ root_password_file }}"
   tasks:
     - include_tasks: ../tasks/tsk_change_root_pwd.yaml
-
+...

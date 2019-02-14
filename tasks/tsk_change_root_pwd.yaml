@@ -1,9 +1,10 @@
 # 
 # Change root password  
 #
+- name: Include root password
+  include_vars: ../root_pwd.yaml
+
 - name: Change root password
   user:
-    name: root
-    password: "{{ sn_rootpasswd }}"
-  vars: 
-    include_vars: ../root_pwd.yaml # "{{ root_password_file }}"
+      name: root
+      password: "{{ sn_rootpasswd }}"
