@@ -16,7 +16,7 @@ iface lo inet6 loopback
 allow-hotplug {{ ansible_default_ipv4.alias }}
 iface {{ ansible_default_ipv4.alias }} inet static
         address {{ ansible_default_ipv4.address }}
-        netmask {{ ansible_default_ipv4.address }}
+        netmask {{ ansible_default_ipv4.netmask }}
         gateway {{ ansible_default_ipv4.gateway }}
         post-up iptables -P OUTPUT ACCEPT
         post-up iptables -A OUTPUT -o $IFACE -d 10.0.0.0/8 -j DROP
