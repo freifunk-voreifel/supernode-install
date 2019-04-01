@@ -5,12 +5,13 @@ source /etc/network/interfaces.d/*
 
 # The loopback network interface
 auto lo
+# (thomas) sinn und zweck ist mir im Moment nicht einsichtig.
 iface lo inet loopback
-        up ip address add 185.66.193.126/32 dev lo
+        up ip address add 185.66.193.2/32 dev lo
 
+# (thomas) sinn und zweck ist mir im Moment nicht einsichtig.
 iface lo inet6 loopback
-	up ip address add 2a03:2260:301a:1000::1/52 dev lo
-
+        up ip address add 2a03:2260:121:2000::2/52 dev lo
 
 # The primary network interface
 allow-hotplug {{ ansible_default_ipv4.alias }}
@@ -25,7 +26,7 @@ iface {{ ansible_default_ipv4.alias }} inet static
         post-up iptables -A OUTPUT -o $IFACE -d 192.168.0.0/16 -j DROP
         post-up iptables -t nat -A POSTROUTING -o $IFACE -j MASQUERADE
 auto 6to4
-        iface 6to4 inet6 6to4
+	iface 6to4 inet6 6to4
         local {{ ansible_default_ipv4.address }}
 
 # GRE Tunnel zum Rheinland Backbone
@@ -34,34 +35,34 @@ auto 6to4
 # Berlin Router A
 auto gre-bb-a.ak.ber
 iface gre-bb-a.ak.ber inet static
-        address 100.64.10.43
+        address 100.64.2.151
         netmask 255.255.255.254
         pre-up ip tunnel add $IFACE mode gre local {{ ansible_default_ipv4.address }} remote 185.66.195.0 ttl 255
-        post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
+        post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
         post-up ip link set $IFACE mtu 1400
-        post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
+        post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-down ip tunnel del $IFACE
 
 iface gre-bb-a.ak.ber inet6 static
-        address 2a03:2260:0:51e::2/64
+        address 2a03:2260:0:155::2/64
         netmask 64
         post-up ip6tables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
 
 # Berlin Router B
 auto gre-bb-b.ak.ber
 iface gre-bb-b.ak.ber inet static
-        address 100.64.10.49
+        address 100.64.2.153
         netmask 255.255.255.254
         pre-up ip tunnel add $IFACE mode gre local {{ ansible_default_ipv4.address }} remote 185.66.195.1 ttl 255
-        post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
+        post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
         post-up ip link set $IFACE mtu 1400
-        post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
+        post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-down ip tunnel del $IFACE
 
 iface gre-bb-b.ak.ber inet6 static
-        address 2a03:2260:0:521::2/64
+        address 2a03:2260:0:156::2/64
         netmask 64
         post-up ip6tables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
 
@@ -69,17 +70,17 @@ iface gre-bb-b.ak.ber inet6 static
 # Duesseldorf Router A
 auto gre-bb-a.ix.dus
 iface gre-bb-a.ix.dus inet static
-        address 100.64.10.47
+        address 100.64.2.155
         netmask 255.255.255.254
         pre-up ip tunnel add $IFACE mode gre local {{ ansible_default_ipv4.address }} remote 185.66.193.0 ttl 255
-        post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
+        post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
         post-up ip link set $IFACE mtu 1400
-        post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
+        post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-down ip tunnel del $IFACE
 
 iface gre-bb-a.ix.dus inet6 static
-        address 2a03:2260:0:520::2/64
+        address 2a03:2260:0:157::2/64
         netmask 64
         post-up ip6tables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
 
@@ -87,51 +88,16 @@ iface gre-bb-a.ix.dus inet6 static
 # Duesseldorf Router B
 auto gre-bb-b.ix.dus
 iface gre-bb-b.ix.dus inet static
-        address 100.64.10.53
+        address 100.64.2.157
         netmask 255.255.255.254
         pre-up ip tunnel add $IFACE mode gre local {{ ansible_default_ipv4.address }} remote 185.66.193.1 ttl 255
-        post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
+        post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
         post-up ip link set $IFACE mtu 1400
-        post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
+        post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.105
         post-down ip tunnel del $IFACE
 
 iface gre-bb-b.ix.dus inet6 static
-        address 2a03:2260:0:523::2/64
-        netmask 64
-        post-up ip6tables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
-
-# Frankfurt Router A
-auto gre-bb-a.fra2.fra
-iface gre-bb-a.fra2.fra inet static
-        address 100.64.10.45
-        netmask 255.255.255.254
-        pre-up ip tunnel add $IFACE mode gre local {{ ansible_default_ipv4.address }} remote 185.66.194.0 ttl 255
-        post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
-        post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
-        post-up ip link set $IFACE mtu 1400
-        post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
-        post-down ip tunnel del $IFACE
-
-iface gre-bb-a.fra2.fra inet6 static
-        address 2a03:2260:0:51f::2/64
-        netmask 64
-        post-up ip6tables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
-
-
-# Frankfurt Router B
-auto gre-bb-b.fra2.fra
-iface gre-bb-b.fra2.fra inet static
-        address 100.64.10.51
-        netmask 255.255.255.254
-        pre-up ip tunnel add $IFACE mode gre local {{ ansible_default_ipv4.address }} remote 185.66.194.1 ttl 255
-        post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
-        post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
-        post-up ip link set $IFACE mtu 1400
-        post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source 185.66.193.126
-        post-down ip tunnel del $IFACE
-
-iface gre-bb-b.fra2.fra inet6 static
-        address 2a03:2260:0:522::2/64
+        address 2a03:2260:0:158::2/64
         netmask 64
         post-up ip6tables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
