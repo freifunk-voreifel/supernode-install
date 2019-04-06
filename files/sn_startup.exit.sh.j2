@@ -39,7 +39,7 @@ curl -X POST --data-urlencode 'payload={"text": "{{ sn_hostname }} is rebooted",
 /bin/sleep 90
 /bin/systemctl restart radvd
 /bin/sleep 2
-/bin/systemctl retsrat tunneldigger
+/bin/systemctl restart tunneldigger
 /bin/sleep 2
 /bin/systemctl restart bird
 /bin/sleep 2
