@@ -70,9 +70,9 @@
       - logrotate.conf
 
   tasks:
-# (thomas) 
-# Add ssh keys for admins move to this position 
-# to allow all admins to connect  
+# (thomas)
+# Add ssh keys for admins move to this position
+# to allow all admins to connect
     - name: Import root password
       include_vars: "{{ root_password_file }}"
     - name: Change root password
@@ -86,7 +86,7 @@
 #
 # Install additional packages
 #
-    - import_playbook: pb_slack.yaml
+#    - import_playbook: pb_slack.yaml
 #
 # Packages installed
 #
@@ -168,7 +168,7 @@
       template: src=./files/dhcpd6.conf.j2 dest=/etc/dhcp/dhcpd6.conf owner=root group=root mode=0444
     - name: Clone static DHCP config
       git: repo="{{ static_dhcp_repo }}" dest=/opt/freifunk/static-dhcp
-      when: dhcpd.changed 
+      when: dhcpd.changed
     - name: Add cron static DHCP
       cron: name=StaticDHCP minute="*" job="/opt/freifunk/static-dhcp/dhcp-update.sh"
       when: dhcpd.changed
@@ -189,12 +189,12 @@
     - name: Exit node startup script super- and exitnode
       template: src=./files/sn_startup.exit.sh.j2 dest=/opt/freifunk/sn_startup.sh owner=root group=root mode=0500
       when: sn_exit is defined
-    - name: Exit node startup script super- and exitnode # local fuer lokales testen 
+    - name: Exit node startup script super- and exitnode # local fuer lokales testen
       template: src=./files/sn_startup.local.exit.sh.j2 dest=/opt/freifunk/sn_startup.sh owner=root group=root mode=0500
       when: sn_local_exit is defined
 
-#   Replaced by separate playbook and move up 
-#   Playbooks adds but not overrides existing ssh-keys 
+#   Replaced by separate playbook and move up
+#   Playbooks adds but not overrides existing ssh-keys
 #    - name: SSH authorized_keys
 #      copy: src=./files/{{ item }} dest=/root/.ssh owner=root group=root mode=0400
 #      with_items: "{{ authorized_keys }}"
@@ -206,7 +206,7 @@
       file: path=/etc/bind/ff state=directory
     - name: Copy FF Zones
       copy: src=./files/ff/{{ item }} dest=/etc/bind/ff/{{ item }} owner=root group=bind mode=644
-      with_items: 
+      with_items:
         - ff.conf
     - name: Copy ff Zone config template
       template: src=./files/ff/db.ff.j2 dest=/etc/bind/ff/db.ff owner=bind group=root mode=0444
