@@ -104,7 +104,7 @@ Zusätzlich noch ein Beispiel für eine GRE Interface Konfiguration unter debian
         local 46.4.156.121
         endpoint 185.66.195.0
         ttl 64
-    mtu 140
+    mtu 1400
     iface bb-a-ak-ber inet6 static
         address 2a03:2260:0:51e::2/64
         
