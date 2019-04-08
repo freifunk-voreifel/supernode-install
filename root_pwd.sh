@@ -10,5 +10,5 @@ then
     echo "sn_rootpasswd: $(pwgen 16 1 | mkpasswd -s -m sha-512)" > root_pwd.yaml
 else
     # As an alternate we use dd and base64
-    eecho "sn_rootpasswd: $(dd if=/dev/urandom bs=24 count=1 | base64 | sed 's#/=##g' | mkpasswd -s -m sha-512)" > root_pwd.yaml
+    echo "sn_rootpasswd: $(dd if=/dev/urandom bs=24 count=1 | base64 | sed 's#/=##g' | mkpasswd -s -m sha-512)" > root_pwd.yaml
 fi
