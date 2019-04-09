@@ -1,0 +1,26 @@
+---
+- name: Get Tunneldigger
+  git: repo=https://github.com/Freifunk-Troisdorf/tunneldigger.git dest=/srv/tunneldigger
+  register: tunneldigger
+- name: Configure tunneldigger
+  raw: "cd /srv/tunneldigger && virtualenv env_tunneldigger && source env_tunneldigger/bin/activate && cd broker && python setup.py install"
+- name: Copy l2tp broker config template
+  template: src=./files/{{ item }} dest=/srv/tunneldigger owner=root group=root mode=0444
+  with_items: "{{ broker_cfg }}"
+- name: Copy tunneldigger script template
+  template: src=./files/bataddif.sh.j2 dest=/srv/tunneldigger/bataddif.sh owner=root group=root mode=0500
+- name: Copy tunneldigger scripts
+  copy: src=./files/{{ item }} dest=/srv/tunneldigger owner=root group=root mode=0500
+  with_items: "{{ tunneldigger_scripts }}"
+- name: Copy tunneldigger service template
+  copy: src=./files/{{ item }} dest=/etc/systemd/system owner=root group=root mode=0444
+  with_items: "{{ tunneldigger_service }}"
+- name: Add modules
+  lineinfile: dest=/etc/modules line={{ item }}
+  with_items: "{{ modules_required }}"
+  register: modules_req
+- name: Tunneldigger reload
+  command: "{{ item }}"
+  with_items:
+  - systemctl daemon-reload
+  - systemctl enable tunneldigger.service
