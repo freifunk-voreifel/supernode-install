@@ -19,11 +19,11 @@ These scripts are testet with and require ansible >= 2.7
     `echo "sn_rootpasswd: $(dd if=/dev/urandom bs=15 count=1 | base64 | mkpasswd -s -m sha512crypt)" > root_pwd.yaml`
 
     You will never know the pasword, but this is ok because we use only public keys for login.
-    See *root_pwd.yaml.example*. 
- 
+    See *root_pwd.yaml.example*.
+
  3. To use slack you need a file *slack_token.yaml* in the inventory directory.
     The file is ignored by git so you will see online an example in this repository.
- 
+
 
 # Installation
 
@@ -36,7 +36,7 @@ The  installation requires a file *root_pwd.yaml* with the encrypted root passwo
 Install both supernodes with:
 
     `ansible-playbook install.sn.yaml -i hosts.yaml`
-    
+
 Limit to supernode 1:
 
     `ansible-playbook install.sn.yaml -i hosts.yaml --limit voreifel1.*`
@@ -56,3 +56,7 @@ You can use the inventory for automatic changes
 ## Check time on all servers
 
     `ansible all -i hosts.yaml -m command -a 'date' -u root`
+
+## reboot all
+
+    ansible --inventory=hosts.yaml -a "/sbin/shutdown -r now" all
