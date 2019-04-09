@@ -23,5 +23,8 @@ sn_ffrl_IPv4: 185.66.193.127
 ## Exit über FFRL
 sn_exit: 1
 
+# brauchen wir aktuell für die tunneldigger konfiguration
+# sollte durch ansible variable ausgetauscht werden
+sn_interface_name: ens18
 yanic_domain: voreifel2
 ...
