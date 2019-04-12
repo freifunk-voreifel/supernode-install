@@ -1,0 +1,11 @@
+---
+# Configure GRE tunnels to FFRL backbone on supernode
+# Define tunnels in host_vars
+
+- name: Install the gateways
+  hosts: supernodes
+  gather_facts: true
+  become: true
+  tasks:
+    - include_role:
+        name: supernode

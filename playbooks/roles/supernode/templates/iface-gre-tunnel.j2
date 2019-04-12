@@ -1,0 +1,26 @@
+# GRE Tunnel configuration
+
+# Template to configure one GRE tunnel in /etc/network/interfaces.d/{{ gre[item].dev }}.conf
+
+auto {{ gre[item].dev }}
+
+iface {{ gre[item].dev }} inet tunnel
+  mode gre
+  netmask {{ gre[item].tunnel.netmask }}
+  address {{ gre[item].address }}
+  dstaddr {{ gre[item].daddress }}
+  local {{ gre[item].tunnel.local }}
+  endpoint {{ gre[item].tunnel.remote }} 
+  mtu {{ gre[item].tunnel.mtu }}
+  ttl {{ gre[item].tunnel.ttl }}
+  post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source {{ sn_ffrl_IPv4 }}
+  post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
+  post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source  {{ sn_ffrl_IPv4 }}
+  post-down ip tunnel del $IFACE
+
+{% if gre[item].inet6 is defined %}
+iface {{ gre[item].dev }} inet6 static
+  address {{ gre[item].inet6 }}
+  post-up ip6tables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
+{% endif %}
+# End GRE Tunnel

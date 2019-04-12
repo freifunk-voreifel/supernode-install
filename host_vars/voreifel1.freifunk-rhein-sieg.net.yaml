@@ -16,6 +16,7 @@ sn_mesh_MAC: a2:8c:ae:6f:f7:01
 ul_mesh_MAC: a2:8c:ae:6f:f7:10
 
 sn_ffrl_IPv4: 185.66.193.126
+sn_ffrl_IPv6: 2a03:2260:301a::1
 
 ## Lokaler exit
 #sn_local_exit: 1
@@ -27,4 +28,88 @@ sn_exit: 1
 # sollte durch ansible variable ausgetauscht werden
 sn_interface_name: ens18
 yanic_domain: voreifel1
+
+## GRE Tunnel definition
+
+#Endpunkte
+
+    # bb-a.ak.ber 185.66.195.0
+    # bb-b.ak.ber 185.66.195.1
+    # bb-a.ix.dus 185.66.193.0
+    # bb-b.ix.dus 185.66.193.1
+    # bb-a.fra3.fra 185.66.194.0
+    # bb-b.fra3.fra 185.66.194.1
+gre:
+  ber_a:
+    tunnel:
+        remote: '185.66.195.0'
+        local:  '{{ ansible_default_ipv4.address }}'
+        netmask: '255.255.255.254'
+        mtu: 1400
+        ttl: 64
+    dev: 'gre-bb-a.ak.ber'
+    address: '100.64.10.43'
+    daddress: '100.64.10.42'
+    network: '100.64.10.42/31'
+    inet6: 2a03:2260:0:51e::2/64
+  ber_b:
+    tunnel:
+        remote: '185.66.195.1'
+        local:  '{{ ansible_default_ipv4.address }}'
+        netmask: '255.255.255.254'
+        mtu: 1400
+        ttl: 64
+    dev: 'gre-bb-b.ak.ber'
+    address: '100.64.10.49'
+    daddress: '100.64.10.48'
+    network: '100.64.10.48/31'
+    inet6: 2a03:2260:0:521::2/64
+  dus_a:
+    tunnel:
+        remote: '185.66.193.0'
+        local:  '{{ ansible_default_ipv4.address }}'
+        netmask: '255.255.255.254'
+        mtu: 1400
+        ttl: 64
+    dev: 'gre-bb-a.ix.dus'
+    address: '100.64.10.47'
+    daddress: '100.64.10.46'
+    network: '100.64.10.42/31'
+    inet6: 2a03:2260:0:520::2/64
+  dus_b:
+    tunnel:
+        remote: '185.66.193.1'
+        local:  '{{ ansible_default_ipv4.address }}'
+        netmask: '255.255.255.254'
+        mtu: 1400
+        ttl: 64
+    dev: 'gre-bb-b.ix.dus'
+    address: '100.64.10.53'
+    daddress: '100.64.10.52'
+    network: '100.64.10.52/31'
+    inet6: 2a03:2260:0:523::2/64
+  fra_a:
+    tunnel:
+        remote: '185.66.194.0'
+        local:  '{{ ansible_default_ipv4.address }}'
+        netmask: '255.255.255.254'
+        mtu: 1400
+        ttl: 64
+    dev: 'gre-bb-a.fra2.fra'
+    address: '100.64.10.47'
+    daddress: '100.64.10.46'
+    network: '100.64.10.42/31'
+    inet6: 2a03:2260:0:51f::2/64
+  fra_b:
+    tunnel:
+        remote: '185.66.194.1'
+        local:  '{{ ansible_default_ipv4.address }}'
+        netmask: '255.255.255.254'
+        mtu: 1400
+        ttl: 64
+    dev: 'gre-bb-b.fra2.fra'
+    address: '100.64.10.45'
+    daddress: '100.64.10.44'
+    network: '100.64.10.44/31'
+    inet6: 2a03:2260:0:522::2/64
 ...

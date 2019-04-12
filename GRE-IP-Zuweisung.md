@@ -19,8 +19,8 @@ Unsere Endpunkte:
     bb-b.ak.ber 185.66.195.1
     bb-a.ix.dus 185.66.193.0
     bb-b.ix.dus 185.66.193.1
-    bb-a.fra3.fra 185.66.194.0
-    bb-b.fra3.fra 185.66.194.1
+    bb-a.fra2.fra 185.66.194.0
+    bb-b.fra2.fra 185.66.194.1
 ```
 
 Mailingliste für Wartungsankündigungen:
@@ -39,7 +39,7 @@ Tunnel Details, angegeben ist jeweils unsere IP im Tunnel, eure ist immer +1. Im
     2a03:2260:0:51e::1/64
 
     bb-b.ak.ber
-    00.64.10.48/31
+    100.64.10.48/31
     2a03:2260:0:521::1/64
 
     bb-a.ix.dus
@@ -104,7 +104,7 @@ Zusätzlich noch ein Beispiel für eine GRE Interface Konfiguration unter debian
         local 46.4.156.121
         endpoint 185.66.195.0
         ttl 64
-    mtu 1400
+        mtu 1400
     iface bb-a-ak-ber inet6 static
         address 2a03:2260:0:51e::2/64
         

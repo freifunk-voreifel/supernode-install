@@ -1,0 +1,32 @@
+# Freifunk Voreifel Ansibele LAN configuration
+
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+
+auto lo
+iface lo inet loopback
+        up ip address add {{ sn_ffrl_IPv4 }}/32 dev lo
+
+iface lo inet6 loopback
+	up ip address add {{ sn_ffrl_IPv6 }}/56 dev lo
+
+
+# The primary network interface
+allow-hotplug {{ ansible_default_ipv4.alias }}
+iface {{ ansible_default_ipv4.alias }} inet static
+        address {{ ansible_default_ipv4.address }}
+        netmask {{ ansible_default_ipv4.netmask }}
+        gateway {{ ansible_default_ipv4.gateway }}
+        post-up iptables -P OUTPUT ACCEPT
+        post-up iptables -A OUTPUT -o $IFACE -d 10.0.0.0/8 -j DROP
+        post-up iptables -A OUTPUT -o $IFACE -d 172.16.0.0/12 -j DROP
+        post-up iptables -A OUTPUT -o $IFACE -d 169.254.0.0/16 -j DROP
+        post-up iptables -A OUTPUT -o $IFACE -d 192.168.0.0/16 -j DROP
+        post-up iptables -t nat -A POSTROUTING -o $IFACE -j MASQUERADE
+auto 6to4
+        iface 6to4 inet6 6to4
+        local {{ ansible_default_ipv4.address }}
