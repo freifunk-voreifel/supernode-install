@@ -1,0 +1,34 @@
+---
+# Install additional packages
+- name: Remove cdrom in sources.list
+  raw: "sed -i '/deb cdrom/c\\#' /etc/apt/sources.list"
+- name: Make this server ansible compatible
+  raw: "apt-get update && apt-get install python apt-transport-https dirmngr -y"
+- name: Adding Freifuck GPG Key
+  raw: "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B2522557E6AB9BF5"
+  
+# Historisch, umstellen auf apt-key
+#      apt_key:
+#             id: B2522557E6AB9BF5
+#             url: https://keyserver.ubuntu.com
+#             url: https://pool.sks-keyservers.net
+#             url: https://sks.pod01.fleetstreetops.com
+#             state: present
+
+- name: Add Freifuck repo to source list
+  apt_repository: repo='deb https://freifuck.de/debian stretch main' state=present
+- name: Add backport repo to source list
+  apt_repository: repo='deb http://http.debian.net/debian stretch-backports main' state=present
+- name: Update apt cache
+  apt: update_cache=yes
+- name: Install common required packages
+  apt:
+    name: "{{ common_required_packages }}"
+    state: present
+    update_cache: yes
+  register: aptupdates
+- name: Gathering facts
+  setup:
+#
+# Packages installed
+#
