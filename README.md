@@ -1,7 +1,7 @@
 # supernode-install
 Install multiple Freifunk super nodes with ansible
 
-The ansible playbook is stored in *install.sn.yml*. The inventory is placed in hosts.yaml
+The ansible playbook is stored in *new_install.yaml*. The inventory is placed in hosts.yaml
 
 # Prerequisite
 

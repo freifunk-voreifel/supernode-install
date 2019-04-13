@@ -5,14 +5,14 @@
 # Create temprary directory for testing Ansible
 
 - file:
-    path: /tmp/etc/network
+    path: /etc/network
     state: directory
     mode: 0755
 
 # Create directory for interfaces
 
 - file:
-    path: /tmp/etc/network/interfaces.d
+    path: /etc/network/interfaces.d
     state: directory
     mode: 0755
 
@@ -21,7 +21,7 @@
 - name: Supernode LAN 
   template:
     src: iface-lan.j2
-    dest: /tmp/etc/network/interfaces
+    dest: /etc/network/interfaces
     owner: root
     group: root
     mode: 0644
@@ -31,7 +31,7 @@
 - name: FFRL GRE Tunnel configuration
   template:
     src: iface-gre-tunnel.j2
-    dest: "/tmp/etc/network/interfaces.d/{{ item }}"
+    dest: "/etc/network/interfaces.d/{{ item }}"
     owner: root
     group: root
     mode: 0644
