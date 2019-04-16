@@ -96,8 +96,8 @@ gre:
         mtu: 1400
         ttl: 64
     dev: 'gre-bb-a.fra2.fra'
-    address: '100.64.10.47'
-    daddress: '100.64.10.46'
+    address: '100.64.10.45'
+    daddress: '100.64.10.44'
     network: '100.64.10.42/31'
     inet6: 2a03:2260:0:51f::2/64
   fra_b:
@@ -108,8 +108,8 @@ gre:
         mtu: 1400
         ttl: 64
     dev: 'gre-bb-b.fra2.fra'
-    address: '100.64.10.45'
-    daddress: '100.64.10.44'
+    address: '100.64.10.51'
+    daddress: '100.64.10.50'
     network: '100.64.10.44/31'
     inet6: 2a03:2260:0:522::2/64
 ...
