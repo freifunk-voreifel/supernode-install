@@ -10,17 +10,8 @@
 
 # Install required packages an make server ansible compatible
 
-- import_playbook: playbooks/pb_packages.yaml
+#- import_playbook: playbooks/pb_install_all.yaml
 
-# add shh-keys for admin team
-
-- import_playbook: playbooks/pb_addsshkeys.yaml
-
-# reset root password  stored in root_pwd.yaml
-
-- import_playbook: playbooks/pb_change_root_pwd.yaml
-
-- import_playbook: playbooks/pb_gre-tunnel.yaml
 
 #
 # old stuff from here
@@ -49,94 +40,47 @@
       - respondd_service
     broker_cfg:
       - l2tp_broker.cfg
-    authorized_keys:
-      - authorized_keys
     logrotate_config:
       - logrotate.conf
 
   tasks:
-    - name: Set IPv4 in hostfile
-      lineinfile: dest=/etc/hosts regexp='^{{ ansible_default_ipv4.address }}' line='{{ ansible_default_ipv4.address }} {{ sn_hostname }}.{{ sn_fqdn }} {{ sn_hostname }}' owner=root group=root mode=0644 state=present
-
-    - name: Set IPv6 in hostfile
-      lineinfile: dest=/etc/hosts regexp='^{{ ansible_default_ipv6.address }}' line='{{ ansible_default_ipv6.address }} {{ sn_hostname }}.{{ sn_fqdn }} {{ sn_hostname }}' owner=root group=root mode=0644 state=present
-      when: ansible_default_ipv6.address is defined
-
-    - name: set hostname
-      hostname: name='{{ sn_hostname }}'
-      register: sethostname
-
-    - name: disable multi CPU Kernel (SMP) # Wg. Fehler batman auf multi proc sys
-      lineinfile: dest=/etc/default/grub regexp='^GRUB_CMDLINE_LINUX_DEFAULT=' line='GRUB_CMDLINE_LINUX_DEFAULT="quiet maxcpus=0 nosmp"' state=present
-      register: grubnosmp
-
-    - name: Update grub
-      shell: update-grub2
-      when: grubnosmp.changed
-
-#
-# Time for a reboot
-#
-
-    - name: Reboot the server
-      shell: sleep 2 && shutdown -r now "Ansible updates triggered, no SMP"
-      async: 1
-      poll: 0
-      ignore_errors: true
-      when: sethostname.changed
-    - name: waiting for server to come back (1st)
-      local_action:
-                   wait_for
-                   host={{ inventory_hostname }}
-                   port=22
-                   delay=20
-                   timeout=300
-#     when: hosts.changed
-      when: sethostname.changed
-    - name: Set clock # t assure valid time
-      shell: /etc/init.d/ntp stop && /usr/sbin/ntpd -q -g && /etc/init.d/ntp start
-
-
-    - include: tasks/tsk_tunneldigger.yml
-      tags: tunneldigger
-
-    - name: Copy logrotate config
-      copy: src=./files/{{ item }} dest=/etc/ owner=root group=root mode=0500
-      with_items: "{{ logrotate_config }}"
 #
 #
 #
     - name: Create freifunk directory
-      file: path=/opt/freifunk state=directory mode=0755
+      file: 
+        path: /opt/freifunk
+        state: directory
+        mode: 0755
 
-    - name: Copy dhcpd template file
-      template: src=./files/dhcpd.conf.j2 dest=/etc/dhcp/dhcpd.conf owner=root group=root mode=0444
-      register: dhcpd
-
-    - name: Copy dhcpd6 template file
-      template: src=./files/dhcpd6.conf.j2 dest=/etc/dhcp/dhcpd6.conf owner=root group=root mode=0444
-
-    - name: Clone static DHCP config
-      git: repo="{{ static_dhcp_repo }}" dest=/opt/freifunk/static-dhcp
-      when: dhcpd.changed
+#   The repo does only work for FF Troisdorf IP range.
+#        
+#    - name: Clone static DHCP config
+#      git: 
+#        repo: "{{ static_dhcp_repo }}"
+#        dest: /opt/freifunk/static-dhcp
+#      register: dhcpd
+#    
+#    - name: Add cron static DHCP
+#      cron: 
+#        name: StaticDHCP 
+#        minute: "*"
+#        job: "/opt/freifunk/static-dhcp/dhcp-update.sh"
+#      when: dhcpd.changed
     
-    - name: Add cron static DHCP
-      cron: name=StaticDHCP minute="*" job="/opt/freifunk/static-dhcp/dhcp-update.sh"
-      when: dhcpd.changed
-    
-    - name: Restart dhcpd
-      service: name=isc-dhcp-server state=restarted
-      when: dhcpd.changed
-      ignore_errors: yes
-    
-    - name: Add cron backbone script
-      cron: name=backbone special_time=reboot job="/opt/freifunk/l2tp_backbone.sh"
+#    - name: Restart dhcpd
+#      service: 
+#        name: isc-dhcp-server
+#        state: restarted
+#      when: dhcpd.changed
+#      ignore_errors: yes
     
     - name: Add cron startup script
-      cron: name=startup special_time=reboot job="/opt/freifunk/sn_startup.sh"
-    
-    - name: Copy backbone script
-      template: src=./files/l2tp_backbone.sh.exit.j2 dest=/opt/freifunk/l2tp_backbone.sh owner=root group=root mode=0544
+      cron: 
+        name: startup
+        special_time: reboot
+        job: "/opt/freifunk/sn_startup.sh"
+
 
 # Startup script benötigt Slack
 
@@ -144,59 +88,22 @@
       include_vars: "{{ slack_token_file }}"
     
     - name: Exit node startup script super- and exitnode
-      template: src=./files/sn_startup.exit.sh.j2 dest=/opt/freifunk/sn_startup.sh owner=root group=root mode=0500
+      template: 
+        src: ./files/sn_startup.exit.sh.j2
+        dest: /opt/freifunk/sn_startup.sh
+        owner: root
+        group: root
+        mode: 0500
       when: sn_exit is defined
     
     - name: Exit node startup script super- and exitnode # local fuer lokales testen
-      template: src=./files/sn_startup.local.exit.sh.j2 dest=/opt/freifunk/sn_startup.sh owner=root group=root mode=0500
+      template: 
+        src: ./files/sn_startup.local.exit.sh.j2
+        dest: /opt/freifunk/sn_startup.sh
+        owner: root
+        group: root
+        mode: 0500
       when: sn_local_exit is defined
-
-# bind9
-
-    - name: Bind9, activate ff zone
-      lineinfile: dest=/etc/bind/named.conf line='include "/etc/bind/ff/ff.conf";' state=present
-    
-    - name: Copy option template
-      template: src=./files/named.conf.options.j2 dest=/etc/bind/named.conf.options owner=root group=bind mode=644
-    
-    - name: Create ff directory
-      file: path=/etc/bind/ff state=directory
-    
-    - name: Copy FF Zones
-      copy: src=./files/ff/{{ item }} dest=/etc/bind/ff/{{ item }} owner=root group=bind mode=644
-      with_items:
-        - ff.conf
-    
-    - name: Copy ff Zone config template
-      template: src=./files/ff/db.ff.j2 dest=/etc/bind/ff/db.ff owner=bind group=root mode=0444
-
-#
-# radvd
-#
-
-    - name: Copy radvd config template
-      template: src=./files/radvd.conf.j2 dest=/etc/radvd.conf owner=radvd group=root mode=0444
-    
-    # Next task moved into playbook pb_gre-tunnel.yaml 
-    # can be configured earlier.
-    
-    #- name: Interface configuration with ffrl gre tunnel
-      #template: 
-         #src: "./files/interfaces-{{ sn_hostname }}.j2"
-         #dest: /etc/network/interfaces 
-         #owner: root
-         #group: root
-         #mode: 0544
-
-#
-# bird
-#
-
-    - name: Bird configuration
-      copy: src=./files/bird-{{ sn_hostname }}.conf dest=/etc/bird/bird.conf owner=bird group=bird mode=0444
-    - name: Bird configuration
-      copy: src=./files/bird6-{{ sn_hostname }}.conf dest=/etc/bird/bird6.conf owner=bird group=bird mode=0444
-
 #
 # yanic
 #
@@ -206,9 +113,19 @@
          name: yanic
          comment: "Yanic service user"
     - name: Create Yanic folder
-      file: path=/opt/freifunk/yanic state=directory mode=0755 owner=yanic group=yanic
+      file: 
+        path: /opt/freifunk/yanic
+        state: directory
+        mode: 0755
+        owner: yanic
+        group: yanic
     - name: Copy Yanic config template
-      template: src=./files/yanic.conf.j2 dest=/etc/yanic.conf owner=yanic group=yanic mode=0444
+      template:
+         src: ./files/yanic.conf.j2
+         dest: /etc/yanic.conf
+         owner: yanic
+         group: yanic
+         mode: 0444
 
 #
 # Go
@@ -216,15 +133,18 @@
 
     - name: Shit go stuff
       shell: cd /usr/local && wget https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz -O go-release-linux-amd64.tar.gz && tar xvf go-release-linux-amd64.tar.gz && rm go-release-linux-amd64.tar.gz
+
     - name: Adjust path for go
       lineinfile:
         dest: /root/.bashrc
         line: "{{ item }}"
-      with_items:
+      loop:
                - export GOPATH=/opt/go
                - export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
     - name: Compile go
       shell: go get -v -u github.com/Freifunk-Troisdorf/yanic
+
     - name: Copy and enable yanic service
       shell: cp /opt/go/src/github.com/Freifunk-Troisdorf/yanic/contrib/init/linux-systemd/yanic.service /lib/systemd/system/yanic.service && systemctl daemon-reload && systemctl enable yanic
 
@@ -234,9 +154,13 @@
 #
 
     - name: Get respondd
-      git: repo=https://github.com/Freifunk-Troisdorf/mesh-announce.git dest=/opt/mesh-announce
+      git: 
+        repo: https://github.com/Freifunk-Troisdorf/mesh-announce.git
+        dest: /opt/mesh-announce
+
     - name: Copy respondd service template
       shell: cp /opt/mesh-announce/respondd.service /etc/systemd/system
+
     - name: Enable respondd service
       shell: systemctl daemon-reload && systemctl enable respondd
 
@@ -248,7 +172,7 @@
       lineinfile:
         dest: /etc/sysctl.conf
         line: "{{ item }}"
-      with_items:
+      loop:
                - net.ipv4.netfilter.ip_conntrack_generic_timeout = 240
                - net.ipv4.netfilter.ip_conntrack_tcp_timeout_established = 54000
                - net.netfilter.nf_conntrack_max = 65536
@@ -269,17 +193,18 @@
 #
 # logrotate
 #
+# Not necessary when set to correct rights in copy step above
 
-    - name: Logrotate rights
-      file: path=/etc/logrotate.conf mode=0644 owner=root group=root
+#    - name: Logrotate rights
+#      file: path=/etc/logrotate.conf mode=0644 owner=root group=root
 
 #
 # Version info ( ToDo: make use of ansible
 #
 
     - name: Write version information
-      shell: echo {{ snversion }} > /etc/sn_version
-#     shell: touch /etc/sn_version && echo {{ snversion }} > /etc/sn_version
+      shell: echo {{ snversion }} > /etc/supernode.version
+#     shell: touch /etc/supernode.version && echo {{ snversion }} > /etc/supernode.version
 
 #
 # Final boot

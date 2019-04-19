@@ -1,0 +1,13 @@
+
+
+- name: disable multi CPU Kernel (SMP) # Wg. Fehler batman auf multi proc sys
+  lineinfile: 
+    dest: /etc/default/grub 
+    regexp: '^GRUB_CMDLINE_LINUX_DEFAULT='
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet maxcpus=0 nosmp"'
+    state: present
+  register: grubnosmp
+  
+- name: Update grub
+  shell: update-grub2
+  when: grubnosmp.changed

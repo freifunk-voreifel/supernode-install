@@ -1,4 +1,13 @@
+# Freifunk Voreifel
 # GRE Tunnel configuration
+
+
+# < This file is maintained by ansible. Don't edit > 
+# < Configure own network devices in the directory interface.d/>
+
+# Thomas Arend
+# Stand: 2019-04-16
+# Created: Created: {{ ansible_date_time.iso8601_basic }}
 
 # Template to configure one GRE tunnel in /etc/network/interfaces.d/{{ gre[item].dev }}.conf
 
@@ -6,16 +15,16 @@ auto {{ gre[item].dev }}
 
 iface {{ gre[item].dev }} inet tunnel
   mode gre
-  netmask {{ gre[item].tunnel.netmask }}
+  netmask {{ gre[item].netmask }}
   address {{ gre[item].address }}
   dstaddr {{ gre[item].daddress }}
-  local {{ gre[item].tunnel.local }}
-  endpoint {{ gre[item].tunnel.remote }} 
-  mtu {{ gre[item].tunnel.mtu }}
-  ttl {{ gre[item].tunnel.ttl }}
-  post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source {{ sn_ffrl_IPv4 }}
+  local {{ gre[item].local }}
+  endpoint {{ gre[item].remote }} 
+  mtu {{ gre[item].mtu }}
+  ttl {{ gre[item].ttl }}
+  post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source {{ ffrl.IPv4 }}
   post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
-  post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source  {{ sn_ffrl_IPv4 }}
+  post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source  {{ ffrl.IPv4 }}
   post-down ip tunnel del $IFACE
 
 {% if gre[item].inet6 is defined %}

@@ -1,0 +1,8 @@
+# 
+# Change root password  
+#
+- name: Change root password
+  user:
+    name: root
+    password: "{{ sn_rootpasswd }}"
+  when: adminteam is succeeded

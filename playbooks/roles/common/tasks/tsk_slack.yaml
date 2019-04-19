@@ -1,0 +1,19 @@
+---
+# Install startup script with slack
+#
+# Startup script benötigt Slack
+#
+# Tested by thomas
+# 20119-02-12
+
+- name: Exit node startup script super- and exitnode
+  template: 
+    src: sn_startup.exit.sh.j2 
+    dest: /opt/freifunk/sn_startup.sh owner=root group=root mode=0500
+  when: sn_exit is defined
+  
+- name: Exit node startup script super- and exitnode # local fuer lokales testen 
+  template: 
+    src: sn_startup.local.exit.sh.j2 
+    dest: /opt/freifunk/sn_startup.sh owner=root group=root mode=0500
+  when: sn_local_exit is defined

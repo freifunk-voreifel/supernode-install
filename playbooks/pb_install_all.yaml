@@ -1,0 +1,21 @@
+---
+# Playbook to install all components via roles!
+# Thoasm Arend
+# Stand 2019-04-17
+
+- name: Install common components
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - include_role:
+        name: common
+
+- name: Install supernode components
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - include_role:
+        name: supernode
+...

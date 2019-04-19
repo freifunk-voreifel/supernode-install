@@ -1,0 +1,30 @@
+# supernode/tasks/tsk_gre-tunnel.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+
+# Configure GRE Tunnles in /etc/network/interfaces.d/{{ item }}.conf
+
+- file:
+    path: /tmp/etc/bird
+    state: directory
+    mode: 0755
+
+- name: bird configuration
+  template:
+    src: bird.conf.j2
+    dest: "/tmp/etc/bird/bird.conf"
+    owner: bird
+    group: bird
+    mode: 0444
+    # Alles in einer Datei
+    #  loop: "{{ gre | list }}"
+
+- name: bird6 configuration
+  template:
+    src: bird6.conf.j2
+    dest: "/tmp/etc/bird/bird6.conf"
+    owner: bird
+    group: bird
+    mode: 0444

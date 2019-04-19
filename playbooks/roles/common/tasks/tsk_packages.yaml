@@ -1,0 +1,53 @@
+---
+# Freifunk Voreifel
+# Thomas Arend
+# Date: 2019-04-13
+
+# Install additional packages for Freifunk
+
+- name: add default repo
+  #Freifunk- und Rollen-Repos erst in den jeweiligen Rollen
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  loop:
+    - "deb http://ftp.de.debian.org/debian/ {{ ansible_distribution_release }} main"
+    - "deb http://ftp.de.debian.org/debian/ {{ ansible_distribution_release }}-updates main"
+    - "deb http://security.debian.org/ {{ ansible_distribution_release }}/updates main"
+  when: ansible_distribution == "Debian"
+
+- name: Adding Freifuck GPG Key
+  apt_key:
+    id: B2522557E6AB9BF5
+    url: https://keyserver.ubuntu.com
+    state: present
+
+- name: Add Freifuck repo to source list
+  apt_repository: 
+    repo: 'deb https://freifuck.de/debian stretch main' 
+    state: present
+  
+- name: Add backport repo to source list
+  apt_repository: 
+    repo: 'deb http://http.debian.net/debian stretch-backports main'
+    state: present
+  
+- name: Update and upgrade packages
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400 # One day 
+    
+- name: Install common required packages
+  apt:
+    name: "{{ common_required_packages }}"
+    state: present
+    update_cache: no
+  register: aptupdates
+
+- name: Gathering facts
+  setup:
+
+#
+# Packages installed
+#

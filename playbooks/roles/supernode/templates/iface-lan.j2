@@ -1,4 +1,14 @@
-# Freifunk Voreifel Ansibele LAN configuration
+# Freifunk Voreifel Ansible LAN configuration
+
+# < This file is maintained by ansible. Don't edit > 
+# < Configure own network devices in the directory interface.d/>
+#
+# Freifunk Voreifel
+
+# Thomas Arend
+# Stand: 2019-04-16
+# Created: {{ ansible_date_time.iso8601_basic }}
+
 
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
@@ -9,13 +19,11 @@ source /etc/network/interfaces.d/*
 
 auto lo
 iface lo inet loopback
-        up ip address add {{ sn_ffrl_IPv4 }}/32 dev lo
 
 iface lo inet6 loopback
-	up ip address add {{ sn_ffrl_IPv6 }}/56 dev lo
-
 
 # The primary network interface
+
 allow-hotplug {{ ansible_default_ipv4.alias }}
 iface {{ ansible_default_ipv4.alias }} inet static
         address {{ ansible_default_ipv4.address }}

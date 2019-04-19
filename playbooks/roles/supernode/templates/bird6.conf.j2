@@ -1,0 +1,56 @@
+/**
+ * This is the BIRD bird6.conf Ansible template 
+ *
+ * Thomas Arend
+ * Stand: 2019-04-16
+ *
+ * Created: {{ ansible_date_time.iso8601_basic }}
+ *
+ **/
+
+log syslog { info };
+
+debug protocols { states, routes, filters, interfaces, events, packets };
+
+router id {{ ansible_default_ipv4.address }} ;
+
+protocol direct {
+        interface "-eth0", "*";  # Restrict network interfaces it works with
+
+}
+
+protocol kernel {
+        device routes;
+        import none;
+        export all;             # Default is export none
+        kernel table 42;        # Kernel table to synchronize with (default: main)
+}
+
+protocol device {
+        scan time 10;           # Scan interfaces every 10 seconds
+}
+
+function is_default() {
+        return (net ~ [::/0]);
+}
+
+filter hostroute {
+	if net ~ [{{ ffrl.net }}\{56,56\}] then accept;
+        reject;
+}
+
+template bgp uplink {
+        local as {{ supernode.asn }};
+        import where is_default();
+        export filter hostroute;
+        gateway recursive;
+}
+
+{% for item in gre %}
+protocol bgp {{ gre[item].dev }} from uplink {
+        description "{{ gre[item].description }}";
+        source address {{ gre[item].inet6 }};
+        neighbor {{ gre[item].dinet6 }} as {{ gre[item].asn }};
+}
+
+{% endfor %}

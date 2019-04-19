@@ -1,0 +1,16 @@
+---
+- name: Install common components
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - include_role:
+        name: common
+---
+- name: Install supernode components
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - include_role:
+        name: supernode

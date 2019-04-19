@@ -1,0 +1,24 @@
+# supernode/tasks/tsk_gre-tunnel.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+
+# Configure netfilter in /etc/sysctl.conf
+
+#
+# netfilter
+#
+- name: Set netfilter rules in sysctl.conf
+  lineinfile:
+    dest: /etc/sysctl.conf
+    line: "{{ item }}"
+  loop:
+    - "net.ipv4.ip_forward = 1"           # GRE tunneling requires IP forwarding
+    - "net.ipv6.conf.all.forwarding = 1"  # GRE tunneling requires IP forwarding
+    - "net.ipv4.netfilter.ip_conntrack_generic_timeout = 240"
+    - "net.ipv4.netfilter.ip_conntrack_tcp_timeout_established = 54000"
+    - "net.netfilter.nf_conntrack_max = 65536"
+    
+- name: Reload sysctl
+  raw: "sysctl --system"

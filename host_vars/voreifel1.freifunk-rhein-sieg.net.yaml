@@ -1,4 +1,148 @@
 ---
+# Stand: 2019-04-16
+#
+# Super node 1
+
+# New variable names, old obsolte variables moved to end of file
+
+ffrl:
+    net: 2a03:2260:301a::/48
+    IPv4: 185.66.193.126
+    IPv6: 2a03:2260:301a::1
+    uplink: "tun-uplink"
+
+# New variable names, old obsolte variables moved to end of file
+
+supernode:
+    number: 1
+    hostname: voreifel1
+    fqdn: "ff"
+    asn: 65201
+    dhcp_range: 10.152.65.0 10.152.78.254
+    tunneldigger:
+        iface: "{{ ansible_default_ipv4.alias }}"
+        port: 53842
+    mesh:
+        iface: bat0
+        mtu: 1312
+        IPv6: 2a03:2260:121:1000::1
+        IPv6_net: 2a03:2260:121:1000::/64
+        IPv6_xfer: 2a03:2260:121:1000::2
+        IPv4: 10.152.64.1
+        IPv4_brcast: 10.152.79.255
+        IPv4_net: 10.152.64.0
+        IPv4_netmask: 255.255.240.0
+        IPv4_xfer: 10.152.64.2
+        MAC: a2:8c:ae:6f:f7:01
+
+ul_mesh_MAC: a2:8c:ae:6f:f7:10
+
+## Lokaler exit
+#sn_local_exit: 1
+
+## Exit über FFRL
+sn_exit: 1
+
+yanic_domain: voreifel1
+
+## GRE Tunnel definition
+
+#Endpunkte
+
+    # bb-a.ak.ber 185.66.195.0
+    # bb-b.ak.ber 185.66.195.1
+    # bb-a.ix.dus 185.66.193.0
+    # bb-b.ix.dus 185.66.193.1
+    # bb-a.fra3.fra 185.66.194.0
+    # bb-b.fra3.fra 185.66.194.1
+    
+gre:
+  ber_a:
+    description: "Rheinland Backbone Berlin A"
+    remote: '185.66.195.0'
+    local:  '{{ ansible_default_ipv4.address }}'
+    netmask: '255.255.255.254'
+    mtu: 1400
+    ttl: 64
+    dev: 'gre-bb-a.ak.ber'
+    address: '100.64.10.43'
+    daddress: '100.64.10.42'
+    network: '100.64.10.42/31'
+    inet6: 2a03:2260:0:51e::2
+    dinet6: 2a03:2260:0:51e::1
+    asn: 201701
+  ber_b:
+    description: "Rheinland Backbone Berlin B"
+    remote: '185.66.195.1'
+    local:  '{{ ansible_default_ipv4.address }}'
+    netmask: '255.255.255.254'
+    mtu: 1400
+    ttl: 64
+    dev: 'gre-bb-b.ak.ber'
+    address: '100.64.10.49'
+    daddress: '100.64.10.48'
+    network: '100.64.10.48/31'
+    inet6: 2a03:2260:0:521::2
+    dinet6: 2a03:2260:0:521::1
+    asn: 201701
+  dus_a:
+    description: "Rheinland Backbone Duesseldorf A"
+    remote: '185.66.193.0'
+    local:  '{{ ansible_default_ipv4.address }}'
+    netmask: '255.255.255.254'
+    mtu: 1400
+    ttl: 64
+    dev: 'gre-bb-a.ix.dus'
+    address: '100.64.10.47'
+    daddress: '100.64.10.46'
+    network: '100.64.10.42/31'
+    inet6: 2a03:2260:0:520::2
+    dinet6: 2a03:2260:0:520::1
+    asn: 201701
+  dus_b:
+    description: "Rheinland Backbone Duesseldorf B"
+    remote: '185.66.193.1'
+    local:  '{{ ansible_default_ipv4.address }}'
+    netmask: '255.255.255.254'
+    mtu: 1400
+    ttl: 64
+    dev: 'gre-bb-b.ix.dus'
+    address: '100.64.10.53'
+    daddress: '100.64.10.52'
+    network: '100.64.10.52/31'
+    inet6: 2a03:2260:0:523::2
+    dinet6: 2a03:2260:0:523::1
+    asn: 201701
+  fra_a:
+    description: "Rheinland Backbone Frankfurt A"
+    remote: '185.66.194.0'
+    local:  '{{ ansible_default_ipv4.address }}'
+    netmask: '255.255.255.254'
+    mtu: 1400
+    ttl: 64
+    dev: 'gre-bb-a.fra2.fra'
+    address: '100.64.10.45'
+    daddress: '100.64.10.44'
+    network: '100.64.10.42/31'
+    inet6: 2a03:2260:0:51f::2
+    dinet6: 2a03:2260:0:51f::1
+    asn: 201701
+  fra_b:
+    description: "Rheinland Backbone Frankfurt B"
+    remote: '185.66.194.1'
+    local:  '{{ ansible_default_ipv4.address }}'
+    netmask: '255.255.255.254'
+    mtu: 1400
+    ttl: 64
+    dev: 'gre-bb-b.fra2.fra'
+    address: '100.64.10.51'
+    daddress: '100.64.10.50'
+    network: '100.64.10.44/31'
+    inet6: 2a03:2260:0:522::2
+    dinet6: 2a03:2260:0:522::1
+    asn: 201701
+
+# Obsolete names vor values
 # Super node 1
 sn_number: 1
 sn_hostname: voreifel1
@@ -13,103 +157,13 @@ sn_mesh_IPv4_netmask: 255.255.240.0
 
 sn_mesh_IPv4_xfer: 10.152.64.2
 sn_mesh_MAC: a2:8c:ae:6f:f7:01
-ul_mesh_MAC: a2:8c:ae:6f:f7:10
 
 sn_ffrl_IPv4: 185.66.193.126
 sn_ffrl_IPv6: 2a03:2260:301a::1
 
-## Lokaler exit
-#sn_local_exit: 1
-
-## Exit über FFRL
-sn_exit: 1
-
 # brauchen wir aktuell für die tunneldigger konfiguration
 # sollte durch ansible variable ausgetauscht werden
-sn_interface_name: ens18
-yanic_domain: voreifel1
 
-## GRE Tunnel definition
+sn_interface_name: "{{ ansible_default_ipv4.alias }}"
 
-#Endpunkte
-
-    # bb-a.ak.ber 185.66.195.0
-    # bb-b.ak.ber 185.66.195.1
-    # bb-a.ix.dus 185.66.193.0
-    # bb-b.ix.dus 185.66.193.1
-    # bb-a.fra3.fra 185.66.194.0
-    # bb-b.fra3.fra 185.66.194.1
-gre:
-  ber_a:
-    tunnel:
-        remote: '185.66.195.0'
-        local:  '{{ ansible_default_ipv4.address }}'
-        netmask: '255.255.255.254'
-        mtu: 1400
-        ttl: 64
-    dev: 'gre-bb-a.ak.ber'
-    address: '100.64.10.43'
-    daddress: '100.64.10.42'
-    network: '100.64.10.42/31'
-    inet6: 2a03:2260:0:51e::2/64
-  ber_b:
-    tunnel:
-        remote: '185.66.195.1'
-        local:  '{{ ansible_default_ipv4.address }}'
-        netmask: '255.255.255.254'
-        mtu: 1400
-        ttl: 64
-    dev: 'gre-bb-b.ak.ber'
-    address: '100.64.10.49'
-    daddress: '100.64.10.48'
-    network: '100.64.10.48/31'
-    inet6: 2a03:2260:0:521::2/64
-  dus_a:
-    tunnel:
-        remote: '185.66.193.0'
-        local:  '{{ ansible_default_ipv4.address }}'
-        netmask: '255.255.255.254'
-        mtu: 1400
-        ttl: 64
-    dev: 'gre-bb-a.ix.dus'
-    address: '100.64.10.47'
-    daddress: '100.64.10.46'
-    network: '100.64.10.42/31'
-    inet6: 2a03:2260:0:520::2/64
-  dus_b:
-    tunnel:
-        remote: '185.66.193.1'
-        local:  '{{ ansible_default_ipv4.address }}'
-        netmask: '255.255.255.254'
-        mtu: 1400
-        ttl: 64
-    dev: 'gre-bb-b.ix.dus'
-    address: '100.64.10.53'
-    daddress: '100.64.10.52'
-    network: '100.64.10.52/31'
-    inet6: 2a03:2260:0:523::2/64
-  fra_a:
-    tunnel:
-        remote: '185.66.194.0'
-        local:  '{{ ansible_default_ipv4.address }}'
-        netmask: '255.255.255.254'
-        mtu: 1400
-        ttl: 64
-    dev: 'gre-bb-a.fra2.fra'
-    address: '100.64.10.45'
-    daddress: '100.64.10.44'
-    network: '100.64.10.42/31'
-    inet6: 2a03:2260:0:51f::2/64
-  fra_b:
-    tunnel:
-        remote: '185.66.194.1'
-        local:  '{{ ansible_default_ipv4.address }}'
-        netmask: '255.255.255.254'
-        mtu: 1400
-        ttl: 64
-    dev: 'gre-bb-b.fra2.fra'
-    address: '100.64.10.51'
-    daddress: '100.64.10.50'
-    network: '100.64.10.44/31'
-    inet6: 2a03:2260:0:522::2/64
 ...

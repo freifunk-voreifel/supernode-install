@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ansible-playbook --inventory=hosts.yaml install.sn.yaml
+ansible-playbook --inventory=hosts.yaml new_install.yaml

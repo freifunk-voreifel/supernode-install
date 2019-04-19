@@ -1,0 +1,32 @@
+---
+# Freifunk Voreifel
+# Thomas Arend
+# Date: 2019-04-13
+
+- name: Set IPv4 in hostfile
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '^{{ ansible_default_ipv4.address }}' 
+    line: '{{ ansible_default_ipv4.address }} {{ supernode.hostname }}.{{ supernode.fqdn }} {{ supernode.hostname }}'
+    owner: root
+    group: root 
+    mode: 0644
+    state: present
+  register: sethostsipv4
+  
+- name: Set IPv6 in hostfile
+  lineinfile: 
+    dest: /etc/hosts
+    regexp: '^{{ ansible_default_ipv6.address }}' 
+    line: '{{ ansible_default_ipv6.address }} {{ supernode.hostname }}.{{ supernode.fqdn }} {{ supernode.hostname }}'
+    owner: root
+    group: root
+    mode: 0644
+    state: present
+  register: sethostsipv6
+  when: ansible_default_ipv6.address is defined
+
+- name: set hostname
+  hostname: 
+    name: '{{ supernode.hostname }}'
+  register: sethostname

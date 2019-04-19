@@ -1,0 +1,29 @@
+
+- name: Reboot the server
+  shell: sleep 2 && shutdown -r now "Ansible updates triggered, no SMP"
+  async: 1
+  poll: 0
+  ignore_errors: true
+  when: 
+    grubnosmp is changed 
+    or sethostsipv4 is changed 
+    or sethostsipv6 is changed
+    or sethostname is changed
+  
+- name: waiting for server to come back (1st)
+  local_action:
+    wait_for
+    host={{ inventory_hostname }}
+    port=22
+    delay=20
+    timeout=300
+  when: 
+    grubnosmp is changed or 
+    sethostsipv4 is changed or 
+    sethostsipv6 is changed or
+    sethostname is changed
+
+# Restart ntp to force time update
+
+- name: Set clock # to assure valid time
+  shell: systemctl stop ntp && /usr/sbin/ntpd -q -g && systemctl start ntp

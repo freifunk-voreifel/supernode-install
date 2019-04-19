@@ -1,0 +1,23 @@
+##
+# dhcpd.conf FF template for Ansible
+# 
+# Thomas Arend
+# Date: 2019-04-16
+#
+#
+
+ddns-update-style none;
+option domain-name "ff";
+default-lease-time 300;
+max-lease-time 3600;
+log-facility local7;
+subnet {{ supernode.mesh.IPv4_net }} netmask {{ supernode.mesh.IPv4_netmask }} {
+authoritative;
+range {{ supernode.dhcp_range }};
+option domain-name-servers {{ supernode.mesh.IPv4 }};
+option routers {{ supernode.mesh.IPv4 }};
+option interface-mtu {{ supernode.mesh.mtu }};
+interface {{ supernode.mesh.iface }} ;
+}
+
+include "/opt/freifunk/static-dhcp/static.conf";

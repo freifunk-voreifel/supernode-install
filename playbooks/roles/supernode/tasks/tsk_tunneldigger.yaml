@@ -1,0 +1,92 @@
+---
+# file: playbooks/roles/gateways/tasks/tsk_tunneldigger.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+#
+
+# Install and configure tunneldigger
+
+- name: Get Tunneldigger
+  git: 
+    repo: https://github.com/Freifunk-Troisdorf/tunneldigger.git
+    dest: /srv/tunneldigger
+  register: tunneldigger
+
+- name: Stop tunneldigger
+  service:
+    name: tunneldigger
+    state: stopped
+
+- name: Configure tunneldigger
+  raw: "cd /srv/tunneldigger && virtualenv env_tunneldigger && source env_tunneldigger/bin/activate && cd broker && python setup.py install"
+  
+- name: Copy l2tp broker config template
+  template: 
+    src: "{{ item }}.j2"
+    dest: "/srv/tunneldigger/{{ item }}"
+    owner: root
+    group: root
+    mode: 0444
+  loop: "{{ broker_cfg }}"
+
+- name: Copy tunneldigger script template
+  template: 
+    src: bataddif.sh.j2
+    dest: /srv/tunneldigger/bataddif.sh
+    owner: root 
+    group: root
+    mode: 0500
+
+- name: Copy tunneldigger scripts
+  copy: 
+    src: "{{ item }}"
+    dest: /srv/tunneldigger
+    owner: root
+    group: root
+    mode: 0500
+  loop: "{{ tunneldigger_scripts }}"
+
+- name: Copy tunneldigger service template
+  copy: 
+    src: "{{ item }}"
+    dest: /etc/systemd/system
+    owner: root
+    group: root
+    mode: 0444
+  loop: "{{ tunneldigger_service }}"
+
+- name: Add modules
+  lineinfile: 
+    dest: /etc/modules
+    line: "{{ item }}"
+  loop: "{{ modules_required }}"
+  register: modules_req
+
+- name: Tunneldigger reload
+  command: systemctl daemon-reload
+    
+- name: Enable and restart service tunneldigger
+  service:
+    name: tunneldigger
+    enabled: yes
+    state: restarted
+
+- name: Copy backbone script
+  template: 
+    src: l2tp_backbone.sh.exit.j2 
+    dest: /opt/freifunk/l2tp_backbone.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Add cron backbone script
+  cron: 
+    name: backbone 
+    special_time: reboot
+    job: "/opt/freifunk/l2tp_backbone.sh"
+  
+    
+
+

@@ -1,0 +1,50 @@
+sn_rootpasswd: $6$A3P5wEa0JF9vlU$VaGPmom4TIt9T.yVC7gSIynv8zGMR9HQeviR8UnA6KQmKDJ6JnyzxM4oGAFYszwAuVcity.nV0dmHIqVlPpMS/ 
+
+common_required_packages:
+  - batctl
+  - batman-adv
+  - bind9
+  - bird
+  - bridge-utils
+  - build-essential
+  - curl
+  - dnsutils
+  - ebtables
+  - ethtool
+  - gcc
+  - git
+  - htop
+  - iftop
+  - iproute
+  - iptables-persistent
+  - isc-dhcp-server
+  - libcap-dev
+  - libevent-dev
+  - libffi-dev
+  - libgps-dev
+  - libjansson-dev
+  - libnetfilter-conntrack-dev
+  - libnetfilter-conntrack3
+  - libnfnetlink-dev
+  - libnl-3-dev
+  - libnl-genl-3-dev
+  - make
+  - ntp
+  - pkg-config
+  - psmisc
+  - python-dev
+  - python-virtualenv
+  - radvd
+  - screen
+  - speedtest-cli
+  - sudo
+  - tcpdump
+  - virtualenv
+modules_required:
+  - batman-adv
+  - nf_conntrack_netlink
+  - nf_conntrack
+  - nfnetlink
+  - l2tp_netlink
+  - l2tp_core
+  - l2tp_eth

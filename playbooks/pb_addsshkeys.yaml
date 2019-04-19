@@ -3,5 +3,4 @@
   hosts: all
   tasks: 
     - include_tasks: '../tasks/tsk_ssh_adminteam.yaml'
-
 ...

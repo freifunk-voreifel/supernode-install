@@ -1,38 +1,37 @@
-# supernode/tasks/main.yaml
+#---
+#
+# Main ansible role task for gateway installation 
+#
+# file: playbooks/roles/gateways/tasks/main.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+#
 
-# Configure LAN Interfaces in /etc/network/interfaces.conf
+# Configure interfaces
 
-# Create temprary directory for testing Ansible
+- include_tasks: tsk_interfaces.yaml
 
-- file:
-    path: /etc/network
-    state: directory
-    mode: 0755
+# Set netfilter
 
-# Create directory for interfaces
+- include_tasks: tsk_netfilter.yaml
 
-- file:
-    path: /etc/network/interfaces.d
-    state: directory
-    mode: 0755
+# Configure GRE tunnels to FFRL
 
-# Configure default Interfaces
+- include_tasks: tsk_gre-tunnel.yaml
 
-- name: Supernode LAN 
-  template:
-    src: iface-lan.j2
-    dest: /etc/network/interfaces
-    owner: root
-    group: root
-    mode: 0644
+# Install Bird 
 
-# Configure GRE Tunnles in /etc/network/interfaces.d/{{ item }}.conf
+- include_tasks: tsk_bird.yaml
 
-- name: FFRL GRE Tunnel configuration
-  template:
-    src: iface-gre-tunnel.j2
-    dest: "/etc/network/interfaces.d/{{ item }}"
-    owner: root
-    group: root
-    mode: 0644
-  loop: "{{ gre | list }}"
+# Configure DNS Server
+
+- include_tasks: tsk_dnsserver.yaml
+
+# Configure Tunneldigegr
+
+- include_tasks: tsk_tunneldigger.yaml
+
+
+...

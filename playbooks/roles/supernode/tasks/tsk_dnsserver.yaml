@@ -1,0 +1,64 @@
+#---
+#
+# Main ansible role task for dns installation 
+#
+# file: playbooks/roles/gateways/tasks/tsk_dnsserver.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+#
+
+- name: Create /etc/bind/zones
+  file: 
+    path: /etc/bind/zones
+    state: directory
+    owner: root
+    group: bind
+    mode: 1755
+    
+- name: Copy FF Zones
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/bind/{{ item }}"
+    owner: root
+    group: 
+    mode: 0644
+  loop: 
+    - named.conf.freifunk
+    
+- name: Activate ff zone
+  lineinfile:
+    dest: /etc/bind/named.conf.local
+    line: 'include "/etc/bind/named.conf.freifunk";'
+    state: present
+
+- name: Copy option template
+  template: 
+    src: named.conf.options.j2 
+    dest: /etc/bind/named.conf.options
+    owner: root
+    group: bind
+    mode: 0644
+
+- name: Copy ff Zone config template
+  template: 
+    src: db.ff.j2 
+    dest: /etc/bind/zones/db.ff 
+    owner: root
+    group: bind
+    mode: 0444
+
+- name: Restart DNS Server
+  service:
+    name: bind9
+    enabled: yes
+    state: restarted
+
+- name: Copy radvd config template
+  template: 
+    src: radvd.conf.j2
+    dest: /etc/radvd.conf
+    owner: radvd
+    group: root
+    mode: 0444
