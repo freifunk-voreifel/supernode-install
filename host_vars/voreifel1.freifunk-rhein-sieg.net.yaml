@@ -64,7 +64,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre-bb-a.ak.ber'
+    dev: 'tun-ber-a'
     address: '100.64.10.43'
     daddress: '100.64.10.42'
     network: '100.64.10.42/31'
@@ -78,7 +78,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre-bb-b.ak.ber'
+    dev: 'tun-ber-b'
     address: '100.64.10.49'
     daddress: '100.64.10.48'
     network: '100.64.10.48/31'
@@ -92,7 +92,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre-bb-a.ix.dus'
+    dev: 'tun-dus-a'
     address: '100.64.10.47'
     daddress: '100.64.10.46'
     network: '100.64.10.42/31'
@@ -106,7 +106,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre-bb-b.ix.dus'
+    dev: 'tun-dus-b'
     address: '100.64.10.53'
     daddress: '100.64.10.52'
     network: '100.64.10.52/31'
@@ -120,7 +120,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre-bb-a.fra2.fra'
+    dev: 'tun-fra-a'
     address: '100.64.10.45'
     daddress: '100.64.10.44'
     network: '100.64.10.42/31'
@@ -134,7 +134,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre-bb-b.fra2.fra'
+    dev: 'tun-fra-b'
     address: '100.64.10.51'
     daddress: '100.64.10.50'
     network: '100.64.10.44/31'
