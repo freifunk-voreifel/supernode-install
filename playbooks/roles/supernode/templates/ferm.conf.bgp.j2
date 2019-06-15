@@ -1,0 +1,41 @@
+domain (ip ip6) {
+    table filter {
+        chain INPUT {
+            policy ACCEPT;
+            proto gre ACCEPT;
+            mod state state INVALID DROP;
+            mod state state (ESTABLISHED RELATED) ACCEPT;
+            interface lo ACCEPT;
+            proto icmp ACCEPT;
+            proto udp dport 500 ACCEPT;
+            proto (esp) ACCEPT;
+            proto tcp dport ssh ACCEPT;
+            proto tcp dport 22 ACCEPT;
+        }
+        chain OUTPUT {
+            policy ACCEPT;
+            mod state state (ESTABLISHED RELATED) ACCEPT;
+        }
+        chain FORWARD {
+            policy ACCEPT;
+            mod state state INVALID DROP;
+            mod state state (ESTABLISHED RELATED) ACCEPT;
+        }
+    }
+    table mangle {
+        chain PREROUTING {
+            interface {{ supernode.tun_prefix }}+ {
+                MARK set-mark 4;
+            }
+        }
+        chain POSTROUTING {
+            outerface {{ supernode.tun_prefix }}+ proto tcp tcp-flags (SYN RST) SYN TCPMSS clamp-mss-to-pmtu;
+        }
+    }
+    table nat {
+        chain POSTROUTING {
+            outerface {{ supernode.tun_prefix }}+ saddr {{ supernode.mesh.IPv4_net }}/{{ supernode.mesh.IPv4_CIDR }} SNAT to {{ ffrl.IPv4 }};
+            policy ACCEPT;
+        }
+    }
+}

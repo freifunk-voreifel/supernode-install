@@ -1,0 +1,13 @@
+---
+# supernode/tasks/tsk_interfaces.yaml
+
+# Configure LAN Interfaces in /etc/network/interfaces.conf
+
+# Create temprary directory for testing Ansible
+
+- name: Set route 42
+  lineinfile:
+    path: /etc/iproute2/rt_tables
+    line:  '42 ffrl'
+    state: present
+...
