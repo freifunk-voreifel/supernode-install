@@ -22,7 +22,7 @@
     # Alles in einer Datei
     #  loop: "{{ gre | list }}"
 
-- name: bird6 configuration
+- name: "bird6 configuration"
   template:
     src: bird6.conf.j2
     dest: "/etc/bird/bird6.conf"

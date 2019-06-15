@@ -35,6 +35,7 @@
 - name: "Configure Routing"
   include_tasks: tsk_routing.yaml
 
-- name: "Configure startup"
-  include_tasks: tsk_startup.yaml
+#  Thomas: Sehe den Sinn der Scripte nicht. Es ist alles konfiguriert.
+# - name: "Configure startup"
+#   include_tasks: tsk_startup.yaml
 ...

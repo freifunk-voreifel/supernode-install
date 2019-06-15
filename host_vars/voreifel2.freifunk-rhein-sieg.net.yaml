@@ -19,6 +19,7 @@ supernode:
     fqdn: "ff"
     asn: 65201
     dhcp_range: 10.152.81.0 10.152.94.254
+    tun_prefix: "tun-ffrl"
     tunneldigger:
         iface: "{{ ansible_default_ipv4.alias }}"
         port: 53842
@@ -33,6 +34,7 @@ supernode:
         IPv4_brcast: 10.152.95.255
         IPv4_net: 10.152.80.0
         IPv4_netmask: 255.255.240.0
+        IPv4_CIDR: 19
         IPv4_xfer: 10.152.80.2
         MAC: a2:8c:ae:6f:f7:02
 

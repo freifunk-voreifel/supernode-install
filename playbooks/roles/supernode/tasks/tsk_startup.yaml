@@ -9,7 +9,7 @@
 # Install and configure tunneldigger
 - name: Exit node startup script super- and exitnode
   template: 
-    src: ./files/sn_startup.exit.sh.j2
+    src: sn_startup.exit.sh.j2
     dest: /opt/freifunk/sn_startup.sh
     owner: root
     group: root
@@ -18,7 +18,7 @@
     
 - name: Exit node startup script super- and exitnode # local fuer lokales testen
   template: 
-    src: ./files/sn_startup.local.exit.sh.j2
+    src: sn_startup.local.exit.sh.j2
     dest: /opt/freifunk/sn_startup.sh
     owner: root
     group: root
