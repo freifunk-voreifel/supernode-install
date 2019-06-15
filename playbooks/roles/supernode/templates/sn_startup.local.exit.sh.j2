@@ -3,11 +3,7 @@
 
 sleep 5
 
-{% if slack_token is defined %}
-    curl -X POST --data-urlencode 'payload={"text": "{{ sn_hostname }} is rebooted", "channel": "#technik", "username": "{{ sn_hostname }}", "icon_emoji": ":floppy_disk:"}' \
-    https://hooks.slack.com/services/{{ slack_token }}
-{% endif %}
-
+curl -X POST --data-urlencode 'payload={"text": "{{ sn_hostname }} is rebooted", "channel": "#technik", "username": "{{ sn_hostname }}", "icon_emoji": ":floppy_disk:"}' https://hooks.slack.com/services/{{ slack_token }}
 
 # Activate IP forwarding
 /sbin/sysctl -w net.ipv6.conf.all.forwarding=1
@@ -43,7 +39,7 @@ sleep 5
 /bin/sleep 90
 /bin/systemctl restart radvd
 /bin/sleep 2
-/bin/systemctl retsrat tunneldigger
+/bin/systemctl restart tunneldigger
 /bin/sleep 2
 /bin/systemctl restart bird
 /bin/sleep 2

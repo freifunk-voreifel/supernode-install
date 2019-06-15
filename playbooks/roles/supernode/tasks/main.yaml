@@ -11,27 +11,22 @@
 
 # Configure interfaces
 
-- include_tasks: tsk_interfaces.yaml
+- name: "Configure interfaces"
+  include_tasks: tsk_interfaces.yaml
 
-# Set netfilter
+- name: "Configure netfilter"
+  include_tasks: tsk_netfilter.yaml
 
-- include_tasks: tsk_netfilter.yaml
+- name: "Configure GRE tunnels to FFRL"
+  include_tasks: tsk_gre-tunnel.yaml
 
-# Configure GRE tunnels to FFRL
+- name: "Configure Bird" 
+  include_tasks: tsk_bird.yaml
 
-- include_tasks: tsk_gre-tunnel.yaml
+- name: "Configure DNS Server"
+  include_tasks: tsk_dnsserver.yaml
 
-# Install Bird 
-
-- include_tasks: tsk_bird.yaml
-
-# Configure DNS Server
-
-- include_tasks: tsk_dnsserver.yaml
-
-# Configure Tunneldigegr
-
-- include_tasks: tsk_tunneldigger.yaml
-
+- name: "Configure Tunneldigger"
+  include_tasks: tsk_tunneldigger.yaml
 
 ...

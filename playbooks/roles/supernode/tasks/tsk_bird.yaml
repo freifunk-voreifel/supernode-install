@@ -6,15 +6,16 @@
 
 # Configure GRE Tunnles in /etc/network/interfaces.d/{{ item }}.conf
 
-- file:
-    path: /tmp/etc/bird
+- name: "Create directory"
+  file:
+    path: "/etc/bird"
     state: directory
     mode: 0755
 
-- name: bird configuration
+- name: "bird configuration"
   template:
     src: bird.conf.j2
-    dest: "/tmp/etc/bird/bird.conf"
+    dest: "/etc/bird/bird.conf"
     owner: bird
     group: bird
     mode: 0444
@@ -24,7 +25,7 @@
 - name: bird6 configuration
   template:
     src: bird6.conf.j2
-    dest: "/tmp/etc/bird/bird6.conf"
+    dest: "/etc/bird/bird6.conf"
     owner: bird
     group: bird
     mode: 0444

@@ -10,7 +10,7 @@
 
 - name: Get Tunneldigger
   git: 
-    repo: https://github.com/Freifunk-Troisdorf/tunneldigger.git
+    repo: https://github.com/freifunk-voreifel/tunneldigger.git
     dest: /srv/tunneldigger
   register: tunneldigger
 
