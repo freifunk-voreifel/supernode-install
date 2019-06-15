@@ -3,7 +3,8 @@
 # Thomas Arend
 # Date: 2019-04-19
 
-- lineinfile: Keep only one week of backlogs step 1
+- name: "Keep only one week of backlogs step 1"
+  lineinfile: 
     path: /etc/logrotate.conf
     regexp: 'rotate .*'
     firstmatch: yes
@@ -12,7 +13,8 @@
     group: root
     mode: 0644
     
-- lineinfile:  Keep only one week of backlogs step 1
+- name: "Keep only one week of backlogs step 2"
+  lineinfile:
     path: /etc/logrotate.conf
     insertafter: '# keep 4 weeks worth of backlogs'
     firstmatch: yes

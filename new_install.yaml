@@ -10,8 +10,7 @@
 
 # Install required packages an make server ansible compatible
 
-#- import_playbook: playbooks/pb_install_all.yaml
-
+- import_playbook: playbooks/pb_install_all.yaml
 
 #
 # old stuff from here
@@ -23,14 +22,6 @@
   gather_facts: True
   vars:
     snversion: master_v0.1.0
-    modules_required:
-      - batman-adv
-      - nf_conntrack_netlink
-      - nf_conntrack
-      - nfnetlink
-      - l2tp_netlink
-      - l2tp_core
-      - l2tp_eth
     tunneldigger_scripts:
       - start-broker.sh
       - batdelif.sh
@@ -47,6 +38,9 @@
 #
 #
 #
+    - debug: 
+        msg: "--- Old stuff ---"
+      
     - name: Create freifunk directory
       file: 
         path: /opt/freifunk
@@ -143,10 +137,10 @@
                - export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
     - name: Compile go
-      shell: go get -v -u github.com/Freifunk-Troisdorf/yanic
+      shell: go get -v -u github.com/FreifunkBremen/yanic
 
     - name: Copy and enable yanic service
-      shell: cp /opt/go/src/github.com/Freifunk-Troisdorf/yanic/contrib/init/linux-systemd/yanic.service /lib/systemd/system/yanic.service && systemctl daemon-reload && systemctl enable yanic
+      shell: cp /opt/go/src/github.com/FreifunkBremen/yanic/contrib/init/linux-systemd/yanic.service /lib/systemd/system/yanic.service && systemctl daemon-reload && systemctl enable yanic
 
 
 #
@@ -155,7 +149,7 @@
 
     - name: Get respondd
       git: 
-        repo: https://github.com/Freifunk-Troisdorf/mesh-announce.git
+        repo: https://github.com/freifunk-voreifel/mesh-announce.git
         dest: /opt/mesh-announce
 
     - name: Copy respondd service template
@@ -163,19 +157,6 @@
 
     - name: Enable respondd service
       shell: systemctl daemon-reload && systemctl enable respondd
-
-#
-# netfilter
-#
-
-    - name: set netfilter rules
-      lineinfile:
-        dest: /etc/sysctl.conf
-        line: "{{ item }}"
-      loop:
-               - net.ipv4.netfilter.ip_conntrack_generic_timeout = 240
-               - net.ipv4.netfilter.ip_conntrack_tcp_timeout_established = 54000
-               - net.netfilter.nf_conntrack_max = 65536
 
 #
 # netfilter
@@ -189,18 +170,6 @@
       when: modprobe1.stat.exists == False
     - name: check /etc/modprobe.conf
       lineinfile: dest=/etc/modprobe.conf line="options ip_conntrack hashsize=65536"
-
-#
-# logrotate
-#
-# Not necessary when set to correct rights in copy step above
-
-#    - name: Logrotate rights
-#      file: path=/etc/logrotate.conf mode=0644 owner=root group=root
-
-#
-# Version info ( ToDo: make use of ansible
-#
 
     - name: Write version information
       shell: echo {{ snversion }} > /etc/supernode.version

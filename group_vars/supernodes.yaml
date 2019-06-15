@@ -10,3 +10,12 @@ slack_token_file: slack_token.yaml
 
 communitymac: "a2:8c:ae:7f:f7"
 communityname: voreifel
+
+tunneldigger_scripts:
+  - start-broker.sh
+  - batdelif.sh
+tunneldigger_service:
+  - tunneldigger.service
+respondd_service:
+  - respondd_service
+...
