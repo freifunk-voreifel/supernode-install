@@ -29,4 +29,12 @@
 - name: "Configure Tunneldigger"
   include_tasks: tsk_tunneldigger.yaml
 
+- name: "Configure Firewall ferm"
+  include_tasks: tsk_ferm.yaml
+
+- name: "Configure Routing"
+  include_tasks: tsk_routing.yaml
+
+- name: "Configure startup"
+  include_tasks: tsk_startup.yaml
 ...
