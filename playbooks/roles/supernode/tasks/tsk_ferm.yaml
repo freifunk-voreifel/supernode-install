@@ -1,0 +1,26 @@
+---
+#
+# Ferm firewall configuration
+#
+# file: playbooks/roles/gateways/tasks/tsk_ferm.conf
+#
+# Thomas Arend
+# Date 2019-04-20
+#
+
+- name: Create ferm directory /etc/ferm
+  file: 
+    path: /etc/ferm
+    state: directory
+    owner: root
+    group: adm
+    mode: 2750
+    
+- name: Create firewall rules for bgp 
+  template:
+    src: ferm.conf.bgp.j2
+    dest: /etc/ferm/ferm.conf
+    owner: root
+    group: adm
+    mode: 0644
+...
