@@ -33,10 +33,12 @@
 
 - name: Compile yanic with go
   shell: "go get -v -u github.com/freifunk-voreifel/yanic"
-
+  ignore_errors: True
+  register: compile_yanic
+  
 - name: Copy and enable yanic service
   shell: "cp /opt/go/src/github.com/freifunk-voreifel/yanic/contrib/init/linux-systemd/yanic.service /lib/systemd/system/yanic.service && systemctl daemon-reload && systemctl enable yanic"
-
+  when: compile_yanic is succeeded
 
 
 ...

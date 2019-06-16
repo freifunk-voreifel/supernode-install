@@ -45,9 +45,15 @@
     update_cache: no
   register: aptupdates
 
+- name: Test if go is installed
+  stat: 
+    path: /usr/local/go/bin/go
+  register: go_installed
+  
 - name: Install go
   shell: cd /usr/local && wget https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz -O go-release-linux-amd64.tar.gz && tar xvf go-release-linux-amd64.tar.gz && rm go-release-linux-amd64.tar.gz
-
+  when: go_installed.stat.exists == False
+  
 - name: Adjust path for go
   lineinfile:
     dest: /root/.bashrc

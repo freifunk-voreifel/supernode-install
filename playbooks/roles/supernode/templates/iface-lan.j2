@@ -29,12 +29,8 @@ iface {{ ansible_default_ipv4.alias }} inet static
         address {{ ansible_default_ipv4.address }}
         netmask {{ ansible_default_ipv4.netmask }}
         gateway {{ ansible_default_ipv4.gateway }}
-        post-up iptables -P OUTPUT ACCEPT
-        post-up iptables -A OUTPUT -o $IFACE -d 10.0.0.0/8 -j DROP
-        post-up iptables -A OUTPUT -o $IFACE -d 172.16.0.0/12 -j DROP
-        post-up iptables -A OUTPUT -o $IFACE -d 169.254.0.0/16 -j DROP
-        post-up iptables -A OUTPUT -o $IFACE -d 192.168.0.0/16 -j DROP
-        post-up iptables -t nat -A POSTROUTING -o $IFACE -j MASQUERADE
+# Firewall rules moved to ferm.configuration
+
 auto 6to4
         iface 6to4 inet6 6to4
         local {{ ansible_default_ipv4.address }}

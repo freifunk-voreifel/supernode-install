@@ -11,8 +11,8 @@
 
 - name: Get respondd
   git: 
-  repo: https://github.com/freifunk-voreifel/mesh-announce.git
-  dest: /opt/mesh-announce
+    repo: https://github.com/freifunk-voreifel/mesh-announce.git
+    dest: /opt/mesh-announce
 
 - name: Copy respondd service template
   shell: cp /opt/mesh-announce/respondd.service /etc/systemd/system
