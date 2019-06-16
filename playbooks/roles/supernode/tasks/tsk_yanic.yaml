@@ -23,12 +23,20 @@
     owner: yanic
     group: yanic
 
-- name: Copy Yanic config template
+- name: Copy yanic config template
   template:
     src: yanic.conf.j2
     dest: /etc/yanic.conf
     owner: yanic
     group: yanic
     mode: 0444
+
+- name: Compile yanic with go
+  shell: "go get -v -u github.com/freifunk-voreifel/yanic"
+
+- name: Copy and enable yanic service
+  shell: "cp /opt/go/src/github.com/freifunk-voreifel/yanic/contrib/init/linux-systemd/yanic.service /lib/systemd/system/yanic.service && systemctl daemon-reload && systemctl enable yanic"
+
+
 
 ...
