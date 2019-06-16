@@ -3,12 +3,18 @@
 
 # Test if GRE tunnel is up and running
 
+- name: Collect only facts returned by facter
+  setup:
+
 - name: "Are the GRE Tunnel endpoints reachable via IPv4?"
   shell: "ping -4 -c 4 {{ gre[item].daddress }}"
+  ignore_errors: True
   loop: "{{ gre | list }}"
+
 
 - name: "Are the GRE Tunnel endpoints reachable via IPv6?"
   shell: "ping -6 -c 4 {{ gre[item].dinet6 }}"
+  ignore_errors: True
   loop: "{{ gre | list }}"
 
 # Test external domains are working
@@ -16,6 +22,7 @@
 
 - name: "Are other domains reachable?"
   shell: "ping -c 4 {{ item }}"
+  ignore_errors: True
   loop: 
     - 't-online.de.'
     - 'byggvir.de.'
