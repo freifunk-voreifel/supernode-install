@@ -45,6 +45,17 @@
     update_cache: no
   register: aptupdates
 
+- name: Install go
+  shell: cd /usr/local && wget https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz -O go-release-linux-amd64.tar.gz && tar xvf go-release-linux-amd64.tar.gz && rm go-release-linux-amd64.tar.gz
+
+- name: Adjust path for go
+  lineinfile:
+    dest: /root/.bashrc
+    line: "{{ item }}"
+  loop:
+    - export GOPATH=/opt/go
+    - export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
 - name: Gathering facts
   setup:
 
