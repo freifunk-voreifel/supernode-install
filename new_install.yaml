@@ -114,10 +114,10 @@
                - export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
     - name: Compile go
-      shell: go get -v -u github.com/FreifunkBremen/yanic
+      shell: go get -v -u github.com/freifunk-voreifel/yanic
 
     - name: Copy and enable yanic service
-      shell: cp /opt/go/src/github.com/FreifunkBremen/yanic/contrib/init/linux-systemd/yanic.service /lib/systemd/system/yanic.service && systemctl daemon-reload && systemctl enable yanic
+      shell: cp /opt/go/src/github.com/freifunk-voreifel/yanic/contrib/init/linux-systemd/yanic.service /lib/systemd/system/yanic.service && systemctl daemon-reload && systemctl enable yanic
 
 
 #
