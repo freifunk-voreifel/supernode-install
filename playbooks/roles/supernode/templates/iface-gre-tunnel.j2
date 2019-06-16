@@ -22,14 +22,10 @@ iface {{ gre[item].dev }} inet tunnel
   endpoint {{ gre[item].remote }} 
   mtu {{ gre[item].mtu }}
   ttl {{ gre[item].ttl }}
-  post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source {{ ffrl.IPv4 }}
-  post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
-  post-down iptables -t nat -D POSTROUTING -o $IFACE -j SNAT --to-source  {{ ffrl.IPv4 }}
   post-down ip tunnel del $IFACE
 
 {% if gre[item].inet6 is defined %}
 iface {{ gre[item].dev }} inet6 static
   address {{ gre[item].inet6 }}
-  post-up ip6tables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
 {% endif %}
 # End GRE Tunnel
