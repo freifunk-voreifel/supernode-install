@@ -19,6 +19,36 @@
     - include_role:
         name: supernode
 
+#
+# Installation / update completed
+# Just log our update  
+#
+
+- name: Write installation / update date 
+  shell: 'echo -e "Last updated by Ansible: $(date +%F\ %X)" >> /etc/supernode.version'
+
+#
+# Restart the supernode
+#
+
+- name: Reboot the server finally
+  shell: sleep 2 && shutdown -r now "Ansible updates triggered"
+  async: 1
+  poll: 0
+  ignore_errors: true
+
+- name: waiting for server to come back
+  local_action:
+    wait_for
+    host={{ inventory_hostname }}
+    port=22
+    delay=20
+    timeout=300
+
+#
+# Test the new supernode
+#
+
 - name: "Test supernode"
   hosts: supernodes
   gather_facts: no
@@ -26,4 +56,6 @@
   tasks:
     - include_role:
         name: testing
+        
+
 ...
