@@ -37,6 +37,9 @@
 
 - name: "Create and configure yanic"
   include_tasks: tsk_yanic.yaml
+
+- name: "Configure respondd"
+  include_tasks: tsk_respondd.yaml
   
 #  Thomas: Sehe den Sinn der Scripte nicht. Es ist alles konfiguriert.
 # - name: "Configure startup"
