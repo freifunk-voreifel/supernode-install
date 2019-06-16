@@ -19,7 +19,7 @@ supernode:
     fqdn: "ff"
     asn: 65201
     dhcp_range: 10.152.65.0 10.152.78.254
-    tun_prefix: "tun-ffrl"
+    tun_prefix: "tun-"
     tunneldigger:
         iface: "{{ ansible_default_ipv4.alias }}"
         port: 53842
@@ -143,29 +143,5 @@ gre:
     inet6: '2a03:2260:0:522::2'
     dinet6: '2a03:2260:0:522::1'
     asn: 201701
-
-# Obsolete names vor values
-# Super node 1
-sn_number: 1
-sn_hostname: voreifel1
-sn_dhcp_range: '10.152.65.0 10.152.78.254'
-sn_mesh_IPv6: '2a03:2260:121:1000::1'
-sn_mesh_IPv6_net: '2a03:2260:121:1000::/64'
-sn_mesh_IPv6_xfer: '2a03:2260:121:1000::2'
-sn_mesh_IPv4: 10.152.64.1
-sn_mesh_IPv4_brcast: 10.152.79.255
-sn_mesh_IPv4_net: 10.152.64.0
-sn_mesh_IPv4_netmask: 255.255.240.0
-
-sn_mesh_IPv4_xfer: 10.152.64.2
-sn_mesh_MAC: 'a2:8c:ae:6f:f7:01'
-
-sn_ffrl_IPv4: 185.66.193.126
-sn_ffrl_IPv6: '2a03:2260:301a::1'
-
-# brauchen wir aktuell für die tunneldigger konfiguration
-# sollte durch ansible variable ausgetauscht werden
-
-sn_interface_name: "{{ ansible_default_ipv4.alias }}"
 
 ...
