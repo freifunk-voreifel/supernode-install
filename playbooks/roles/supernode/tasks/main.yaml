@@ -35,6 +35,9 @@
 - name: "Configure Routing"
   include_tasks: tsk_routing.yaml
 
+- name: "Create and configure yanic"
+  include_tasks: tsk_yanic.yaml
+  
 #  Thomas: Sehe den Sinn der Scripte nicht. Es ist alles konfiguriert.
 # - name: "Configure startup"
 #   include_tasks: tsk_startup.yaml
