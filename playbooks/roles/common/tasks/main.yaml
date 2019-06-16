@@ -37,6 +37,11 @@
 
 - include_tasks: tsk_kernel.yaml
 
+# Create /opt/freifunk directory
+
+- include_tasks: tsk_opt_freifunk.yaml
+
+
 # Reboot and adjust clock
 
 - include_tasks: tsk_reboot.yaml

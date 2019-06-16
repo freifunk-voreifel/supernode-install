@@ -1,0 +1,12 @@
+---
+# Create Freifunk directory
+#
+# 2019-06-16
+
+- name: Create /opt/freifunk directory
+  file: 
+    path: /opt/freifunk
+    state: directory
+    mode: 0755
+
+...
