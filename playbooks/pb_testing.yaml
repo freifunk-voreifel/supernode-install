@@ -1,0 +1,13 @@
+---
+# Playbook to install all components via roles!
+# Thoasm Arend
+# Stand 2019-04-17
+
+- name: "Test supernode"
+  hosts: supernodes
+  gather_facts: no
+  become: yes
+  tasks:
+    - include_role:
+        name: testing
+...

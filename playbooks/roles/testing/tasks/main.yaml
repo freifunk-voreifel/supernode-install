@@ -1,0 +1,21 @@
+---
+# Test supernode after installlation
+
+# Test if GRE tunnel is up and running
+
+- name: "Are the GRE Tunnel endpoints reachable via IPv4?"
+  shell: "ping -4 -c 4 {{ gre[item].daddress }}"
+  loop: "{{ gre | list }}"
+
+- name: "Are the GRE Tunnel endpoints reachable via IPv6?"
+  shell: "ping -6 -c 4 {{ gre[item].dinet6 }}"
+  loop: "{{ gre | list }}"
+
+# Test external domains are working
+# URL must end with a dot or freifunk-rhein-sieg.net will be added.
+
+- name: "Are other domains reachable?"
+  shell: "ping -c 4 {{ item }}"
+  loop: 
+    - 't-online.de.'
+    - 'byggvir.de.'
