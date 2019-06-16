@@ -1,0 +1,31 @@
+# supernode/tasks/tsk_modeprobe.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+
+# Configure netfilter in /etc/sysctl.conf
+
+#
+# modeprobe
+#
+
+- name: Check modprobe.conf
+  stat: 
+    path: /etc/modprobe.conf
+  register: modprobe1
+
+- name: create /etc/modprobe.conf when not present
+  file: 
+    path: /etc/modprobe.conf 
+    state: touch 
+    owner: root
+    group: root
+    mode: 0544
+  when: modprobe1.stat.exists == False
+
+- name: check /etc/modprobe.conf
+  lineinfile: 
+    dest: /etc/modprobe.conf
+    line: "options ip_conntrack hashsize=65536"
+
