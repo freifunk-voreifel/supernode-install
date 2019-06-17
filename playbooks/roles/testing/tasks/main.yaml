@@ -7,13 +7,13 @@
   setup:
 
 - name: "Are the GRE Tunnel endpoints reachable via IPv4?"
-  shell: "ping -4 -c 1 {{ gre[item].daddress }}"
+  shell: "ping -4 -c 4 {{ gre[item].daddress }}"
   ignore_errors: True
   loop: "{{ gre | list }}"
 
 
 - name: "Are the GRE Tunnel endpoints reachable via IPv6?"
-  shell: "ping -6 -c 1 {{ gre[item].dinet6 }}"
+  shell: "ping -6 -c 4 {{ gre[item].dinet6 }}"
   ignore_errors: True
   loop: "{{ gre | list }}"
 
@@ -21,7 +21,7 @@
 # URL must end with a dot or freifunk-rhein-sieg.net will be added.
 
 - name: "Are other domains reachable?"
-  shell: "ping -c 1 {{ item }}"
+  shell: "ping -c 4 {{ item }}"
   ignore_errors: True
   loop: 
     - 't-online.de.'

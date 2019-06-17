@@ -19,7 +19,7 @@
 - name: Adding Freifuck GPG Key
   apt_key:
     id: B2522557E6AB9BF5
-    url: https://keyserver.ubuntu.com
+    keyserver: keyserver.ubuntu.com
     state: present
 
 - name: Add Freifuck repo to source list

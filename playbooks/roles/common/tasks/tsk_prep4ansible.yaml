@@ -10,6 +10,16 @@
 # Fully working Ansible needs python, 
 # We install python with module 'raw' instead of 'apt' in case there is no python available.
 
+# If the snapshot is a older, you need to update the systembefore making it Ansible compatible
+
+- name: Update the repositories
+  raw: "apt-get update -y"
+
+- name: Upgrade system
+  raw: "apt-get upgrade -y"
+
+# Now we prepare for Ansible
+
 - name: Make this server ansible compatible
   raw: "apt-get install aptitude python apt-transport-https dirmngr -y"
  
