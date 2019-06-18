@@ -21,6 +21,7 @@ domain (ip ip6) {
         }
         chain FORWARD {
             policy ACCEPT;
+            logical-in brnodes DROP;
             mod state state INVALID DROP;
             mod state state (ESTABLISHED RELATED) ACCEPT;
         }
@@ -41,4 +42,6 @@ domain (ip ip6) {
             policy ACCEPT;
         }
     }
+    table 42 {
+    
 }

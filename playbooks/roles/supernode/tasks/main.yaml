@@ -14,11 +14,11 @@
 - name: "Configure interfaces"
   include_tasks: tsk_interfaces.yaml
 
-- name: "Configure netfilter"
-  include_tasks: tsk_netfilter.yaml
-
 - name: "Configure GRE tunnels to FFRL"
   include_tasks: tsk_gre-tunnel.yaml
+
+- name: "Configure netfilter"
+  include_tasks: tsk_netfilter.yaml
 
 - name: "Configure Bird" 
   include_tasks: tsk_bird.yaml
@@ -45,6 +45,6 @@
   include_tasks: tsk_modprobe.yaml
   
 #  Thomas: Sehe den Sinn der Scripte nicht. Es ist alles konfiguriert.
-# - name: "Configure startup"
-#   include_tasks: tsk_startup.yaml
+- name: "Configure startup"
+  include_tasks: tsk_startup.yaml
 ...

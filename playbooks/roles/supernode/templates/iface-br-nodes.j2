@@ -1,0 +1,14 @@
+# Freifunk Voreifel 
+# Ansible br-nodes configuration
+
+# < This file is maintained by ansible. Don't edit > 
+# < Configure own network devices in the directory interface.d/>
+
+# Thomas Arend
+# Stand: 2019-06-17
+# Created: {{ ansible_date_time.iso8601_basic }}
+
+auto br-nodes
+iface br-nodes inet static
+    hwaddress 2E:9D:FA:A1:6B:0{{ supernode.number }}
+    post-ip /usr/local/sbin/batctl if add $IFACE
