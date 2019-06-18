@@ -10,13 +10,14 @@
     or sethostsipv6 is changed
     or sethostname is changed
   
-- name: waiting for server to come back (1st)
-  local_action:
-    wait_for
-    host={{ inventory_hostname }}
-    port=22
-    delay=20
-    timeout=300
+- name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
+  wait_for:
+    port: 22
+    host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+    search_regex: OpenSSH
+    delay: 10
+  vars:
+    ansible_connection: local
   when: 
     grubnosmp is changed or 
     sethostsipv4 is changed or 

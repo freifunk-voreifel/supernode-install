@@ -3,18 +3,6 @@
 
 sleep 5
 
-curl -X POST --data-urlencode 'payload={"text": "{{ sn_hostname }} is rebooted", "channel": "#technik", "username": "{{ sn_hostname }}", "icon_emoji": ":floppy_disk:"}' https://hooks.slack.com/services/{{ slack_token }}
-
-# Activate IP forwarding
-/sbin/sysctl -w net.ipv6.conf.all.forwarding=1
-/sbin/sysctl -w net.ipv4.ip_forward=1
-
-# restart when kernel panic
-/sbin/sysctl kernel.panic=1
-
-# Routing table 42
-/bin/grep 42 /etc/iproute2/rt_tables || /bin/echo 42 ffrl >> /etc/iproute2/rt_tables
-
 # Set table for traffice with mark 4
 /bin/ip rule add fwmark 0x4 table 42
 /bin/ip -6 rule add fwmark 0x4 table 42
@@ -32,7 +20,7 @@ curl -X POST --data-urlencode 'payload={"text": "{{ sn_hostname }} is rebooted",
 
 # Create Tunneldigger Bridge
 /sbin/brctl addbr br-nodes
-/sbin/ip link set dev br-nodes up address 2E:9D:FA:A1:6B:0{{ sn_number }}
+/sbin/ip link set dev br-nodes up address 2E:9D:FA:A1:6B:0{{ supernode.number }}
 /sbin/ebtables -A FORWARD --logical-in br-nodes -j DROP
 /usr/local/sbin/batctl if add br-nodes
 
@@ -47,11 +35,5 @@ curl -X POST --data-urlencode 'payload={"text": "{{ sn_hostname }} is rebooted",
 /bin/sleep 2
 /bin/systemctl restart respondd
 /bin/sleep 2
-/bin/systemctl stop isc-dhcp-server
-/bin/sleep 2
-/usr/bin/killall dhcpd
-/bin/sleep 2
-/bin/rm /var/run/dhcpd.pid
-/bin/sleep 2
-/bin/systemctl start isc-dhcp-server
+/bin/systemctl restart isc-dhcp-server
 exit 0
