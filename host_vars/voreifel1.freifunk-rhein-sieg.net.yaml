@@ -3,6 +3,7 @@
 #
 # Super node 1
 
+ansible_host: voreifel1.freifunk-rhein-sieg.net
 # New variable names, old obsolte variables moved to end of file
 
 ffrl:

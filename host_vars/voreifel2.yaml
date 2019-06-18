@@ -1,9 +1,10 @@
 ---
-# Stand: 2019-04-16
+# Stand: 2019-06-18
 #
 # Super node 2
 
-ansible_host: voreifel2.freifunk-rhein-sieg.net
+ansible_host: "{{inventory_hostname_short}}.freifunk-rhein-sieg.net"
+
 
 # New variable names, old obsolte variables moved to end of file
 
@@ -17,7 +18,7 @@ ffrl:
 
 supernode:
     number: 2
-    hostname: voreifel2
+    hostname: "{{inventory_hostname_short}}"
     fqdn: "ff"
     asn: 65201
     dhcp_range: 10.152.81.0 10.152.94.254
@@ -48,7 +49,7 @@ ul_mesh_MAC: a2:8c:ae:6f:f7:20
 ## Exit über FFRL
 sn_exit: 1
 
-yanic_domain: voreifel1
+yanic_domain: "{{inventory_hostname_short}}"
 
 ## GRE Tunnel definition
 
