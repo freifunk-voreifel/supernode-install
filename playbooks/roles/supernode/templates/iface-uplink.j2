@@ -15,5 +15,5 @@ iface {{ ffrl.uplink }} inet static
 	pre-up ip link add $IFACE type dummy
 	post-down ip link del $IFACE
 
-iface {{ ffrl.uplink }} ine6 static
+iface {{ ffrl.uplink }} inet6 static
 	address {{ ffrl.IPv6 }}/56
