@@ -39,6 +39,7 @@ common_required_packages:
   - speedtest-cli
   - sudo
   - tcpdump
+  - vim
   - virtualenv
 modules_required:
   - batman-adv

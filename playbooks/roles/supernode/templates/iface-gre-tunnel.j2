@@ -25,6 +25,6 @@ iface {{ gre[item].dev }} inet tunnel
 
 {% if gre[item].inet6 is defined %}
 iface {{ gre[item].dev }} inet6 static
-  address {{ gre[item].inet6 }}
+  address {{ gre[item].inet6 }}/64
 {% endif %}
 # End GRE Tunnel
