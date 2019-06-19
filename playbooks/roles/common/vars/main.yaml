@@ -29,6 +29,7 @@ common_required_packages:
   - libnl-3-dev
   - libnl-genl-3-dev
   - make
+  - netfilter-persistent
   - ntp
   - pkg-config
   - psmisc
