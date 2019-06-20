@@ -1,10 +1,8 @@
 ---
 # Stand: 2019-06-18
 #
-# Super node 1
+# Super node 99 for testing 
 
-ansible_host: 192.168.2.115
-ansible_user: thomas
 
 # New variable names, old obsolte variables moved to end of file
 
