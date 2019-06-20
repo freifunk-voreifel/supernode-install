@@ -11,6 +11,7 @@ common_required_packages:
   - dnsutils
   - ebtables
   - ethtool
+  - ferm
   - gcc
   - git
   - htop

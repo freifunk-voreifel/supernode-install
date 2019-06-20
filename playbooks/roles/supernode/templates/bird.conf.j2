@@ -12,7 +12,7 @@ router id {{ ansible_default_ipv4.address }} ;
 protocol direct announce {
         table master;
         import where net ~ [{{ ffrl.IPv4 }}/32];
-        interface {{ ffrl.uplink }};
+        interface {{ ffrl.IPv4 }};
 };
 
 protocol kernel {
@@ -34,7 +34,7 @@ function is_default() {
         return (net ~ [0.0.0.0/0]);
 };
 
-template bgp uplink {
+template bgp GREUPLINK {
         local as 65201;
         import where is_default();
         export where proto = "announce";
@@ -43,7 +43,8 @@ template bgp uplink {
 
 {% for item in gre %}
 
-protocol bgp {{ gre[item].dev }} from uplink {
+protocol bgp {{ gre[item].dev }} from GREUPLINK {
+        description {{ gre[item].description }}
         source address {{ gre[item].address }};
         neighbor {{ gre[item].daddress }} as {{ gre[item].asn }};
 }

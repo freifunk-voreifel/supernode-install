@@ -6,7 +6,7 @@
 - name: Install common components
   hosts: all
   gather_facts: yes
-  become: yes
+  become: true
   tasks:
     - include_role:
         name: common
@@ -14,7 +14,7 @@
 - name: Install supernode components
   hosts: supernodes
   gather_facts: yes
-  become: yes
+  become: true
   tasks:
     - include_role:
         name: supernode
@@ -26,6 +26,7 @@
 
 - name: Write installation / update date
   hosts: all
+  become: true
   tasks:
     - name: Log update
       shell: 'echo -e "Last updated by Ansible: $(date +%F\ %X)" >> /etc/supernode.version'
@@ -56,7 +57,7 @@
 - name: "Test supernode"
   hosts: supernodes
   gather_facts: no
-  become: yes
+  become: true
   tasks:
     - include_role:
         name: testing

@@ -11,7 +11,7 @@ ffrl:
     net: 2a03:2260:301a::/48
     IPv4: 185.66.193.126
     IPv6: 2a03:2260:301a::1
-    uplink: "tun-uplink"
+    uplink: "tun_uplink"
 
 supernode:
     number: 1
@@ -19,7 +19,7 @@ supernode:
     fqdn: "ff"
     asn: 65201
     dhcp_range: 10.152.65.0 10.152.78.254
-    tun_prefix: "tun-"
+    tun_prefix: "tun_"
     tunneldigger:
         iface: "{{ ansible_default_ipv4.alias }}"
         port: 53842
@@ -66,7 +66,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun-ber-a'
+    dev: 'tun_ber_a' # Used for Bird, '-' not allowed
     address: '100.64.10.43'
     daddress: '100.64.10.42'
     network: '100.64.10.42/31'
@@ -80,7 +80,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun-ber-b'
+    dev: 'tun_ber_b'
     address: '100.64.10.49'
     daddress: '100.64.10.48'
     network: '100.64.10.48/31'
@@ -94,7 +94,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun-dus-a'
+    dev: 'tun_dus_a'
     address: '100.64.10.47'
     daddress: '100.64.10.46'
     network: '100.64.10.42/31'
@@ -108,7 +108,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun-dus-b'
+    dev: 'tun_dus_b'
     address: '100.64.10.53'
     daddress: '100.64.10.52'
     network: '100.64.10.52/31'
@@ -122,7 +122,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun-fra-a'
+    dev: 'tun_fra_a'
     address: '100.64.10.45'
     daddress: '100.64.10.44'
     network: '100.64.10.42/31'
@@ -136,7 +136,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun-fra-b'
+    dev: 'tun_fra_b'
     address: '100.64.10.51'
     daddress: '100.64.10.50'
     network: '100.64.10.44/31'
