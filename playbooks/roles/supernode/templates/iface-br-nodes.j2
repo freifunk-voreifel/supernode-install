@@ -7,10 +7,10 @@
 # Thomas Arend
 # Stand: 2019-06-17
 
-allow-hotplug br-nodes
-iface br-nodes inet6 manual
+auto br_nodes
+iface br_nodes inet6 manual
   hwaddress ether 2E:9D:FA:A1:6B:0{{ supernode.number }}
-  pre-up    /sbin/ip link set dev $IFACE master br-nodes
+  pre-up    /sbin/ip link set dev $IFACE master br_nodes
   pre-up    /usr/sbin/batctl -m $IFACE it 5000
   up        /sbin/ip link set dev $IFACE up
   down      /sbin/ip link set dev $IFACE down
