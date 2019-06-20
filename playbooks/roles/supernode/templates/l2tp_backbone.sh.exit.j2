@@ -13,7 +13,7 @@ $ip link set up dev bat0
 $ip addr add {{ supernode.mesh.IPv4 }}/19 broadcast {{ supernode.mesh.IPv4_brcast }} dev bat0
 $ip -6 addr add {{ supernode.mesh.IPv6 }}/64 dev bat0
 
-/usr/bin/killall batadv-vis
+#/usr/bin/killall batadv-vis
 #/bin/sleep 15
 # $batadv -i bat0 -s > /dev/null 2>&1 &
 #/bin/sleep 15
@@ -23,16 +23,7 @@ $ip -6 addr add {{ supernode.mesh.IPv6 }}/64 dev bat0
 /usr/sbin/service bird restart
 /usr/sbin/service bird6 restart
 
-# Etwas kompliziert, aber ... läuft nur so
-/bin/systemctl stop isc-dhcp-server
-/bin/sleep 2
-/usr/bin/killall dhcpd
-/bin/sleep 2
-/bin/rm /var/run/dhcpd.pid
-/bin/sleep 2
-/bin/systemctl start isc-dhcp-server
-##
-
+/bin/systemctl restart isc-dhcp-server
 /usr/sbin/service radvd restart
 $batctl gw server 100Mbit/100Mbit
 

@@ -4,8 +4,9 @@
 sleep 5
 
 # Set table for traffice with mark 4
-/bin/ip rule add fwmark 0x4 table 42
-/bin/ip -6 rule add fwmark 0x4 table 42
+# Moved to interface.d/
+#/bin/ip rule add fwmark 0x4 table 42
+#/bin/ip -6 rule add fwmark 0x4 table 42
 
 # Set mark 4 to Freifunk traffic
 # Moved to ferm.conf
@@ -13,8 +14,9 @@ sleep 5
 #/sbin/ip6tables -t mangle -A PREROUTING -s 2a03:2260:301a::/48 ! -d 2a03:2260:301a::/48 -j MARK --set-mark 4
 
 # All from FF IPv4 via routing table 42
-/bin/ip rule add from {{ ffrl.IPv4 }}/32 lookup 42
-/bin/ip -6 rule add from {{ supernode.mesh.IPv6_net }} lookup 42
+# Moved to interface.d/
+#/bin/ip rule add from {{ ffrl.IPv4 }}/32 lookup 42
+#/bin/ip -6 rule add from {{ supernode.mesh.IPv6_net }} lookup 42
 
 # Allow MAC address spoofing
 # Moved to config
