@@ -37,7 +37,6 @@ domain (ip ip6) {
     }
     table nat {
         chain POSTROUTING {
-            outerface {{ ansible_default_ipv4.alias }} MASQUERADE;
             outerface {{ supernode.tun_prefix }}+ saddr {{ supernode.mesh.IPv4_net }}/{{ supernode.mesh.IPv4_CIDR }} SNAT to {{ ffrl.IPv4 }};
             policy ACCEPT;
         }
