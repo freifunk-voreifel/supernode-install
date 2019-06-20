@@ -54,7 +54,7 @@
 #
 
 - name: "Test supernode"
-  hosts: supernodes
+  hosts: supernodes,!voreifel99
   gather_facts: no
   become: yes
   tasks:
