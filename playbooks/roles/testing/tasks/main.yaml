@@ -5,24 +5,50 @@
 
 - name: Collect only facts returned by facter
   setup:
+  tags:
+    - testing
 
 - name: "Are the GRE Tunnel endpoints reachable via IPv4?"
   shell: "ping -4 -c 4 {{ gre[item].daddress }}"
   ignore_errors: True
   loop: "{{ gre | list }}"
-
+  tags:
+    - testing
 
 - name: "Are the GRE Tunnel endpoints reachable via IPv6?"
-  shell: "ping -6 -c 4 {{ gre[item].dinet6 }}"
+  shell: "ping -m 4 -6 -c 4 {{ gre[item].dinet6 }}"
   ignore_errors: True
   loop: "{{ gre | list }}"
+  tags:
+    - testing
+
 
 # Test external domains are working
 # URL must end with a dot or freifunk-rhein-sieg.net will be added.
 
 - name: "Are other domains reachable?"
-  shell: "ping -c 4 {{ item }}"
+  shell: "ping -m 4 -c 4 {{ item }}"
   ignore_errors: True
   loop: 
     - 't-online.de.'
     - 'byggvir.de.'
+  tags:
+    - testing
+
+- name: Create /usr/local/bin
+  file: 
+    path: /usr/local/bin
+    state: directory
+    mode: 0755
+
+
+- name: "Copy test script to /usr/loacl/bin"
+  copy:
+    src: "supernode-net-test.sh"
+    dest: "/usr/local/bin/supernode-net-test.sh"
+    owner: root
+    group: 
+    mode: 0755
+  tags:
+    - copytest
+
