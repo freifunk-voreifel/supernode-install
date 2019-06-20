@@ -15,28 +15,38 @@
     - "deb http://ftp.de.debian.org/debian/ {{ ansible_distribution_release }}-updates main"
     - "deb http://security.debian.org/ {{ ansible_distribution_release }}/updates main"
   when: ansible_distribution == "Debian"
-
+  tags:
+    - apt
+    
 - name: Adding Freifuck GPG Key
   apt_key:
     id: B2522557E6AB9BF5
     keyserver: keyserver.ubuntu.com
     state: present
+  tags:
+    - apt
 
 - name: Add Freifuck repo to source list
   apt_repository: 
     repo: 'deb https://freifuck.de/debian stretch main' 
     state: present
+  tags:
+    - apt
   
 - name: Add backport repo to source list
   apt_repository: 
     repo: 'deb http://http.debian.net/debian stretch-backports main'
     state: present
+  tags:
+    - apt
   
 - name: Update and upgrade packages
   apt:
     upgrade: 'yes'
     update_cache: 'yes'
     cache_valid_time: 86400 # One day 
+  tags:
+    - apt
     
 - name: Install common required packages
   apt:
@@ -44,15 +54,21 @@
     state: present
     update_cache: no
   register: aptupdates
+  tags:
+    - apt
 
 - name: Test if go is installed
   stat: 
     path: /usr/local/go/bin/go
   register: go_installed
+  tags:
+    - apt
   
 - name: Install go
   shell: cd /usr/local && wget https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz -O go-release-linux-amd64.tar.gz && tar xvf go-release-linux-amd64.tar.gz && rm go-release-linux-amd64.tar.gz
   when: go_installed.stat.exists == False
+  tags:
+    - apt
   
 - name: Adjust path for go
   lineinfile:
@@ -61,6 +77,8 @@
   loop:
     - export GOPATH=/opt/go
     - export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+  tags:
+    - apt
 
 - name: Gathering facts
   setup:

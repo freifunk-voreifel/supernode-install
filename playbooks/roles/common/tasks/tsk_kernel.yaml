@@ -7,7 +7,11 @@
     line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet maxcpus=0 nosmp"'
     state: present
   register: grubnosmp
-  
+  tags:
+    - kernel
+    
 - name: Update grub
   shell: update-grub2
   when: grubnosmp.changed
+  tags:
+    - grub

@@ -7,6 +7,8 @@
 - name: Remove cdrom in sources.list
   become: true
   raw: "sed -i '/deb cdrom/c\\#' /etc/apt/sources.list"
+  tags:
+    - apt
   
 # Fully working Ansible needs python, 
 # We install python with module 'raw' instead of 'apt' in case there is no python available.
@@ -16,14 +18,21 @@
 - name: Update the repositories
   become: true
   raw: "apt-get update -y"
+  tags:
+    - apt
 
 - name: Upgrade system
   become: true
   raw: "apt-get upgrade -y"
+  tags:
+    - apt
 
 # Now we prepare for Ansible
 
 - name: Make this server ansible compatible
   become: true
   raw: "apt-get install aptitude python apt-transport-https dirmngr -y"
- 
+  tags:
+    - apt
+
+...

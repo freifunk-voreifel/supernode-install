@@ -13,6 +13,8 @@
     mode: 0644
     state: present
   register: sethostsipv4
+  tags: 
+    - etc_hosts
   
 - name: Set IPv6 in hostfile
   lineinfile: 
@@ -25,8 +27,15 @@
     state: present
   register: sethostsipv6
   when: ansible_default_ipv6.address is defined
+  tags: 
+    - etc_hosts
+  
 
 - name: set hostname
   hostname: 
     name: '{{ supernode.hostname }}'
   register: sethostname
+  tags: 
+    - etc_hosts
+
+...

@@ -12,6 +12,8 @@
     owner: root
     group: root
     mode: 0644
+  tags:
+    - logrotate
     
 - name: "Keep only one week of backlogs step 2"
   lineinfile:
@@ -23,3 +25,6 @@
     owner: root
     group: root
     mode: 0644
+  tags:
+    - logrotate
+...
