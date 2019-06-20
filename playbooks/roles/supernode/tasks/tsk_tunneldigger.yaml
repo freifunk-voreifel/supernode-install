@@ -72,15 +72,6 @@
     - tunneldigger
   loop: "{{ tunneldigger_service }}"
 
-- name: Add modules
-  lineinfile: 
-    dest: /etc/modules
-    line: "{{ item }}"
-  tags: 
-    - tunneldigger
-  loop: "{{ modules_required }}"
-  register: modules_req
-
 - name: Tunneldigger reload
   command: systemctl daemon-reload
   tags: 
