@@ -2,10 +2,8 @@
 INTERFACE="$3"
 MAC="$8"
 brctl=/sbin/brctl
-BLOCKLISTE=$(/bin/cat /opt/freifunk/tunneldigger-blacklist.txt)
-wget -q -O /opt/freifunk/tunneldigger-blacklist.txt https://raw.githubusercontent.com/Freifunk-Troisdorf/tunneldigger-blockliste/master/macs.txt
 
-/bin/ip link set dev $INTERFACE up mtu 1312
+[ -e /opt/freifunk/tunneldigger-blacklist.txt] ? BLOCKLISTE=$(/bin/cat /opt/freifunk/tunneldigger-blacklist.txt) : BLOCKLISTE="00:00:00:00:00:00"
 
 for i in $BLOCKLISTE;
 do
@@ -14,4 +12,6 @@ do
     fi
 done
 
-$brctl addif br-nodes $INTERFACE
+/bin/ip link set dev $INTERFACE up mtu 1312
+
+$brctl addif br_nodes $INTERFACE
