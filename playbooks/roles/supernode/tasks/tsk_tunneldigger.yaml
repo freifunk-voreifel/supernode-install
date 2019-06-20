@@ -1,4 +1,4 @@
----
+s---
 # file: playbooks/roles/gateways/tasks/tsk_tunneldigger.yaml
 #
 # Thomas Arend
@@ -13,16 +13,22 @@
     repo: https://github.com/freifunk-voreifel/tunneldigger.git
     dest: /srv/tunneldigger
   register: tunneldigger
+  tags: 
+    - tunneldigger
 
 - name: Stop tunneldigger
   service:
     name: tunneldigger
     state: stopped
   ignore_errors: True
+  tags: 
+    - tunneldigger
 
 - name: Configure tunneldigger
   raw: "cd /srv/tunneldigger && virtualenv env_tunneldigger && source env_tunneldigger/bin/activate && cd broker && python setup.py install"
-  
+  tags: 
+    - tunneldigger
+
 - name: Copy l2tp broker config template
   template: 
     src: "{{ item }}.j2"
@@ -31,6 +37,8 @@
     group: root
     mode: 0444
   loop: "{{ broker_cfg }}"
+  tags: 
+    - tunneldigger
 
 - name: Copy tunneldigger script template
   template: 
@@ -39,6 +47,8 @@
     owner: root 
     group: root
     mode: 0500
+  tags: 
+    - tunneldigger
 
 - name: Copy tunneldigger scripts
   copy: 
@@ -48,6 +58,8 @@
     group: root
     mode: 0500
   loop: "{{ tunneldigger_scripts }}"
+  tags: 
+    - tunneldigger
 
 - name: Copy tunneldigger service template
   copy: 
@@ -56,23 +68,31 @@
     owner: root
     group: root
     mode: 0444
+  tags: 
+    - tunneldigger
   loop: "{{ tunneldigger_service }}"
 
 - name: Add modules
   lineinfile: 
     dest: /etc/modules
     line: "{{ item }}"
+  tags: 
+    - tunneldigger
   loop: "{{ modules_required }}"
   register: modules_req
 
 - name: Tunneldigger reload
   command: systemctl daemon-reload
-    
+  tags: 
+    - tunneldigger
+
 - name: Enable and restart service tunneldigger
   service:
     name: tunneldigger
     enabled: yes
     state: restarted
+  tags: 
+    - tunneldigger
 
 - name: Copy backbone script
   template: 
@@ -81,13 +101,15 @@
     owner: root
     group: root
     mode: 0755
+  tags: 
+    - tunneldigger
 
 - name: Add cron backbone script
   cron: 
     name: backbone 
     special_time: reboot
     job: "/opt/freifunk/l2tp_backbone.sh"
-  
-    
-
+  tags: 
+    - tunneldigger
+...
 

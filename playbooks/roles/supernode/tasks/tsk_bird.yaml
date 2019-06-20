@@ -11,6 +11,8 @@
     path: "/etc/bird"
     state: directory
     mode: 0755
+  tags:
+    - bird
 
 - name: "bird configuration"
   template:
@@ -19,8 +21,8 @@
     owner: bird
     group: bird
     mode: 0444
-    # Alles in einer Datei
-    #  loop: "{{ gre | list }}"
+  tags:
+    - bird
 
 - name: "bird6 configuration"
   template:
@@ -29,3 +31,5 @@
     owner: bird
     group: bird
     mode: 0444
+  tags:
+    - bird

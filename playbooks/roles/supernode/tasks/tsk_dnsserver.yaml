@@ -16,6 +16,8 @@
     owner: root
     group: bind
     mode: 1755
+  tags:
+    - dns
     
 - name: Copy FF Zones
   copy:
@@ -24,6 +26,8 @@
     owner: root
     group: 
     mode: 0644
+  tags:
+    - dns
   loop: 
     - named.conf.freifunk
     
@@ -32,6 +36,8 @@
     dest: /etc/bind/named.conf.local
     line: 'include "/etc/bind/named.conf.freifunk";'
     state: present
+  tags:
+    - dns
 
 - name: Copy option template
   template: 
@@ -40,6 +46,8 @@
     owner: root
     group: bind
     mode: 0644
+  tags:
+    - dns
 
 - name: Copy ff Zone config template
   template: 
@@ -48,12 +56,16 @@
     owner: root
     group: bind
     mode: 0444
+  tags:
+    - dns
 
 - name: Restart DNS Server
   service:
     name: bind9
     enabled: yes
     state: restarted
+  tags:
+    - dns
 
 - name: Copy radvd config template
   template: 
@@ -62,3 +74,5 @@
     owner: radvd
     group: root
     mode: 0444
+  tags:
+    - radvd

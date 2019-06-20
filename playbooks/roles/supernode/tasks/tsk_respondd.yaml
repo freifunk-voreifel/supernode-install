@@ -13,11 +13,16 @@
   git: 
     repo: https://github.com/freifunk-voreifel/mesh-announce.git
     dest: /opt/mesh-announce
+  tags: 
+    - respondd
 
 - name: Copy respondd service template
   shell: cp /opt/mesh-announce/respondd.service /etc/systemd/system
+  tags: 
+    - respondd
 
 - name: Enable respondd service
   shell: systemctl daemon-reload && systemctl enable respondd
-
+  tags: 
+    - respondd
 ...
