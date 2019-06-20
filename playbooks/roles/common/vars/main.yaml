@@ -46,7 +46,7 @@ common_required_packages:
 
 modules_required:
   - batman-adv
-  - ip_nat_pptp
+  - nf_nat_pptp
   - nf_conntrack_netlink
   - nf_conntrack
   - nfnetlink
