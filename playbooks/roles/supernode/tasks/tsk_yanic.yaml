@@ -14,6 +14,8 @@
   user:
     name: yanic
     comment: "Yanic service user"
+  tags:
+    - yanic
 
 - name: Create Yanic folder
   file: 
@@ -22,6 +24,8 @@
     mode: 0755
     owner: yanic
     group: yanic
+  tags:
+    - yanic
 
 - name: Copy yanic config template
   template:
@@ -30,15 +34,19 @@
     owner: yanic
     group: yanic
     mode: 0444
+  tags:
+    - yanic
 
 - name: Compile yanic with go
   shell: "go get -v -u github.com/freifunk-voreifel/yanic"
   ignore_errors: True
   register: compile_yanic
+  tags:
+    - yanic
   
 - name: Copy and enable yanic service
   shell: "cp /opt/go/src/github.com/freifunk-voreifel/yanic/contrib/init/linux-systemd/yanic.service /lib/systemd/system/yanic.service && systemctl daemon-reload && systemctl enable yanic"
   when: compile_yanic is succeeded
-
-
+  tags:
+    - yanic
 ...
