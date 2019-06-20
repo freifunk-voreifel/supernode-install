@@ -40,7 +40,7 @@
   tags: 
     - tunneldigger
 
-- name: Copy tunneldigger script template
+- name: Copy tunneldigger bataddif
   template: 
     src: bataddif.sh.j2
     dest: /srv/tunneldigger/bataddif.sh
