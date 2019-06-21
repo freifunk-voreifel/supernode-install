@@ -11,7 +11,7 @@
 
 - name: Get respondd
   git: 
-    repo: https://github.com/freifunk-voreifel/mesh-announce.git
+    repo: https://github.com/{{ github_user }}/mesh-announce.git
     dest: /opt/mesh-announce
   tags: 
     - respondd

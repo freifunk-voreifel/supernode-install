@@ -1,5 +1,23 @@
-broker_cfg:
-  - l2tp_broker.cfg 
+---
+hoods:
+  meckenheim:
+    namespace: "meckenheim"
+    address: "{{ ansible_default_ipv4.address }}"
+    iface: "{{ ansible_default_ipv4.alias }}"
+    mac: "a2:8c:ae:7f:f1"
+    port: 20013
+  rheinbach: 
+    namespace: "rheinbach"
+    address: "{{ ansible_default_ipv4.address }}"
+    iface: "{{ ansible_default_ipv4.alias }}"
+    mac: "a2:8c:ae:7f:f2"
+    port: 20014
+  voreifel:
+    namespace: "voreifel"
+    address: "{{ ansible_default_ipv4.address }}"
+    iface: "{{ ansible_default_ipv4.alias }}"
+    mac: "a2:8c:ae:7f:f3"
+    port: 53842
 
 modules_required:
   - batman-adv
@@ -9,3 +27,5 @@ modules_required:
   - l2tp_netlink
   - l2tp_core
   - l2tp_eth
+
+...

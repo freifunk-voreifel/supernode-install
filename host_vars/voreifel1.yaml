@@ -5,6 +5,8 @@
 
 ansible_host: "{{inventory_hostname_short}}.freifunk-rhein-sieg.net"
 
+provider: 'hetzner'
+
 # New variable names, old obsolte variables moved to end of file
 
 ffrl:

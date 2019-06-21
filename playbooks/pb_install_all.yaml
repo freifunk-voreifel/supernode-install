@@ -18,6 +18,8 @@
   tasks:
     - include_role:
         name: supernode
+  tags:
+    - tunneldigger
 
 #
 # Installation / update completed

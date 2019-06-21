@@ -8,13 +8,26 @@
 
 # Install and configure tunneldigger
 
+- name: Create tunneldigger directories if they do not exist
+  file:
+    path: "/{{ item }}/tunneldigger"
+    state: directory
+    mode: '0755'
+  loop:
+    - etc
+    - srv
+
+# Get tunneldigger from github
+
 - name: Get Tunneldigger
   git: 
-    repo: https://github.com/freifunk-voreifel/tunneldigger.git
+    repo: https://github.com/{{ github_user }}/tunneldigger.git
     dest: /srv/tunneldigger
   register: tunneldigger
   tags: 
     - tunneldigger
+
+# Stop running tunneldigger before recompiling it
 
 - name: Stop tunneldigger
   service:
@@ -24,6 +37,17 @@
   tags: 
     - tunneldigger
 
+- name: Enable and restart service tunneldigger
+  service:
+    name: "tunneldigger-{{ hoods[item].namespace }}.service"
+    enabled: yes
+    state: restarted
+  loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger
+
+# Install tunneldigger
+
 - name: Configure tunneldigger
   raw: "cd /srv/tunneldigger && virtualenv env_tunneldigger && source env_tunneldigger/bin/activate && cd broker && python setup.py install"
   tags: 
@@ -31,18 +55,18 @@
 
 - name: Copy l2tp broker config template
   template: 
-    src: "{{ item }}.j2"
-    dest: "/srv/tunneldigger/{{ item }}"
+    src: "l2tp_broker.cfg.j2"
+    dest: "/etc/tunneldigger/hood-{{ hoods[item].namespace }}.cfg"
     owner: root
     group: root
     mode: 0444
-  loop: "{{ broker_cfg }}"
+  loop: "{{ hoods | list }}"
   tags: 
     - tunneldigger
 
 - name: Copy tunneldigger bataddif
   template: 
-    src: bataddif.sh.j2
+    src: "bataddif.sh.j2"
     dest: /srv/tunneldigger/bataddif.sh
     owner: root 
     group: root
@@ -57,20 +81,22 @@
     owner: root
     group: root
     mode: 0500
-  loop: "{{ tunneldigger_scripts }}"
+  loop:
+    - start-broker.sh
+    - batdelif.sh
   tags: 
     - tunneldigger
 
 - name: Copy tunneldigger service template
-  copy: 
-    src: "{{ item }}"
-    dest: /etc/systemd/system
+  template: 
+    src: "tunneldigger.service.j2"
+    dest: "/etc/systemd/system/tunneldigger-{{ hoods[item].namespace }}.service"
     owner: root
     group: root
     mode: 0444
   tags: 
     - tunneldigger
-  loop: "{{ tunneldigger_service }}"
+  loop: "{{ hoods | list }}"
 
 - name: Tunneldigger reload
   command: systemctl daemon-reload
@@ -79,15 +105,16 @@
 
 - name: Enable and restart service tunneldigger
   service:
-    name: tunneldigger
+    name: "tunneldigger-{{ hoods[item].namespace }}.service"
     enabled: yes
     state: restarted
+  loop: "{{ hoods | list }}"
   tags: 
     - tunneldigger
 
 - name: Copy backbone script
   template: 
-    src: l2tp_backbone.sh.exit.j2 
+    src: "l2tp_backbone.sh.exit.j2" 
     dest: /opt/freifunk/l2tp_backbone.sh
     owner: root
     group: root
@@ -103,4 +130,3 @@
   tags: 
     - tunneldigger
 ...
-

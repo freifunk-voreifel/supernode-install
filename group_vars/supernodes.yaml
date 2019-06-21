@@ -2,7 +2,9 @@
 ansible_user: root
 ansible_port: 22
 
-static_dhcp_repo: https://github.com/freifunk-voreifel/static-dhcp.git
+github_user: "freifunk-voreifel"
+
+static_dhcp_repo: https://github.com/{{ github_user }}/static-dhcp.git
 
 root_password_file: root_pwd.yaml
 
@@ -12,11 +14,4 @@ communitymac: "a2:8c:ae:7f:f7"
 
 communityname: voreifel
 
-tunneldigger_scripts:
-  - start-broker.sh
-  - batdelif.sh
-tunneldigger_service:
-  - tunneldigger.service
-respondd_service:
-  - respondd_service
 ...
