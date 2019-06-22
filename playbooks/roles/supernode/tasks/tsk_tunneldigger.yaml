@@ -41,7 +41,8 @@
   service:
     name: "tunneldigger-{{ hoods[item].namespace }}.service"
     enabled: yes
-    state: restarted
+    state: stopped
+  ignore_errors: True
   loop: "{{ hoods | list }}"
   tags: 
     - tunneldigger

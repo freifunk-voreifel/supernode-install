@@ -17,6 +17,9 @@
 - name: "Configure interfaces"
   include_tasks: tsk_interfaces.yaml
 
+- name: "Configure bridge br-nodes for batman"
+  include_tasks: tsk_br-nodes.yaml
+
 - name: "Configure GRE tunnels to FFRL"
   include_tasks: tsk_gre-tunnel.yaml
 

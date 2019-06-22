@@ -36,12 +36,4 @@
     owner: root
     group: root
     mode: 0644
-
-- name: IFACE br-nodes 
-  template:
-    src: iface-br-nodes.j2
-    dest: /etc/network/interfaces.d/br_nodes
-    owner: root
-    group: root
-    mode: 0644
 ...
