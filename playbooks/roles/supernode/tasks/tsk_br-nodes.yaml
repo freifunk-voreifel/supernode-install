@@ -1,0 +1,75 @@
+---
+# file: playbooks/roles/gateways/tasks/tsk_br-nodes.yaml
+#
+# Thomas Arend
+# Date 2019-06-22
+#
+#
+
+# Install and configure br-nodes as a service
+
+- name: Create bridge directory if they do not exist
+  file:
+    path: "/etc/freifunk"
+    state: directory
+    mode: '0755'
+  tags: 
+    - bridge
+
+# Stop bridge service
+
+- name: Stop bridge service
+  service:
+    name: "bridge.service"
+    state: stopped
+  ignore_errors: True
+  tags: 
+    - bridge
+
+- name: Copy bridge service script template
+  template: 
+    src: "bridge.service.sh.j2"
+    dest: "/etc/freifunk/bridge.service.sh"
+    owner: root
+    group: root
+    mode: 0755
+  tags: 
+    - bridge
+
+- name: Copy bridge service template
+  template: 
+    src: "bridge.service.j2"
+    dest: "/etc/freifunk/bridge.service"
+    owner: root
+    group: root
+    mode: 0644
+  tags: 
+    - bridge
+
+- name: Delete bridge.service
+  file:
+    dest: "/etc/systemd/system/bridge.service"
+    state: absent
+  ignore_errors: True
+  tags: 
+    - bridge
+
+- name: Create link to bridge service
+  file:
+    src: "/etc/freifunk/bridge.service"
+    dest: "/etc/systemd/system/bridge.service"
+    owner: root
+    group: root
+    state: link
+  tags: 
+    - bridge
+
+- name: Enable and restart service bridge
+  service:
+    name: "bridge.service"
+    enabled: yes
+    state: restarted
+  tags: 
+    - bridge
+
+...

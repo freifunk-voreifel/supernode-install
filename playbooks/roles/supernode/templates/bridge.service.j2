@@ -1,0 +1,15 @@
+[Unit]
+Description=brige br-nodes to connect all l2tpv3 tunnels with batman
+After=network.target auditd.service
+Before=isc-dhcp-server.service
+
+[Service]
+Type=simple
+WorkingDirectory=/etc/brigde
+ExecStart=/etc/bridge/bridge.service.sh
+
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
