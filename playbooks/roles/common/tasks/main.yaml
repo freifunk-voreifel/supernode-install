@@ -41,6 +41,10 @@
 
 - include_tasks: tsk_kernel.yaml
 
+# Insert required modules in /etc/modules directory
+
+- include_tasks: tsk_etc_modules.yaml
+
 # Create /opt/freifunk directory
 
 - include_tasks: tsk_opt_freifunk.yaml
