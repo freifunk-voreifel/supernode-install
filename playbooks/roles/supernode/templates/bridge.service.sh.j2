@@ -15,7 +15,6 @@ case "$1" in
         ip link set dev br-nodes up address 2E:9D:FA:A1:6B:0{{ supernode.number }} || return=2
         ebtables -A FORWARD --logical-in br-nodes -j DROP  || return=3
         batctl if add br-nodes  || return=4
-        ip addr add 
         echo -e "$return"
         ;;
 
