@@ -31,10 +31,6 @@
 
 # Replace time server in ntp.conf
 
-- include_tasks: tsk_etc_ntp_conf.yaml
-
-# Set lopgrotate rotation cycle
-
 - include_tasks: tsk_etc_logrotate.yaml
 
 # Update kernel / grub

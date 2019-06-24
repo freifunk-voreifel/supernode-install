@@ -11,6 +11,14 @@
     - include_role:
         name: common
 
+- name: Install ntpserver
+  hosts: all
+  gather_facts: yes
+  become: true
+  tasks:
+    - include_role:
+        name: ntpserver
+
 - name: Install supernode components
   hosts: supernodes
   gather_facts: yes
