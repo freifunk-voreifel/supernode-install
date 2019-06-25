@@ -1,15 +1,9 @@
 [Unit]
-Description=brige br-nodes to connect all l2tpv3 tunnels with batman
-After=network.target auditd.service
-Before=isc-dhcp-server.service
+Description="Add br-nodes to batman"
 
 [Service]
-Type=simple
-WorkingDirectory=/etc/freifunk
-ExecStart=/etc/freifunk/bridge.service.sh
-
-KillMode=process
-Restart=on-failure
+Type=oneshot
+ExecStart=/bin/bash -c "batctl if add br-nodes"
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=sys-subsystem-net-devices-br-nodes.device

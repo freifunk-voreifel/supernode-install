@@ -13,63 +13,63 @@
     path: "/etc/freifunk"
     state: directory
     mode: '0755'
+  ignore_errors: true
   tags: 
     - bridge
 
-# Stop bridge service
+# Copy network templates to /etc/systemd/network/
 
-- name: Stop bridge service
-  service:
-    name: "bridge.service"
-    state: stopped
-  ignore_errors: True
-  tags: 
-    - bridge
-
-- name: Copy bridge service script template
+- name: Copy bridge templates to /etc/systemd/network/
   template: 
-    src: "bridge.service.sh.j2"
-    dest: "/etc/freifunk/bridge.service.sh"
+    src: "{{ item }}.j2"
+    dest: "/etc/systemd/network/{{ item }}"
     owner: root
     group: root
     mode: 0755
+  loop:
+    - br-nodes.netdev
+    - br-nodes.link
+    - br-nodes_bat0.network
   tags: 
     - bridge
 
-- name: Copy bridge service template
+# Tempate to add br-nodes to batman
+# systemd-networkd hasn't any features to execute a command
+# pre or post is going up or down
+
+
+- name: Copy bridge.service templates to /etc/systemd/
   template: 
-    src: "bridge.service.j2"
-    dest: "/etc/freifunk/bridge.service"
+    src: "{{ item }}.j2"
+    dest: "/etc/systemd/system/{{ item }}"
     owner: root
     group: root
-    mode: 0644
+    mode: 0755
+  loop:
+    - bridge.service
   tags: 
     - bridge
 
-- name: Delete bridge.service
-  file:
-    dest: "/etc/systemd/system/bridge.service"
-    state: absent
-  ignore_errors: True
-  tags: 
-    - bridge
+# Excute "systemctl daemon-reload" after configs have been changed
 
-- name: Create link to bridge service
-  file:
-    src: "/etc/freifunk/bridge.service"
-    dest: "/etc/systemd/system/bridge.service"
-    owner: root
-    group: root
-    state: link
-  tags: 
-    - bridge
+- name: Force systemd to re-execute itself
+  systemd:
+    daemon_reexec: yes
 
-- name: Enable and restart service bridge
+# Excute "systemctl daemon-reload" after configs have been changed
+
+- name: Enable and restart network services
   service:
-    name: "bridge.service"
-    enabled: yes
+    name: "{{ item }}.service"
     state: restarted
+    enabled: yes
   tags: 
     - bridge
+  loop:
+    - systemd-resolved
+    - systemd-networkd
+    - bridge
 
+# End 
+...
 ...
