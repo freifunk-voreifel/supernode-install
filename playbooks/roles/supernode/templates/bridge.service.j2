@@ -1,9 +1,13 @@
 [Unit]
 Description="Add br-nodes to batman"
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/bin/bash -c "batctl if add br-nodes"
+ExecStart=/sbin/ebtables -A FORWARD --logical-in br-nodes -j DROP
+ExecStart=/usr/local/sbin/batctl if add br-nodes
+ExecStop=/bin/true
 
 [Install]
 WantedBy=sys-subsystem-net-devices-br-nodes.device
