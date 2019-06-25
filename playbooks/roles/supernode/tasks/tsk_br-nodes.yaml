@@ -29,7 +29,6 @@
   loop:
     - br-nodes.netdev
     - br-nodes.link
-    - br-nodes_bat0.network
   tags: 
     - bridge
 
