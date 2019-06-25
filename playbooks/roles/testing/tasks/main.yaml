@@ -10,12 +10,12 @@
 
 # This step should not be required after the tunneldigger and iptables issue is resolved
 
-- name: Restart ferm, due to an iptables failure after an initial start of the server
-  service:
-    name: ferm
-    state: restarted
-  tags:
-    - testing
+#- name: Restart ferm, due to an iptables failure after an initial start of the server
+  #service:
+    #name: ferm
+    #state: restarted
+  #tags:
+    #- testing
 
 - name: "Are the GRE Tunnel endpoints reachable via IPv4?"
   shell: "ping -4 -c 4 {{ gre[item].daddress }}"

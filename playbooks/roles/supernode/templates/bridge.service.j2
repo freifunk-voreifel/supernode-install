@@ -5,8 +5,8 @@ Before=isc-dhcp-server.service
 
 [Service]
 Type=simple
-WorkingDirectory=/etc/brigde
-ExecStart=/etc/bridge/bridge.service.sh
+WorkingDirectory=/etc/freifunk
+ExecStart=/etc/freifunk/bridge.service.sh
 
 KillMode=process
 Restart=on-failure
