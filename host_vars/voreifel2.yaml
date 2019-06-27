@@ -13,7 +13,7 @@ ffrl:
     net: 2a03:2260:301a::/48
     IPv4: 185.66.193.127
     IPv6: 2a03:2260:301a::2
-    uplink: "tun_uplink"
+    uplink: "ffrl_uplink"
 
 # New variable names, old obsolte variables moved to end of file
 
@@ -23,7 +23,7 @@ supernode:
     fqdn: "ff"
     asn: 65201
     dhcp_range: 10.152.81.0 10.152.94.254
-    tun_prefix: "tun_"
+    tunnel_prefix: "gre_"
     tunneldigger:
         iface: "{{ ansible_default_ipv4.alias }}"
         port: 53842
@@ -70,7 +70,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun_ber_a'
+    dev: 'gre_ber_a'
     address: '100.64.10.55'
     daddress: '100.64.10.54'
     network: '100.64.10.54/31'
@@ -84,7 +84,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun_ber_b'
+    dev: 'gre_ber_b'
     address: '100.64.10.61'
     daddress: '100.64.10.60'
     network: '100.64.10.60/31'
@@ -98,7 +98,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun_dus_a'
+    dev: 'gre_dus_a'
     address: '100.64.10.59'
     daddress: '100.64.10.58'
     network: '100.64.10.58/31'
@@ -112,7 +112,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun_dus_b'
+    dev: 'gre_dus_b'
     address: '100.64.10.65'
     daddress: '100.64.10.64'
     network: '100.64.10.64/31'
@@ -126,7 +126,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun_fra_a'
+    dev: 'gre_fra_a'
     address: '100.64.10.57'
     daddress: '100.64.10.56'
     network: '100.64.10.42/31'
@@ -140,7 +140,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'tun_fra_b'
+    dev: 'gre_fra_b'
     address: '100.64.10.63'
     daddress: '100.64.10.62'
     network: '100.64.10.62/31'

@@ -25,7 +25,7 @@
     dest: "/etc/systemd/network/{{ item }}"
     owner: root
     group: root
-    mode: 0755
+    mode: 0644
   loop:
     - br-nodes.netdev
     - br-nodes.link
@@ -62,6 +62,7 @@
     name: "{{ item }}.service"
     state: restarted
     enabled: yes
+  ignore_errors: true
   tags: 
     - bridge
   loop:
