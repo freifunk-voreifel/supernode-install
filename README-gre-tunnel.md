@@ -9,4 +9,6 @@ File names:
 
     (ber|dus|fra)_(a|b)
 
-The tunnel settings are defined in the variable *gre* in the hosts_vars file for each host.
+The tunnel settings are defined in the dict variable *gre* in the hosts_vars file for each host.
+
+Tunnels are prefixed with *gre_* which can be changed in *group_vars/supernodes.yaml*. 

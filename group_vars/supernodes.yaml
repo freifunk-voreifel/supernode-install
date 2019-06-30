@@ -4,14 +4,20 @@ ansible_port: 22
 
 github_user: "freifunk-voreifel"
 
-static_dhcp_repo: https://github.com/{{ github_user }}/static-dhcp.git
+static_dhcp_repo: "https://github.com/{{ github_user }}/static-dhcp.git"
 
-root_password_file: root_pwd.yaml
+root_password_file: "root_pwd.yaml"
+
+# Community GRE-tunnel prefix!
+# Make sure, that no other interfaces has the same prefix. This would spoil ferm configuration.
+#
+
+gre_tunnel_prefix: "gre_"
 
 # Tunnerdigger variables
 
 communitymac: "a2:8c:ae:7f:f7"
 
-communityname: voreifel
+communityname: "voreifel"
 
 ...

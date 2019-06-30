@@ -3,19 +3,6 @@ INTERFACE="$3"
 MAC="$8"
 brctl=/sbin/brctl
 
-if [ -e /opt/freifunk/tunneldigger-blacklist.txt ] ; then
-    BLOCKLISTE=$(/bin/cat /opt/freifunk/tunneldigger-blacklist.txt)
-else
-    BLOCKLISTE="00:00:00:00:00:00"
-fi
-
-for i in $BLOCKLISTE;
-do
-    if [[ $i == $MAC ]]; then
-      exit 1
-    fi
-done
-
 /bin/ip link set dev $INTERFACE up mtu 1312
 
 $brctl addif br-nodes $INTERFACE

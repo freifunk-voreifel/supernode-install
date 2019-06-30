@@ -18,7 +18,6 @@ supernode:
     fqdn: "ff"
     asn: 65201
     dhcp_range: 10.152.65.0 10.152.78.254
-    tunnel_prefix: "gre_"
     tunneldigger:
         iface: "{{ ansible_default_ipv4.alias }}"
         port: 53842
@@ -65,7 +64,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre_ber_a'
+    dev: '{{ gre_tunnel_prefix }}ber_a'
     address: '100.64.10.43'
     daddress: '100.64.10.42'
     network: '100.64.10.42/31'
@@ -79,7 +78,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre_ber_b'
+    dev: '{{ gre_tunnel_prefix }}ber_b'
     address: '100.64.10.49'
     daddress: '100.64.10.48'
     network: '100.64.10.48/31'
@@ -93,7 +92,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre_dus_a'
+    dev: '{{ gre_tunnel_prefix }}dus_a'
     address: '100.64.10.47'
     daddress: '100.64.10.46'
     network: '100.64.10.42/31'
@@ -107,7 +106,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre_dus_b'
+    dev: '{{ gre_tunnel_prefix }}dus_b'
     address: '100.64.10.53'
     daddress: '100.64.10.52'
     network: '100.64.10.52/31'
@@ -121,7 +120,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre_fra_a'
+    dev: '{{ gre_tunnel_prefix }}fra_a'
     address: '100.64.10.45'
     daddress: '100.64.10.44'
     network: '100.64.10.42/31'
@@ -135,7 +134,7 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: 'gre_fra_b'
+    dev: '{{ gre_tunnel_prefix }}fra_b'
     address: '100.64.10.51'
     daddress: '100.64.10.50'
     network: '100.64.10.44/31'

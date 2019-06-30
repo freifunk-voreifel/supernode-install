@@ -33,18 +33,18 @@ domain (ip ip6) {
         } 
 
         chain PREROUTING {
-            interface {{ supernode.tunnel_prefix }}+ {
+            interface {{ gre_tunnel_prefix }}+ {
                 MARK set-mark 4;
             }
         }
         chain POSTROUTING {
-            outerface {{ supernode.tunnel_prefix }}+ proto tcp tcp-flags (SYN RST) SYN TCPMSS clamp-mss-to-pmtu;
+            outerface {{ gre_tunnel_prefix }}+ proto tcp tcp-flags (SYN RST) SYN TCPMSS clamp-mss-to-pmtu;
         }
     }
     table nat {
         chain POSTROUTING {
             outerface {{ ansible_default_ipv4.alias }} MASQUERADE;
-            outerface {{ supernode.tunnel_prefix }}+ saddr {{ supernode.mesh.IPv4_net }}/{{ supernode.mesh.IPv4_CIDR }} SNAT to {{ ffrl.IPv4 }};
+            outerface {{ gre_tunnel_prefix }}+ saddr {{ supernode.mesh.IPv4_net }}/{{ supernode.mesh.IPv4_CIDR }} SNAT to {{ ffrl.IPv4 }};
             policy ACCEPT;
         }
     }

@@ -5,7 +5,7 @@ After=network.target auditd.service
 [Service]
 Type=simple
 WorkingDirectory=/srv/tunneldigger/
-ExecStart=/srv/tunneldigger/env_tunneldigger/bin/python -m tunneldigger_broker.main /etc/tunneldigger/hood-{{ hoods[item].namespace }}.cfg
+ExecStart=/srv/tunneldigger/env_tunneldigger/bin/python -m tunneldigger_broker.main /etc/tunneldigger/hood-%I.cfg
 
 KillMode=process
 Restart=on-failure

@@ -9,21 +9,21 @@ port={{ hoods[item].port }}
 
 ; Interface with that IP address
 
-interface={{ hoods[item].iface }}
+interface={{ hoods[item].interface }}
 
 ; Maximum number of tunnels that will be allowed by the broker
 
-max_tunnels=1024
+max_tunnels={{ hoods[item].max_tunnels }}
 
 ; Tunnel port base. This port is not visible to clients, but must be free on the server.
 ; This port is used by the actual l2tp tunnel, but tunneldigger sets up NAT rules so that clients
 ; can keep using the control port.
 
-port_base=20000
+port_base={{ hoods[item].port_base }}
 
 ; Tunnel id base
 
-tunnel_id_base=100
+tunnel_id_base={{ hoods[item].tunnel_id_base }}
 
 ; Namespace (for running multiple brokers); note that you must also
 ; configure disjunct ports, and tunnel identifiers in order for

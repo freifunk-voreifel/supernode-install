@@ -29,18 +29,9 @@
 
 # Stop running tunneldigger before recompiling it
 
-- name: Stop tunneldigger
+- name: Stop service tunneldigger
   service:
-    name: tunneldigger
-    state: stopped
-  ignore_errors: True
-  tags: 
-    - tunneldigger
-
-- name: Enable and restart service tunneldigger
-  service:
-    name: "tunneldigger-{{ hoods[item].namespace }}.service"
-    enabled: yes
+    name: "tunneldigger@{{ hoods[item].namespace }}.service"
     state: stopped
   ignore_errors: True
   loop: "{{ hoods | list }}"
@@ -91,7 +82,7 @@
 - name: Copy tunneldigger service template
   template: 
     src: "tunneldigger.service.j2"
-    dest: "/etc/systemd/system/tunneldigger-{{ hoods[item].namespace }}.service"
+    dest: "/etc/systemd/system/tunneldigger@.service"
     owner: root
     group: root
     mode: 0444
@@ -106,7 +97,7 @@
 
 - name: Enable and restart service tunneldigger
   service:
-    name: "tunneldigger-{{ hoods[item].namespace }}.service"
+    name: "tunneldigger@{{ hoods[item].namespace }}.service"
     enabled: yes
     state: restarted
   loop: "{{ hoods | list }}"
