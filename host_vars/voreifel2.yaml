@@ -34,7 +34,7 @@ supernode:
         IPv4_brcast: 10.152.95.255
         IPv4_net: 10.152.80.0
         IPv4_netmask: 255.255.240.0
-        IPv4_CIDR: 19
+        IPv4_CIDR: 18
         IPv4_xfer: 10.152.80.2
         MAC: a2:8c:ae:6f:f7:02
 
