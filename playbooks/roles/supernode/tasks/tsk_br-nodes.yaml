@@ -68,7 +68,6 @@
   loop:
     - systemd-resolved
     - systemd-networkd
-    - bridge
 
 # End 
 ...
