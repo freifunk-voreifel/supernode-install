@@ -50,7 +50,7 @@
 - name: "Configure respondd"
   include_tasks: tsk_respondd.yaml
 
-# Letzte Reste im Script
-- name: "Configure startup"
-  include_tasks: tsk_startup.yaml
+# Obsolete Startup Scripte
+#- name: "Configure startup"
+#  include_tasks: tsk_startup.yaml
 ...
