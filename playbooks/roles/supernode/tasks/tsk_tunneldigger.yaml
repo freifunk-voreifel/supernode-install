@@ -104,21 +104,21 @@
   tags: 
     - tunneldigger
 
-- name: Copy backbone script
-  template: 
-    src: "l2tp_backbone.sh.exit.j2" 
-    dest: /opt/freifunk/l2tp_backbone.sh
-    owner: root
-    group: root
-    mode: 0755
-  tags: 
-    - tunneldigger
+#- name: Copy backbone script
+#  template: 
+#    src: "l2tp_backbone.sh.exit.j2" 
+#    dest: /opt/freifunk/l2tp_backbone.sh
+#    owner: root
+#    group: root
+#    mode: 0755
+#  tags: 
+#    - tunneldigger
 
-- name: Add cron backbone script
-  cron: 
-    name: backbone 
-    special_time: reboot
-    job: "/opt/freifunk/l2tp_backbone.sh"
-  tags: 
-    - tunneldigger
+#- name: Add cron backbone script
+#  cron: 
+#    name: backbone 
+#    special_time: reboot
+#    job: "/opt/freifunk/l2tp_backbone.sh"
+#  tags: 
+#    - tunneldigger
 ...
