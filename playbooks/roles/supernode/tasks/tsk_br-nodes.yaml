@@ -38,6 +38,7 @@
     group: root
     mode: 0644
   loop:
+    - br-nodes.network
     - br-nodes.netdev
     - br-nodes.link
   tags: 
@@ -54,7 +55,7 @@
     dest: "/etc/systemd/system/{{ item }}"
     owner: root
     group: root
-    mode: 0755
+    mode: 0644
   loop:
     - bridge.service
   tags: 
@@ -77,6 +78,7 @@
   tags: 
     - bridge
   loop:
+    - bridge
     - systemd-resolved
     - systemd-networkd
 

@@ -13,7 +13,7 @@ max-lease-time 3600;
 log-facility local7;
 subnet {{ supernode.mesh.IPv4_net }} netmask {{ supernode.mesh.IPv4_netmask }} {
 authoritative;
-range {{ supernode.dhcp_range }};
+range {{ supernode.dhcp.range }};
 option domain-name-servers {{ supernode.mesh.IPv4 }};
 option routers {{ supernode.mesh.IPv4 }};
 option interface-mtu {{ supernode.mesh.mtu }};

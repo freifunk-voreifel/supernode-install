@@ -20,7 +20,9 @@ supernode:
     hostname: "{{inventory_hostname_short}}"
     fqdn: "ff"
     asn: 65201
-    dhcp_range: 10.152.65.0 10.152.78.254
+    dhcp:
+      range: 10.152.65.0 10.152.78.254
+      iface: br-nodes
     mesh:
         iface: bat0
         mtu: 1312
