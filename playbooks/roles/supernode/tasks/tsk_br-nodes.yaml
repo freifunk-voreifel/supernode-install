@@ -19,10 +19,21 @@
 
 # Copy network templates to /etc/systemd/network/
 
+- name: Create bridge directory if they do not exist
+  file:
+    path: "/etc/systemd/network/{{ item }}"
+    state: absent
+  ignore_errors: true
+  loop:
+    - br-nodes.netdev
+    - br-nodes.link
+  tags: 
+    - bridge
+
 - name: Copy bridge templates to /etc/systemd/network/
   template: 
     src: "{{ item }}.j2"
-    dest: "/etc/systemd/network/{{ item }}"
+    dest: "/etc/systemd/network/90-{{ item }}"
     owner: root
     group: root
     mode: 0644
