@@ -33,7 +33,7 @@
   replace:
     path: /etc/default/isc-dhcp-server
     regexp: 'INTERFACESv6=".*"'
-    replace: 'INTERFACESv6="{{ supernode.dhcp.iface }}"'
+    replace: 'INTERFACESv6=' # {{ supernode.dhcp.iface }}"'
   tags:
     - dhcp
 ...
