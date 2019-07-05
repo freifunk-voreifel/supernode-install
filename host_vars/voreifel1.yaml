@@ -13,7 +13,7 @@ ffrl:
     net: 2a03:2260:301a::/48
     IPv4: 185.66.193.126
     IPv6: 2a03:2260:301a::1
-    uplink: "ffrl-uplink"
+    uplink: "ffrl_uplink"
 
 supernode:
     number: 1

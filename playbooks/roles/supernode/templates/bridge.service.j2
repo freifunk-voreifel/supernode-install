@@ -1,7 +1,7 @@
 [Unit]
 Description="Add br-nodes to batman"
 Wants=network.target
-BindsTo=sys-subsystem-net-devices-br-nodes.device
+After=network.target auditd.service
 Before=isc-dhcp-server.service
 
 [Service]
