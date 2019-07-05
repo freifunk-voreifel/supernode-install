@@ -2,13 +2,10 @@ domain (ip ip6) {
     table filter {
         chain INPUT {
             policy ACCEPT;
-            proto gre ACCEPT;
             mod state state INVALID DROP;
             mod state state (ESTABLISHED RELATED) ACCEPT;
-            interface lo ACCEPT;
-            proto icmp ACCEPT;
-            proto udp dport 500 ACCEPT;
-            proto (esp) ACCEPT;
+            interface ( lo l2tp+ br-nodes bat0 ) ACCEPT;
+            proto ( icmp esp udp ) ACCEPT;
             proto tcp dport ( ssh http https ) ACCEPT;
         }
         chain OUTPUT {
