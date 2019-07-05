@@ -1,4 +1,4 @@
-# Zuweimung der Tunnel-Adressen
+# Zuweisung der Tunnel-Adressen
 
 [..]
 
