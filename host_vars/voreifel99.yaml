@@ -17,7 +17,9 @@ supernode:
     hostname: "{{inventory_hostname_short}}"
     fqdn: "ff"
     asn: 65201
-    dhcp_range: 10.152.65.0 10.152.78.254
+    dhcp:
+      range: 10.152.65.0 10.152.78.254
+      iface: br-nodes
     tunneldigger:
         iface: "{{ ansible_default_ipv4.alias }}"
         port: 53842
@@ -38,10 +40,10 @@ supernode:
 ul_mesh_MAC: a2:8c:ae:6f:f7:10
 
 ## Lokaler exit
-#sn_local_exit: 1
+sn_local_exit: 1
 
 ## Exit über FFRL
-sn_exit: 1
+# sn_exit: 1
 
 yanic_domain: "{{inventory_hostname_short}}"
 
