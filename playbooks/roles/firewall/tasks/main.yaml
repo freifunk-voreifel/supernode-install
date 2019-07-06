@@ -1,0 +1,8 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-06
+
+# Konfigurieren der Firewall für einen Freifunk Supernode
+- name: "Configure Firewall ferm"
+  include_tasks: tsk_ferm.yaml
+...
