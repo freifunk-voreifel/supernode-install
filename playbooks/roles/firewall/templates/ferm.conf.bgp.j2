@@ -10,8 +10,8 @@ domain (ip ip6) {
         }
         chain OUTPUT {
             policy ACCEPT;
-            outerface {{ ansible_default_ipv4.alias }} daddr 10.0.0.0/8 DROP;
-            outerface {{ ansible_default_ipv4.alias }} daddr 169.254.0.0/16 DROP;
+			outerface {{ ansible_default_ipv4.alias }} daddr 169.254.0.0/16 DROP;
+            outerface {{ ansible_default_ipv4.alias }} daddr 10.0.0.0/8 DROP;            
             outerface {{ ansible_default_ipv4.alias }} daddr 172.16.0.0/12 DROP; 
             outerface {{ ansible_default_ipv4.alias }} daddr 192.168.0.0/16 DROP; 
             mod state state (ESTABLISHED RELATED) ACCEPT;
