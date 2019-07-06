@@ -1,0 +1,14 @@
+[Unit]
+Description=tunneldigger tunnelling network daemon using l2tpv3 for hood {{ hoods[item].namespace }}
+After=network.target auditd.service
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/tunneldigger
+ExecStart=/srv/tunneldigger/env_tunneldigger/bin/python -m tunneldigger_broker.main /etc/tunneldigger/hood-%I.cfg
+
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
