@@ -35,15 +35,19 @@ The  installation requires a file *root_pwd.yaml* with the encrypted root passwo
 ## supdernode installation
 Install both supernodes with:
 
-    `ansible-playbook install.sn.yaml -i hosts.yaml`
+    `ansible-playbook playbooks/pb_install_all.yaml -i hosts.yaml`
 
 Limit to supernode 1:
 
-    `ansible-playbook install.sn.yaml -i hosts.yaml --limit voreifel1.*`
+    `ansible-playbook playbooks/pb_install_all.yaml-i hosts.yaml --limit voreifel1`
 
 Limit to supernode 2:
 
-    `ansible-playbook install.sn.yaml -i hosts.yaml --limit voreifel2.*`
+    `ansible-playbook playbooks/pb_install_all.yaml -i hosts.yaml --limit voreifel2`
+
+Limit to supernode 99 (Test):
+
+    `ansible-playbook playbooks/pb_install_all.yaml -i hosts.yaml --limit voreifel99`
 
 # Miscellaneous
 
