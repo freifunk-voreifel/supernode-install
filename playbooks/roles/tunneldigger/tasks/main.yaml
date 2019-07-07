@@ -1,9 +1,0 @@
----
-# Erstellt von: Thomas Arend
-# Erstellt am:  2019-07-06
-
-# Installieren und Einrichten des Tunneldigger auf Freifunk-Supernodes
-
-- name: "Configure Tunneldigger"
-  include_tasks: tsk_tunneldigger.yaml
-...
