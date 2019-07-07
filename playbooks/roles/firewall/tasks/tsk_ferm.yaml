@@ -19,6 +19,7 @@
     - ferm
     
 - name: "Create firewall rules for bgp"
+  when: sn_local_exit != 1
   template:
     src: ferm.conf.bgp.j2
     dest: /etc/ferm/ferm.conf
@@ -28,6 +29,17 @@
   tags:
     - ferm
     
+- name: "Create firewall rules for local exit"
+  when: sn_local_exit == 1
+  template:
+    src: ferm.conf.local.j2
+    dest: /etc/ferm/ferm.conf
+    owner: root
+    group: adm
+    mode: 0644
+  tags:
+    - ferm    
+    
 - name: Remove firewall rules for local nets on Voreifel99
   when: ansible_hostname == 'voreifel99'
   become: yes
@@ -36,8 +48,8 @@
     regexp: '(10\.0\.0\.0\/8|172\.16\.0\.0\/12|192\.168\.0\.0\/16) DROP\;'
     state: absent
   tags:
-    - ferm    
-    
+    - ferm 
+        
 - name: Enable and restart firewall ferm (ferm.service)
   service:
     name: "ferm.service"

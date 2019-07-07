@@ -20,6 +20,7 @@
 # Configure default Interfaces
 
 - name: Supernode LAN
+  when: sn_local_exit != 1
   template:
     src: iface-lan.j2
     dest: /etc/network/interfaces
@@ -27,6 +28,15 @@
     group: root
     mode: 0644
     
+- name: Supernode LAN Local Exit
+  when: sn_local_exit == 1
+  template:
+    src: iface-lan.v6.j2
+    dest: /etc/network/interfaces
+    owner: root
+    group: root
+    mode: 0644
+
 # Configure default Interfaces
 
 - name: IFACE FFRL uplink 
