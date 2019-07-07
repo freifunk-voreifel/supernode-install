@@ -38,7 +38,6 @@
     group: root
     mode: 0644
   loop:
-    - br-nodes.network
     - br-nodes.netdev
     - br-nodes.link
   tags: 
