@@ -1,0 +1,8 @@
+---
+# Erstellt von: Christoph Schwadorf
+# Erstellt am:  2019-07-07
+
+# Konfigurieren des tunneldiggers für eine Freifunk Voreifel Supernode
+- name: "Install and configure tunneldigger"
+  include_tasks: tsk_tunneldigger.yaml
+...

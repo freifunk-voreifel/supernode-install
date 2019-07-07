@@ -1,0 +1,11 @@
+[Unit]
+Description=tunneldigger and ferm fix for all hoods
+After=network-online.target
+
+[Service]
+Type=idle
+ExecStart=/srv/tunneldigger/startup.sh
+
+[Install]
+WantedBy=network-online.target
+

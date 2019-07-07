@@ -1,0 +1,15 @@
+---
+# Playbook to install all components via roles!
+# Thomas Arend / Christoph Schwadorf
+# Stand 2019-04-17
+
+- name: Install and configure tunneldigger
+  hosts: supernodes
+  gather_facts: yes
+  become: true
+  tasks:
+    - include_role:
+        name: tunneldigger
+  tags:
+    - tunneldigger
+...

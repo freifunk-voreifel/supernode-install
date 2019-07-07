@@ -1,0 +1,160 @@
+---
+# file: playbooks/roles/gateways/tasks/tsk_tunneldigger.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+#
+
+# Install and configure tunneldigger
+
+- name: Create tunneldigger directories if they do not exist
+  file:
+    path: "/{{ item }}/tunneldigger"
+    state: directory
+    mode: '0755'
+  loop:
+    - etc
+    - srv
+
+# Get tunneldigger from github
+
+- name: Get Tunneldigger
+  git: 
+    repo: https://github.com/{{ github_user }}/tunneldigger.git
+    dest: /srv/tunneldigger
+  register: tunneldigger
+  tags: 
+    - tunneldigger
+
+# Stop running tunneldigger before recompiling it
+
+- name: Stop service tunneldigger
+  service:
+    name: "tunneldigger@{{ hoods[item].namespace }}.service"
+    state: stopped
+  ignore_errors: True
+  loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger
+
+# Install tunneldigger
+
+- name: Configure tunneldigger
+  raw: "cd /srv/tunneldigger && virtualenv env_tunneldigger && source env_tunneldigger/bin/activate && cd broker && python setup.py install"
+  tags: 
+    - tunneldigger
+
+- name: Copy l2tp broker config template
+  template: 
+    src: "l2tp_broker.cfg.j2"
+    dest: "/etc/tunneldigger/hood-{{ hoods[item].namespace }}.cfg"
+    owner: root
+    group: root
+    mode: 0444
+  loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger
+
+- name: Copy tunneldigger bataddif
+  template: 
+    src: "bataddif.sh.j2"
+    dest: /srv/tunneldigger/bataddif.sh
+    owner: root 
+    group: root
+    mode: 0500
+  tags: 
+    - tunneldigger
+
+- name: Copy tunneldigger scripts
+  copy: 
+    src: "{{ item }}"
+    dest: /srv/tunneldigger
+    owner: root
+    group: root
+    mode: 0500
+  loop:
+    - start-broker.sh
+    - batdelif.sh
+  tags: 
+    - tunneldigger
+
+- name: Copy tunneldigger service template
+  template: 
+    src: "tunneldigger.service.j2"
+    dest: "/etc/systemd/system/tunneldigger@.service"
+    owner: root
+    group: root
+    mode: 0444
+  tags: 
+    - tunneldigger
+  loop: "{{ hoods | list }}"
+
+- name: Tunneldigger reload
+  command: systemctl daemon-reload
+  tags: 
+    - tunneldigger
+
+- name: Enable and restart service tunneldigger
+  service:
+    name: "tunneldigger@{{ hoods[item].namespace }}.service"
+    enabled: yes
+    state: restarted
+  loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger
+    
+- name: Copy FERM/Tunneldigger Bugfix Script
+  template: 
+    src: "startup.sh.j2" 
+    dest: /srv/tunneldigger/startup.sh
+    owner: root
+    group: root
+    mode: 0755
+  tags: 
+    - tunneldigger 
+    
+- name: Insert Hoods into /srv/tunneldigger/startup.sh
+  lineinfile:
+    path: /srv/tunneldigger/startup.sh
+    line: "/bin/systemctl restart tunneldigger@{{ item }}"
+  loop: "{{ hoods | list }}"
+  tags:
+    - tunneldigger      
+    
+- name: Copy tunneldigger ferm fix template
+  template: 
+    src: "tunneldiggerfermfix.service.j2"
+    dest: "/etc/systemd/system/tunneldiggerfermfix.service"
+    owner: root
+    group: root
+    mode: 0444
+  tags: 
+    - tunneldigger
+    
+- name: Enable and restart service tunneldigger ferm fix
+  service:
+    name: "tunneldiggerfermfix.service"
+    enabled: yes
+    state: restarted
+  tags: 
+    - tunneldigger    
+
+#- name: Copy backbone script
+#  template: 
+#    src: "l2tp_backbone.sh.exit.j2" 
+#    dest: /opt/freifunk/l2tp_backbone.sh
+#    owner: root
+#    group: root
+#    mode: 0755
+#  tags: 
+#    - tunneldigger
+
+#- name: Add cron backbone script
+#  cron: 
+#    name: backbone 
+#    special_time: reboot
+#    job: "/opt/freifunk/l2tp_backbone.sh"
+#  tags: 
+#    - tunneldigger
+...

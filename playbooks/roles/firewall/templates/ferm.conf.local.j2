@@ -1,0 +1,31 @@
+domain (ip ip6) {
+    table filter {
+        chain INPUT {
+            policy ACCEPT;
+            mod state state INVALID DROP;
+            mod state state (ESTABLISHED RELATED) ACCEPT;
+            interface ( lo l2tp+ br-nodes bat0 ) ACCEPT;
+            proto ( icmp esp udp ) ACCEPT;
+            proto tcp dport ( ssh http https ) ACCEPT;
+        }
+        chain OUTPUT {
+            policy ACCEPT;
+			outerface {{ ansible_default_ipv4.alias }} daddr 169.254.0.0/16 DROP;
+            outerface {{ ansible_default_ipv4.alias }} daddr 10.0.0.0/8 DROP;            
+            outerface {{ ansible_default_ipv4.alias }} daddr 172.16.0.0/12 DROP; 
+            outerface {{ ansible_default_ipv4.alias }} daddr 192.168.0.0/16 DROP; 
+            mod state state (ESTABLISHED RELATED) ACCEPT;
+        }
+        chain FORWARD {
+            policy ACCEPT;
+            mod state state INVALID DROP;
+            mod state state (ESTABLISHED RELATED) ACCEPT;
+        }
+    }
+    table nat {
+        chain POSTROUTING {
+            outerface {{ ansible_default_ipv4.alias }} MASQUERADE;
+            policy ACCEPT;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+---
+#
+# NTP Server configuration
+# Thomas Arend
+# Date 2019-06-20
+#
+
+- name: "Configure NTP Server"
+  include_role: 
+    name: ntpserver
+  tags:
+    - ntp
+...
