@@ -75,11 +75,11 @@ session.up=/srv/tunneldigger/bataddif.sh
 ; (However, due to hooks being asynchonous, the hook may actually execute after the interface was
 ; already removed.)
 
-session.pre-down=
+session.pre-down=/srv/tunneldigger/batdelif.sh
 
 ; Called after the tunnel interface goes down
 
-session.down=/srv/tunneldigger/batdelif.sh
+session.down=
 
 ; Called after the tunnel MTU gets changed because of PMTU discovery
 

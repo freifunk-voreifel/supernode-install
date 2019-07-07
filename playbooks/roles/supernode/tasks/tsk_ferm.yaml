@@ -8,23 +8,9 @@
 # Date 2019-06-20
 #
 
-- name: "Create ferm directory /etc/ferm"
-  file: 
-    path: /etc/ferm
-    state: directory
-    owner: root
-    group: adm
-    mode: 2750
-  tags:
-    - ferm
-    
-- name: "Create firewall rules for bgp"
-  template:
-    src: ferm.conf.bgp.j2
-    dest: /etc/ferm/ferm.conf
-    owner: root
-    group: adm
-    mode: 0644
+- name: "Configure Firewall"
+  include_role: 
+    name: firewall
   tags:
     - ferm
 ...
