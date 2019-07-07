@@ -45,8 +45,6 @@ ul_mesh_MAC: a2:8c:ae:6f:f7:10
 ## Exit über FFRL
 sn_exit: 1
 
-yanic_domain: "{{inventory_hostname_short}}"
-
 ## GRE Tunnel definition
 
 #Endpunkte

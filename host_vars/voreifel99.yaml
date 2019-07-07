@@ -48,8 +48,6 @@ sn_local_exit: 1
 ## Exit über FFRL
 # sn_exit: 1
 
-yanic_domain: "{{inventory_hostname_short}}"
-
 ## NTP Server
 ntp_provider:
 - ptbtime1.ptb.de

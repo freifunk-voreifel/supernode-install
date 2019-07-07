@@ -7,6 +7,8 @@ domain (ip ip6) {
             interface ( lo l2tp+ br-nodes bat0 ) ACCEPT;
             proto ( icmp esp udp ) ACCEPT;
             proto tcp dport ( ssh http https ) ACCEPT;
+			
+			# Ansible specified INPUT rules.
         }
         chain OUTPUT {
             policy ACCEPT;

@@ -1,0 +1,12 @@
+#---
+#
+# Main ansible role task for yanic installation 
+#
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+#
+
+- name: "Create and configure yanic"
+  include_tasks: tsk_yanic.yaml
