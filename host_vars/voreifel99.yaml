@@ -39,7 +39,7 @@ supernode:
         IPv4_CIDR: 19
         IPv4_xfer: 10.152.64.2
         MAC: a2:8c:ae:6f:f7:01
-
+        
 ul_mesh_MAC: a2:8c:ae:6f:f7:10
 
 ## Lokaler exit
@@ -50,6 +50,11 @@ sn_local_exit: 1
 
 yanic_domain: "{{inventory_hostname_short}}"
 
+## NTP Server
+ntp_provider:
+- ptbtime1.ptb.de
+- ptbtime2.ptb.de
+    
 ## GRE Tunnel definition
 
 #Endpunkte

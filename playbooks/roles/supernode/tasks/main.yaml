@@ -43,6 +43,9 @@
 
 - name: "Configure DHCP Server"
   include_tasks: tsk_dhcp.yaml
+  
+- name: "Configure NTP Server"
+  include_tasks: tsk_ntpserver.yaml
 
 - name: "Create and configure yanic"
   include_tasks: tsk_yanic.yaml
