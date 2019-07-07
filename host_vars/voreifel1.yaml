@@ -21,7 +21,7 @@ supernode:
     fqdn: "ff"
     asn: 65201
     dhcp:
-      range: 10.152.65.0 10.152.78.254
+      range: 10.152.65.1 10.152.78.254
       iface: br-nodes
     mesh:
         iface: bat0
