@@ -1,0 +1,20 @@
+#---
+#
+# Main ansible role task for dns installation 
+#
+# file: playbooks/roles/radvd/tasks/tsk_radvd.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+#
+
+- name: Copy radvd config template
+  template: 
+    src: radvd.conf.j2
+    dest: /etc/radvd.conf
+    owner: radvd
+    group: root
+    mode: 0444
+  tags:
+    - radvd

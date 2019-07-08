@@ -61,7 +61,7 @@
 
 - name: Restart DNS Server
   service:
-    name: "bind9.service"
+    name: bind9
     enabled: yes
     state: restarted
   tags:
@@ -74,13 +74,5 @@
     owner: radvd
     group: root
     mode: 0444
-  tags:
-    - radvd
-
-- name: Restart radvd Server
-  service:
-    name: "radvd.service"
-    enabled: yes
-    state: restarted
   tags:
     - radvd

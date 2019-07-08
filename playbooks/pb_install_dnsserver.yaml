@@ -1,0 +1,15 @@
+---
+# Playbook to install all components via roles!
+# Thoasm Arend
+# Stand 2019-04-17
+
+- name: Installieren und Einrichten eines DNS-Servers (bind9) 
+  hosts: supernodes
+  gather_facts: yes
+  become: true
+  tasks:
+    - include_role:
+        name: dnsserver
+  tags:
+    - dnsserver
+...

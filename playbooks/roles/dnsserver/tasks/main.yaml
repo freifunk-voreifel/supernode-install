@@ -1,0 +1,14 @@
+#---
+#
+# Main ansible role task for gateway installation 
+#
+# file: playbooks/roles/gateways/tasks/main.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+#
+
+- name: "Configure DNS Server"
+  include_tasks: tsk_dnsserver.yaml
+...
