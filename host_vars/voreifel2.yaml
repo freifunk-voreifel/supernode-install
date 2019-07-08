@@ -38,6 +38,9 @@ supernode:
         IPv4_CIDR: 18
         IPv4_xfer: 10.152.80.2
         MAC: a2:8c:ae:6f:f7:02
+    yanic: 
+        expose: true
+        web_port: 8080      
 
 ul_mesh_MAC: a2:8c:ae:6f:f7:20
 

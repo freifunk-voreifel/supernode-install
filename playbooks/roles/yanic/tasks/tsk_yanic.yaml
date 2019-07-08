@@ -37,6 +37,42 @@
   tags:
     - yanic
 
+- name: Activate yanic webserver
+  ini_file:
+    path: /etc/yanic.conf
+    section: webserver
+    option: enable
+    value: "true"
+  when: supernode.yanic.web_port is defined
+  tags:
+    - yanic
+    
+- name: Set correct yanic webserver bindings and port
+  ini_file:
+    path: /etc/yanic.conf
+    section: webserver
+    option: bind
+    value: "{{ ansible_default_ipv4.address }}:{{ supernode.yanic.web_port }}"
+  when: supernode.yanic.web_port is defined
+  tags:
+    - yanic 
+
+- name: open up the yanik webport
+  lineinfile: dest=/etc/ferm/ferm.conf
+              line='proto tcp dport ( {{ supernode.yanic.web_port }} ) ACCEPT;'
+              insertafter='# Ansible specified INPUT rules.'
+  when: supernode.yanic.web_port is defined and supernode.yanic.expose == true 
+  tags: 
+    - yanic    
+              
+- name: Restart firewall ferm (ferm.service)
+  service:
+    name: "ferm.service"
+    state: restarted
+  when: supernode.yanic.web_port is defined and supernode.yanic.expose == true 
+  tags: 
+    - yanic     
+    
 - name: Compile yanic with go
   shell: "go get -v -u github.com/{{ github_user }}/yanic"
   ignore_errors: True
@@ -55,19 +91,5 @@
     name: yanic.service
     state: restarted
   tags:
-    - yanic     
-    
-- name: open up the yanik webport
-  lineinfile: dest=/etc/ferm/ferm.conf
-              line='proto tcp dport ( 8080 ) ACCEPT;'
-              insertafter='# Ansible specified INPUT rules.'
-  tags: 
-    - yanic    
-              
-- name: Restart firewall ferm (ferm.service)
-  service:
-    name: "ferm.service"
-    state: restarted
-  tags: 
-    - yanic              
+    - yanic                  
 ...
