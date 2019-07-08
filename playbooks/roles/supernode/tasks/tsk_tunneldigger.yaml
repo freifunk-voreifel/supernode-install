@@ -17,17 +17,7 @@
     - etc
     - srv
 
-# Get tunneldigger from github
-
-- name: Get Tunneldigger
-  git: 
-    repo: https://github.com/{{ github_user }}/tunneldigger.git
-    dest: /srv/tunneldigger
-  register: tunneldigger
-  tags: 
-    - tunneldigger
-
-# Stop running tunneldigger before recompiling it
+# Stop tunneldigger before recompiling it
 
 - name: Stop service tunneldigger
   service:
@@ -35,6 +25,17 @@
     state: stopped
   ignore_errors: True
   loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger
+
+    
+# Get tunneldigger from github
+
+- name: Get Tunneldigger
+  git: 
+    repo: https://github.com/{{ github_user }}/tunneldigger.git
+    dest: /srv/tunneldigger
+  register: tunneldigger
   tags: 
     - tunneldigger
 
@@ -59,7 +60,7 @@
 - name: Copy tunneldigger bataddif
   template: 
     src: "bataddif.sh.j2"
-    dest: /srv/tunneldigger/bataddif.sh
+    dest: /etc/tunneldigger/bataddif.sh
     owner: root 
     group: root
     mode: 0500
@@ -69,7 +70,7 @@
 - name: Copy tunneldigger scripts
   copy: 
     src: "{{ item }}"
-    dest: /srv/tunneldigger
+    dest: /etc/tunneldigger
     owner: root
     group: root
     mode: 0500
