@@ -16,18 +16,9 @@
   loop:
     - etc
     - srv
-
-# Get tunneldigger from github
-
-- name: Get Tunneldigger
-  git: 
-    repo: https://github.com/{{ github_user }}/tunneldigger.git
-    dest: /srv/tunneldigger
-  register: tunneldigger
-  tags: 
-    - tunneldigger
-
-# Stop running tunneldigger before recompiling it
+    
+# Stop the running tunneldigger before installing a new one
+# Be aware we are stopping only hoods, which we have in the Ansible
 
 - name: Stop service tunneldigger
   service:
@@ -35,6 +26,16 @@
     state: stopped
   ignore_errors: True
   loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger
+    
+# Get tunneldigger from github
+
+- name: Get Tunneldigger
+  git: 
+    repo: https://github.com/{{ github_user }}/tunneldigger.git
+    dest: /srv/tunneldigger
+  register: tunneldigger
   tags: 
     - tunneldigger
 
@@ -69,7 +70,7 @@
 - name: Copy tunneldigger scripts
   copy: 
     src: "{{ item }}"
-    dest: /srv/tunneldigger
+    dest: "/etc/tunneldigger"
     owner: root
     group: root
     mode: 0500
