@@ -3,4 +3,5 @@
 zone "ff" {
   type master;
   file "/etc/bind/zones/db.ff";
+  allow-query { any; };
 };
