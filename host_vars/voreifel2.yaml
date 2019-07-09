@@ -23,9 +23,10 @@ supernode:
     fqdn: "ff"
     asn: 65201
     dhcp:
-      range: 10.152.81.0 10.152.94.254
+      range: 10.152.81.1 10.152.94.254
       iface: br-nodes
     mesh:
+        # Interface Adresse darf nicht local-node IP sein
         iface: bat0
         mtu: 1312
         IPv6: 2a03:2260:301a:2::1
