@@ -67,10 +67,19 @@
   loop:
     - bataddif.sh
     - batdelif.sh
-    - ferm_fix.sh
     - blocklist
   tags: 
     - tunneldigger
+    
+- name: Copy tunneldigger / FERM fix startup script
+  template: 
+    src: "ferm_fix.sh.j2"
+    dest: "/etc/tunneldigger/ferm_fix.sh"
+    owner: root
+    group: root
+    mode: 0500
+  tags: 
+    - tunneldigger      
     
 - name: Apply tunneldigger / FERM fix startup script
   lineinfile:

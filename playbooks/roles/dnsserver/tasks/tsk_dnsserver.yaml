@@ -58,6 +58,24 @@
     mode: 0444
   tags:
     - dns
+    
+- name: Add provider specific DNS Server
+  lineinfile: dest=/etc/bind/named.conf.options
+              line=' {{ item }}'
+              insertafter='// Ansible DNS Servers //'
+  loop: "{{ dns_server[provider] | list }}"
+  when: provider is defined and dns_server[provider] is defined          
+  tags: 
+    - dns   
+
+- name: Add default DNS Server
+  lineinfile: dest=/etc/bind/named.conf.options
+              line='{{ item }};'
+              insertafter='// Ansible DNS Servers //'
+  loop: "{{ dns_server[default] | list }}"
+  when: dns_server[provider] is not defined          
+  tags: 
+    - dns     
 
 - name: Restart DNS Server
   service:

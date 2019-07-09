@@ -13,18 +13,25 @@
 auto {{ gre[item].dev }}
 
 iface {{ gre[item].dev }} inet tunnel
-  mode gre
-  netmask {{ gre[item].netmask }}
-  address {{ gre[item].address }}
-  dstaddr {{ gre[item].daddress }}
-  local {{ gre[item].local }}
-  endpoint {{ gre[item].remote }} 
-  mtu {{ gre[item].mtu }}
-  ttl {{ gre[item].ttl }}
-  post-down ip tunnel del $IFACE
+	mode gre
+	netmask {{ gre[item].netmask }}
+	address {{ gre[item].address }}
+	dstaddr {{ gre[item].daddress }}
+	local {{ gre[item].local }}
+	endpoint {{ gre[item].remote }} 
+	mtu {{ gre[item].mtu }}
+	ttl {{ gre[item].ttl }}
+  
+	pre-up ip tunnel add $IFACE mode gre local {{ gre[item].local }} remote {{ gre[item].remote }}  ttl 255
+	# post-up iptables -t nat -A POSTROUTING -o $IFACE -j SNAT --to-source ???
+	post-up iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
+	post-up ip link set $IFACE mtu 1400
+	post-down ip tunnel del $IFACE
 
 {% if gre[item].inet6 is defined %}
 iface {{ gre[item].dev }} inet6 static
-  address {{ gre[item].inet6 }}/64
+	address {{ gre[item].inet6 }}/64
+	netmask 64
+	post-up ip6tables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $IFACE -j TCPMSS --set-mss 1312
 {% endif %}
 # End GRE Tunnel

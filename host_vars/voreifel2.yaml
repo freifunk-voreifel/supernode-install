@@ -10,12 +10,10 @@ provider: 'hetzner'
 # New variable names, old obsolte variables moved to end of file
 
 ffrl:
-    net: 2a03:2260:301a::/48
+    net: 2a03:2260:301a:0400::/54
     IPv4: 185.66.193.127
-    IPv6: 2a03:2260:301a::2
+    IPv6: 2a03:2260:301a:0400::1
     uplink: "ffrl_uplink"
-
-# New variable names, old obsolte variables moved to end of file
 
 supernode:
     number: 2
@@ -23,21 +21,21 @@ supernode:
     fqdn: "ff"
     asn: 65201
     dhcp:
-      range: 10.152.81.1 10.152.94.254
+      range: 10.152.79.1 10.152.92.254
       iface: bat0
     mesh:
         # Interface Adresse darf nicht local-node IP sein
         iface: bat0
         mtu: 1312
         IPv6: 2a03:2260:301a:2::1
-        IPv6_net: 2a03:2260:301a:2::/64
-        IPv6_xfer: 2a03:2260:301a:1::1
-        IPv4: 10.152.80.1
-        IPv4_brcast: 10.152.95.255
-        IPv4_net: 10.152.80.0
-        IPv4_netmask: 255.255.240.0
+        IPv6_net: 2a03:2260:301a:0500::/64
+        IPv6_xfer: 2a03:2260:301a:0500::1
+        IPv4: 10.152.64.10
+        IPv4_brcast: 10.152.127.255
+        IPv4_net: 10.152.64.0
+        IPv4_netmask: 255.255.192.0
         IPv4_CIDR: 18
-        IPv4_xfer: 10.152.80.2
+        IPv4_xfer: 10.152.64.3
         MAC: a2:8c:ae:6f:f7:02
     yanic:
         expose: true
@@ -61,6 +59,7 @@ sn_exit: 1
     # bb-b.ix.dus 185.66.193.1
     # bb-a.fra3.fra 185.66.194.0
     # bb-b.fra3.fra 185.66.194.1
+    
 gre:
   ber_a:
     description: "Rheinland Backbone Berlin A"
