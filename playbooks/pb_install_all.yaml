@@ -28,6 +28,12 @@
     - name: Configure Netfilter
       include_role:
         name: netfilter
+        
+    # Firewall
+
+    - name: Configure FERM Firewall
+      include_role:
+        name: firewall
     
     # bird / bird6 
 

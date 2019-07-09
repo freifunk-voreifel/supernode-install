@@ -57,16 +57,6 @@
   tags: 
     - tunneldigger
 
-- name: Copy tunneldigger bataddif
-  template: 
-    src: "bataddif.sh.j2"
-    dest: /srv/tunneldigger/bataddif.sh
-    owner: root 
-    group: root
-    mode: 0500
-  tags: 
-    - tunneldigger
-
 - name: Copy tunneldigger scripts
   copy: 
     src: "{{ item }}"
@@ -75,7 +65,7 @@
     group: root
     mode: 0500
   loop:
-    - start-broker.sh
+    - bataddif.sh
     - batdelif.sh
   tags: 
     - tunneldigger
