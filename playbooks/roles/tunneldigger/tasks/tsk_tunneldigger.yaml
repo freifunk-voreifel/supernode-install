@@ -67,8 +67,27 @@
   loop:
     - bataddif.sh
     - batdelif.sh
+    - ferm_fix.sh
   tags: 
     - tunneldigger
+    
+- name: Apply tunneldigger / FERM fix startup script
+  lineinfile:
+    path: /etc/tunneldigger/ferm_fix.sh
+    line: "/bin/systemctl restart tunneldigger@{{ hoods[item].namespace }}.service"
+  loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger   
+
+- name: Copy tunneldigger / FERM fix service
+  copy: 
+    src: "tunneldigger_ferm_fix.service"
+    dest: "/etc/systemd/system/tunneldigger_ferm_fix.service"
+    owner: root
+    group: root
+    mode: 0500
+  tags: 
+    - tunneldigger    
 
 - name: Copy tunneldigger service template
   template: 
@@ -94,4 +113,12 @@
   loop: "{{ hoods | list }}"
   tags: 
     - tunneldigger
+    
+- name: Enable tunneldigger / FERM fix
+  service:
+    name: "tunneldigger_ferm_fix.service"
+    enabled: yes
+    state: started
+  tags: 
+    - tunneldigger    
 ...

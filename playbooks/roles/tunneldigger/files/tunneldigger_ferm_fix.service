@@ -1,0 +1,13 @@
+[Unit]
+Description=tunneldigger and ferm restart to fix for all hoods
+After=network-online.target
+
+[Service]
+Type=idle
+ExecStart=/etc/tunneldigger/ferm_fix.sh
+
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=network-online.target

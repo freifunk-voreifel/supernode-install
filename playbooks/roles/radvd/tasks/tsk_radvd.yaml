@@ -18,3 +18,11 @@
     mode: 0444
   tags:
     - radvd
+
+- name: Enable and restart service radvd
+  service:
+    name: "radvd.service"
+    enabled: yes
+    state: restarted
+  tags: 
+    - radvd
