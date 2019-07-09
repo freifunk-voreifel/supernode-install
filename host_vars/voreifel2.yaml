@@ -24,18 +24,18 @@ supernode:
     asn: 65201
     dhcp:
       range: 10.152.81.1 10.152.94.254
-      iface: br-nodes
+      iface: bat0
     mesh:
         # Interface Adresse darf nicht local-node IP sein
         iface: bat0
         mtu: 1312
         IPv6: 2a03:2260:301a:2::1
-        IPv6_net: 2a03:2260:301a::/48
+        IPv6_net: 2a03:2260:301a:2::/64
         IPv6_xfer: 2a03:2260:301a:1::1
         IPv4: 10.152.80.1
         IPv4_brcast: 10.152.95.255
         IPv4_net: 10.152.80.0
-        IPv4_netmask: 255.255.192.0
+        IPv4_netmask: 255.255.240.0
         IPv4_CIDR: 18
         IPv4_xfer: 10.152.80.2
         MAC: a2:8c:ae:6f:f7:02
