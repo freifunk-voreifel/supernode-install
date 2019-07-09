@@ -13,6 +13,7 @@
         name: common
 
     - name: Configure NTP (Server / Client)
+      include_role:
         name: ntpserver
 
 # Supernode (first steps)
@@ -53,7 +54,7 @@
       include_role:
         name: dhcpserver
 
-    - naem: Configure radvd
+    - name: Configure radvd
       include_role:
         name: radvd
 
@@ -70,8 +71,8 @@
     - name: Insatll and configure respondd
       include_role:
         name: respondd
-   - tags:
-     - sonstiges
+  tags:
+    - sonstiges
 #
 # Installation / update completed
 # Just log our update  
