@@ -28,7 +28,7 @@ supernode:
         iface: bat0
         mtu: 1312
         IPv6: 2a03:2260:301a:1::1
-        IPv6_net: 2a03:2260:301a:1:/64
+        IPv6_net: 2a03:2260:301a:1::/64
         IPv6_xfer: 2a03:2260:301a:2::1
         IPv4: 10.152.64.2
         IPv4_brcast: 10.152.127.255
