@@ -1,0 +1,10 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-08
+
+# Install respondd
+
+- name: "Configure respondd"
+  include_tasks: tsk_respondd.yaml
+  
+...

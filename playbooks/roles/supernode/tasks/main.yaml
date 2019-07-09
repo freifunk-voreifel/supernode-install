@@ -26,29 +26,39 @@
 - name: "Configure Routing"
   include_tasks: tsk_routing.yaml
 
-- name: "Configure Firewall ferm"
-  include_tasks: tsk_ferm.yaml
+# ferm configuration is moved to role
+#- name: "Configure Firewall ferm"
+#  include_tasks: tsk_ferm.yaml
 
-- name: "Configure netfilter"
-  include_tasks: tsk_netfilter.yaml
+# Bird configuration is moved to role
+#- name: "Configure netfilter"
+#  include_tasks: tsk_netfilter.yaml
 
-- name: "Configure Bird" 
-  include_tasks: tsk_bird.yaml
+# Bird configuration is moved to role
+#- name: "Configure Bird" 
+#  include_tasks: tsk_bird.yaml
+  
+# Tunneldigger configuration is moved to role
+#- name: "Configure Tunneldigger"
+#  include_tasks: tsk_tunneldigger.yaml
 
-- name: "Configure Tunneldigger"
-  include_tasks: tsk_tunneldigger.yaml
+# DNS configuration is moved to role
+#- name: "Configure DNS Server"
+#  include_tasks: tsk_dnsserver.yaml
 
-- name: "Configure DNS Server"
-  include_tasks: tsk_dnsserver.yaml
+  
+# DHCP configuration is moved to role
+#- name: "Configure DHCP Server"
+#  include_tasks: tsk_dhcp.yaml
 
-- name: "Configure DHCP Server"
-  include_tasks: tsk_dhcp.yaml
+# Yannic is moved to role
+#- name: "Create and configure yanic"
+#  include_tasks: tsk_yanic.yaml
+#
 
-- name: "Create and configure yanic"
-  include_tasks: tsk_yanic.yaml
-
-- name: "Configure respondd"
-  include_tasks: tsk_respondd.yaml
+# Respondd is moved to role
+#- name: "Configure respondd"
+#  include_tasks: tsk_respondd.yaml
 
 # Obsolete Startup Scripte
 #- name: "Configure startup"

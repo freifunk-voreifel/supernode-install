@@ -1,0 +1,50 @@
+---
+# file: playbooks/roles/gateways/tasks/tsk_tunneldigger.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+#
+#
+# respondd
+#
+
+- name: Enable and restart service respondd
+  service:
+    name: "respondd.service"
+    enabled: yes
+    state: stopped
+  ignore_errors: True
+  tags: 
+    - respondd
+
+- name: Get respondd
+  git: 
+    repo: "https://github.com/{{ github_user }}/mesh-announce.git"
+    dest: "/opt/mesh-announce"
+  register: get_respondd
+  tags: 
+    - respondd
+
+- name: Copy respondd service template
+  shell: "cp /opt/mesh-announce/respondd.service /etc/systemd/system"
+  when: get_respondd is succeeded
+  tags: 
+    - respondd
+
+- name: Enable respondd service
+  command: "systemctl daemon-reload"
+  when: get_respondd is succeeded
+  tags: 
+    - respondd
+    
+- name: Enable and restart service respondd
+  service:
+    name: "respondd.service"
+    enabled: yes
+    state: restarted
+  when: get_respondd is succeeded
+  tags: 
+    - respondd
+
+...

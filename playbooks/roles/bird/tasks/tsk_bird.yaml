@@ -1,0 +1,44 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-08
+
+# Configure bird and bird6
+
+- name: Stop bird / bird6
+  service:
+    name: "{{ item }}.service"
+    state: stopped
+  ignore_errors: True
+  loop: 
+    - bird
+    - bird6
+
+- name: "Create directory"
+  file:
+    path: "/etc/bird"
+    state: directory
+    mode: 0755
+  tags:
+    - bird
+
+- name: "bird / bird6 configuration"
+  template:
+    src: "{{ item }}.conf.j2"
+    dest: "/etc/bird/{{ item }}.conf"
+    owner: bird
+    group: bird
+    mode: 0444
+  tags:
+    - bird
+  loop: 
+    - bird
+    - bird6
+    
+- name: Enable and restart service bird / bird6
+  service:
+    name: "{{ item }}.service"
+    enabled: yes
+    state: restarted
+  loop: 
+    - bird
+    - bird6

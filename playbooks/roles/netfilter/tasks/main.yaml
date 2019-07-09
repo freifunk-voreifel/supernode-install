@@ -1,0 +1,10 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-08
+
+# Netfilter 
+
+- name: "Configure netfilter"
+  include_tasks: tsk_netfilter.yaml
+
+...

@@ -1,0 +1,10 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-08
+
+# Configure DHCP Server
+
+- name: "Configure DHCP Server"
+  include_tasks: tsk_dhcp.yaml
+
+...

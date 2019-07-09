@@ -1,56 +1,13 @@
 #---
 #
-# Main ansible role task for gateway installation 
-#
-# file: playbooks/roles/gateways/tasks/main.yaml
-#
 # Thomas Arend
-# Date 2019-04-13
+# Date 2019-07-08
 #
 #
 
 # Configure interfaces
 
-- name: "Update modprobe"
-  include_tasks: tsk_modprobe.yaml
-  
-- name: "Configure interfaces"
-  include_tasks: tsk_interfaces.yaml
+- name: "Configure radvd"
+  include_tasks: tsk_radvd.yaml
 
-- name: "Configure bridge br-nodes for batman"
-  include_tasks: tsk_br-nodes.yaml
-
-- name: "Configure GRE tunnels to FFRL"
-  include_tasks: tsk_gre-tunnel.yaml
-
-- name: "Configure Routing"
-  include_tasks: tsk_routing.yaml
-
-- name: "Configure Firewall ferm"
-  include_tasks: tsk_ferm.yaml
-
-- name: "Configure netfilter"
-  include_tasks: tsk_netfilter.yaml
-
-- name: "Configure Bird" 
-  include_tasks: tsk_bird.yaml
-
-- name: "Configure Tunneldigger"
-  include_tasks: tsk_tunneldigger.yaml
-
-- name: "Configure DNS Server"
-  include_tasks: tsk_dnsserver.yaml
-
-- name: "Configure DHCP Server"
-  include_tasks: tsk_dhcp.yaml
-
-- name: "Create and configure yanic"
-  include_tasks: tsk_yanic.yaml
-
-- name: "Configure respondd"
-  include_tasks: tsk_respondd.yaml
-
-# Obsolete Startup Scripte
-#- name: "Configure startup"
-#  include_tasks: tsk_startup.yaml
 ...

@@ -77,9 +77,9 @@
   tags: 
     - bridge
   loop:
-    - bridge
     - systemd-resolved
     - systemd-networkd
-
+    - bridge
+    
 # End 
 ...

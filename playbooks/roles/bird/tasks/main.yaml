@@ -1,0 +1,8 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-08
+
+- name: "Configure Bird" 
+  include_tasks: tsk_bird.yaml
+  
+...

@@ -1,0 +1,12 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-08
+
+# Ab hier muss noch dein Code hinein
+
+# Install yanic
+
+- name: "Create and configure yanic"
+  include_tasks: tsk_yanic.yaml
+  
+...
