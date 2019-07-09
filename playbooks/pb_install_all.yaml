@@ -62,13 +62,13 @@
 
 # Sonstiges
 
-- name: Install yannic
+- name: Install yanic
   hosts: supernodes
   tasks:
     - name: Install and configure yanic
       include_role:
-        name: yannic
-    - name: Insatll and configure respondd
+        name: yanic
+    - name: Install and configure respondd
       include_role:
         name: respondd
   tags:
