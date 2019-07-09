@@ -36,6 +36,9 @@ supernode:
         IPv4_CIDR: 19
         IPv4_xfer: 10.152.64.2
         MAC: a2:8c:ae:6f:f7:01
+    yanic:
+        expose: true
+        web_port: 8080        
 
 ul_mesh_MAC: a2:8c:ae:6f:f7:10
 
@@ -44,8 +47,6 @@ sn_local_exit: 1
 
 ## Exit über FFRL
 # sn_exit: 1
-
-yanic_domain: "{{inventory_hostname_short}}"
 
 ## GRE Tunnel definition
 

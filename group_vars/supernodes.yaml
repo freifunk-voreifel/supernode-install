@@ -20,4 +20,7 @@ communitymac: "a2:8c:ae:7f:f7"
 
 communityname: "voreifel"
 
+# Yanic Communit Name
+yanic_domain: "{{inventory_hostname_short}}"
+
 ...
