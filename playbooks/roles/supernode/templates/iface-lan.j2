@@ -17,8 +17,10 @@ source /etc/network/interfaces.d/*
 
 auto lo
 iface lo inet loopback
+	up ip address add {{ ffrl.IPv4 }} dev lo
 
 iface lo inet6 loopback
+	up ip address add {{ ffrl.IPv6 }}/54 dev lo
 
 # The primary network interface
 

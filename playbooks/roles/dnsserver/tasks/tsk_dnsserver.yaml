@@ -61,7 +61,7 @@
     
 - name: Add provider specific DNS Server
   lineinfile: dest=/etc/bind/named.conf.options
-              line=' {{ item }}'
+              line=' {{ item }};'
               insertafter='// Ansible DNS Servers //'
   loop: "{{ dns_server[provider] | list }}"
   when: provider is defined and dns_server[provider] is defined          

@@ -27,7 +27,7 @@ supernode:
         # Interface Adresse darf nicht local-node IP sein
         iface: bat0
         mtu: 1312
-        IPv6: 2a03:2260:301a:2::1
+        IPv6: 2a03:2260:301a:0500::1
         IPv6_net: 2a03:2260:301a:0500::/64
         IPv6_xfer: 2a03:2260:301a:0500::1
         IPv4: 10.152.64.10
