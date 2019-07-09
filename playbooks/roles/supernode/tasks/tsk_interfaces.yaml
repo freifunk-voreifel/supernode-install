@@ -26,6 +26,16 @@
     owner: root
     group: root
     mode: 0644
+  when: sn_local_exit is not defined
+  
+- name: Supernode LAN mit lokaler Ausleitung
+  template:
+    src: iface-lan.local.j2
+    dest: /etc/network/interfaces
+    owner: root
+    group: root
+    mode: 0644
+  when: sn_local_exit is defined  
     
 # Configure default Interfaces
 

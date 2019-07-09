@@ -68,6 +68,7 @@
     - bataddif.sh
     - batdelif.sh
     - ferm_fix.sh
+    - blocklist
   tags: 
     - tunneldigger
     
@@ -96,9 +97,9 @@
     owner: root
     group: root
     mode: 0444
-  tags: 
-    - tunneldigger
   loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger  
 
 - name: Tunneldigger reload
   command: systemctl daemon-reload
