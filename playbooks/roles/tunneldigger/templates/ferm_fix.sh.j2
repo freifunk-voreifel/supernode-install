@@ -7,6 +7,8 @@ ip rule add from {{ ffrl.IPv4 }}/32 lookup 42
 ip -6 rule add fwmark 0x4 table 42
 ip -6 rule add from {{ supernode.mesh.IPv6_net }} lookup 42
 
+ip route add {{ supernode.mesh.IPv4_net }}/{{ supernode.mesh.IPv4_CIDR }} via bat0 table 42
+
 /bin/systemctl restart bind9.service
 
 # Ansible Tunneldigger

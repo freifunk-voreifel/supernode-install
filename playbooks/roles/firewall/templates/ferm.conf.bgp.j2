@@ -58,6 +58,8 @@ domain (ip6) {
             mod state state (ESTABLISHED RELATED) ACCEPT;
             interface ( lo l2tp+ br-nodes bat0 ) ACCEPT;
             proto ( icmp esp udp ) ACCEPT;
+			proto ( icmp ) daddr {{ supernode.mesh.IPv6_net }} ACCEPT;
+			proto ( icmp ) daddr {{ ffrl.net }} ACCEPT;
             proto tcp dport ( ssh ) ACCEPT;
 			
 			# Ansible specified INPUT rules.
