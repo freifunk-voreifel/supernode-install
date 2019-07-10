@@ -3,6 +3,10 @@
 #
 # Super node 99 for testing 
 
+ansible_host: "192.168.2.116"
+ansible_user: "thomas"
+
+provider: 'hetzner'
 
 # New variable names, old obsolte variables moved to end of file
 

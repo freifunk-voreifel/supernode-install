@@ -1,3 +1,8 @@
+acl freifunk {
+        2a03:2260:301a::/48;
+        localhost;
+        localnets;
+};
 options {
         directory "/var/cache/bind";
 
@@ -10,17 +15,23 @@ options {
         // Uncomment the following block, and insert the addresses replacing
         // the all-0's placeholder.
 
-        // forwarders {
-        //      0.0.0.0;
-        // };
+        forwarders {
+            2a01:4f8:0:1::add:1010
+            2a01:4f8:0:1::add:9999
+            2a01:4f8:0:1::add:9898
+        };
 
         //========================================================================
         // If BIND logs error messages about the root key being expired,
         // you will need to update your keys.  See https://www.isc.org/bind-keys
         //========================================================================
         dnssec-validation auto;
-
+        
+        recursion yes;
+        allow-query { freifunk; } ;
+        
         auth-nxdomain no;    # conform to RFC1035
+
         listen-on { {{ supernode.mesh.IPv4 }}; };
         listen-on-v6 { {{ supernode.mesh.IPv6 }}; };
 };

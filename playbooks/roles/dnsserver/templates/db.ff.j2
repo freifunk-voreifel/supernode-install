@@ -1,0 +1,25 @@
+;; db.ff
+;; Forwardlookupzone für .ff
+;;
+$TTL 600
+@       IN      SOA     ff. root.ff. (
+                        2019041600      ; Serial
+                                8H      ; Refresh
+                                2H      ; Retry
+                                4W      ; Expire
+                                3H )    ; NX (TTL Negativ Cache)
+
+@                               IN      NS      {{ supernode.hostname }}.infra.ff.
+                                IN      A       {{ supernode.mesh.IPv4 }}
+                                IN      AAAA	{{ supernode.mesh.IPv6 }}
+localhost			IN	A    	127.0.0.1
+				IN  	AAAA    ::1
+nextnode			IN  	A       10.152.61.1
+				IN  	AAAA    2a03:2260:121:1000::1
+;;This Supernode
+{{ supernode.hostname }}.infra		IN	A	{{ supernode.mesh.IPv4 }}
+				IN	AAAA	{{ supernode.mesh.IPv6 }}
+;; Update Servers
+update1.infra			IN      AAAA    2a03:2260:121:4000:6038:61ff:fe34:3461
+update2.infra			IN      AAAA    2a03:2260:121:4000:6038:61ff:fe34:3461
+update3.infra			IN      AAAA    2a03:2260:121:4000:6038:61ff:fe34:3461

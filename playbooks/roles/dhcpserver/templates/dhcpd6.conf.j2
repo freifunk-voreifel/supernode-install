@@ -1,0 +1,15 @@
+# Enable RFC 5007 support (same than for DHCPv4)
+allow leasequery;
+
+authoritative;
+
+default-lease-time 300;
+max-lease-time 600;
+
+option dhcp6.name-servers {{ supernode.mesh.IPv6 }};
+
+option dhcp6.domain-search "ff";
+
+subnet6 {{ supernode.mesh.IPv6_net }} {
+}
+
