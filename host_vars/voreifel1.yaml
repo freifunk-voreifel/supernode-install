@@ -22,19 +22,19 @@ supernode:
     asn: 65201
     dhcp:
       range: 10.152.65.0 10.152.78.254
-      iface: br-nodes
+      iface: bat0
     mesh:
         iface: bat0
         mtu: 1312
-        IPv6: 2a03:2260:301a:1::1
-        IPv6_net: 2a03:2260:301a:1:/64
-        IPv6_xfer: 2a03:2260:301a:2::1
-        IPv4: 10.152.64.2
+        IPv6: 2a03:2260:301a::1
+        IPv6_net: 2a03:2260:301a::/64   # Prefix für radvd
+        IPv6_xfer: 2a03:2260:301a::2
+        IPv4: 10.152.64.1
         IPv4_brcast: 10.152.127.255
         IPv4_net: 10.152.64.0
         IPv4_netmask: 255.255.192.0
         IPv4_CIDR: 18
-        IPv4_xfer: 10.152.64.3
+        IPv4_xfer: 10.152.80.1
         MAC: a2:8c:ae:6f:f7:01
 
 ul_mesh_MAC: a2:8c:ae:6f:f7:10
@@ -44,8 +44,6 @@ ul_mesh_MAC: a2:8c:ae:6f:f7:10
 
 ## Exit über FFRL
 sn_exit: 1
-
-yanic_domain: "{{inventory_hostname_short}}"
 
 ## GRE Tunnel definition
 

@@ -49,8 +49,6 @@ sn_local_exit: 1
 ## Exit über FFRL
 # sn_exit: 1
 
-yanic_domain: "{{inventory_hostname_short}}"
-
 ## GRE Tunnel definition
 
 #Endpunkte
