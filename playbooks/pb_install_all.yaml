@@ -10,69 +10,46 @@
   tasks:
     - name:  Basic installation for all servers
       include_role:
-        name: common
-
-    - name: Configure NTP (Server / Client)
-      include_role:
-        name: ntpserver
+        name: common    # common components for all servers
 
 # Supernode (first steps)
 
 - name: Install supernode components
   hosts: supernodes
   tasks:
-    - name: First steps 
+    - name: Configure modprobe 
       include_role:
-        name: supernode
-        
-    - name: Configure Netfilter
-      include_role:
-        name: netfilter
-    
-    # bird / bird6 
+        name: {{ required_role }}
+      loop:
+        - modprobe
+        - netfilter
+        - interfaces
+        - br-nodes
+        - gre-tunnel
+        - tunneldigger
+        - routing
+        - bird
+        - firewall
+        - dnsserver
+        - dhcpserver
+        - radvd
+        - ntpserver
+      loop_control:
+        loop_var: required_role 
 
-    - name: Configure bird  and bird6
-      include_role:
-        name: bird
-
-    # Tunneldigger 
-
-    - name: Install and configure tunneldigger
-      include_role:
-        name: tunneldigger
-    
-    - name: Configure DNS Server (bind9)
-      include_role:
-        name: dnsserver
-        
-    # DHCP
-    
-    # Da der DHCP Server auf der Tunnel Bridge oder dm BATMAN Interface lauscht,
-    # kommt zum Schluss, denn ohne bat0 oder br-nodes startet er nicht. 
-
-    - name: Install DHCP server isc-dhcp-server
-      include_role:
-        name: dhcpserver
-
-    - name: Configure radvd
-      include_role:
-        name: radvd
 
 # Für die reine Gateway-Funktion nicht erforderliche Dienste
-
-# Sonstiges
 
 - name: Install yanic
   hosts: supernodes
   tasks:
     - name: Install and configure yanic
       include_role:
-        name: yanic
-    - name: Install and configure respondd
-      include_role:
-        name: respondd
-  tags:
-    - sonstiges
+      loop:
+        - respondd
+        - yanic
+    tags:
+      - sonstiges
 #
 # Installation / update completed
 # Just log our update  

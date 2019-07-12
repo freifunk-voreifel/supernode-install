@@ -1,0 +1,8 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-11
+
+- name: "Configure GRE tunnels to FFRL"
+  include_tasks: tsk_gre-tunnel.yaml
+
+...

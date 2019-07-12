@@ -3,7 +3,7 @@
 #
 # Super node 99 for testing 
 
-ansible_host: "192.168.2.116"
+ansible_host: "192.168.2.112"
 ansible_user: "thomas"
 
 provider: 'hetzner'

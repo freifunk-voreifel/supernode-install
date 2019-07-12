@@ -11,20 +11,27 @@
 
 # Configure interfaces
 
-- name: "Update modprobe"
-  include_tasks: tsk_modprobe.yaml
-  
-- name: "Configure interfaces"
-  include_tasks: tsk_interfaces.yaml
 
-- name: "Configure bridge br-nodes for batman"
-  include_tasks: tsk_br-nodes.yaml
+# modprobe configuration is moved to role
+#- name: "Update modprobe"
+#  include_tasks: tsk_modprobe.yaml
 
-- name: "Configure GRE tunnels to FFRL"
-  include_tasks: tsk_gre-tunnel.yaml
+# interfacefaces configuration is moved to role
+#- name: "Configure interfaces"
+#  include_tasks: tsk_interfaces.yaml
 
-- name: "Configure Routing"
-  include_tasks: tsk_routing.yaml
+# br-nodes configuration is moved to role
+#- name: "Configure bridge br-nodes for batman"
+#  include_tasks: tsk_br-nodes.yaml
+
+
+# moved to role
+#- name: "Configure GRE tunnels to FFRL"
+#  include_tasks: tsk_gre-tunnel.yaml
+
+# moved to role
+#- name: "Configure Routing"
+#  include_tasks: tsk_routing.yaml
 
 # ferm configuration is moved to role
 #- name: "Configure Firewall ferm"

@@ -1,0 +1,30 @@
+# Freifunk Voreifel
+# GRE Tunnel configuration
+
+
+# < This file is maintained by ansible. Don't edit > 
+# < Configure own network devices in the directory interface.d/>
+
+# Thomas Arend
+# Stand: 2019-06-16
+
+# Template to configure one GRE tunnel in /etc/network/interfaces.d/{{ gre[item].dev }}.conf
+
+auto {{ gre[item].dev }}
+
+iface {{ gre[item].dev }} inet tunnel
+  mode gre
+  netmask {{ gre[item].netmask }}
+  address {{ gre[item].address }}
+  dstaddr {{ gre[item].daddress }}
+  local {{ gre[item].local }}
+  endpoint {{ gre[item].remote }} 
+  mtu {{ gre[item].mtu }}
+  ttl {{ gre[item].ttl }}
+  post-down ip tunnel del $IFACE
+
+{% if gre[item].inet6 is defined %}
+iface {{ gre[item].dev }} inet6 static
+  address {{ gre[item].inet6 }}/64
+{% endif %}
+# End GRE Tunnel
