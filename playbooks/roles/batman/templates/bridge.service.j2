@@ -1,0 +1,13 @@
+[Unit]
+Description="Add br-nodes to batman"
+Wants=network.target
+After=network.target auditd.service
+Before=isc-dhcp-server.service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/freifunk/batman-up-{{ hoods[item].mesh.IPv4.addr }}.sh
+ExecStop=/bin/true
+
+[Install]
+WantedBy=multi-user.target

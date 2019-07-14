@@ -4,14 +4,15 @@ domain (ip ip6) {
             policy ACCEPT;
             mod state state INVALID DROP;
             mod state state (ESTABLISHED RELATED) ACCEPT;
-            interface ( lo l2tp+ br-nodes bat0 ) ACCEPT;
+            interface ( lo l2tp+ br-bat+ bat+ gre_+ ) ACCEPT;
             proto ( icmp esp udp ) ACCEPT;
             proto tcp dport ( ssh http https 8080) ACCEPT;
+
         }
         chain OUTPUT {
             policy ACCEPT;
             outerface {{ ansible_default_ipv4.alias }} daddr 169.254.0.0/16 DROP;
-            outerface {{ ansible_default_ipv4.alias }} daddr 10.0.0.0/8 DROP;            
+            outerface {{ ansible_default_ipv4.alias }} daddr 10.0.0.0/8 DROP;
             outerface {{ ansible_default_ipv4.alias }} daddr 172.16.0.0/12 DROP; 
             outerface {{ ansible_default_ipv4.alias }} daddr 192.168.0.0/16 DROP; 
             mod state state (ESTABLISHED RELATED) ACCEPT;
@@ -40,9 +41,12 @@ domain (ip ip6) {
     }
     table nat {
         chain POSTROUTING {
-            outerface {{ ansible_default_ipv4.alias }} MASQUERADE;
-            outerface {{ gre_tunnel_prefix }}+ saddr {{ supernode.mesh.IPv4_net }}/{{ supernode.mesh.IPv4_CIDR }} SNAT to {{ ffrl.IPv4 }};
             policy ACCEPT;
+            outerface {{ ansible_default_ipv4.alias }} MASQUERADE;
+            
+            {% for item in hoods| list %}
+            outerface {{ gre_tunnel_prefix }}+ saddr {{ hoods[item].mesh.IPv4.net }}/{{ hoods[item].mesh.IPv4.CIDR }} SNAT to {{ ffrl.IPv4 }};
+            {% endfor %}
         }
     }
 }

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Start brigde for L2TP brige
+
+/sbin/ebtables -A FORWARD --logical-in br-nodes -j DROP
+/usr/local/sbin/batctl if add br-nodes
+/usr/local/sbin/batctl gw_mode server
+/sbin/ip link set up dev br-nodes
+/sbin/ip link set address {{ communitymac }}:0{{ supernode.number }} dev bat0
+/sbin/ip link set up dev bat0
+/sbin/ip addr add {{ supernode.mesh.IPv4 }}/{{ supernode.mesh.IPv4_CIDR }} broadcast {{ supernode.mesh.IPv4_brcast }} dev bat0
+/sbin/ip -6 addr add {{ supernode.mesh.IPv6 }}/64 dev bat0

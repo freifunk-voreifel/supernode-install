@@ -2,6 +2,9 @@
 # Erstellt von: Thomas Arend
 # Erstellt am:  2019-07-08
 
-# Ab hier muss noch dein Code hinein
-
+- name: restart dhcpd
+  service:
+    name: isc-dhcp-server
+    state: restarted
+    enabled: yes
 ...

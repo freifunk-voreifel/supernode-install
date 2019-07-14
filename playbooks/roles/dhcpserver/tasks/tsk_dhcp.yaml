@@ -1,12 +1,8 @@
 ---
-# supernode/tasks/tsk_dhcp.yaml
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-08
 
-# Configure LAN Interfaces in /etc/network/interfaces.conf
-
-# Create temprary directory for testing Ansible
-
-
-- name: Replace dhcpd*.conf 
+- name: replace dhcpd*.conf 
   template:
     src: "{{ item }}.j2"
     dest: "/etc/dhcp/{{ item }}"
@@ -18,22 +14,53 @@
     - dhcpd6.conf
   tags:
     - dhcp
+  notify: 
+    - restart dhcpd
+
+- name: create local subnet directory
+  file:
+    path: "/etc/dhcp/dhcpd.conf.d"
+    state: directory
+    mode: '0755'
+  notify: 
+    - restart dhcpd
+
+- name: create subnet-hood-*.conf 
+  template:
+    src: "subnet-ipv4.conf.j2"
+    dest: "/etc/dhcp/dhcpd.conf.d/subnet-hood-{{ hoods[item].namespace }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ hoods | list }}"
+  tags:
+    - dhcp
+  notify: 
+    - restart dhcpd
 
 - name: Set interfaces in /etc/default/isc-dhcp-server
   become: yes
   replace:
-    path: /etc/default/isc-dhcp-server
+    path: "/etc/default/isc-dhcp-server"
     regexp: 'INTERFACESv4=".*"'
-    replace: 'INTERFACESv4="{{ supernode.dhcp.iface }}"'
+    replace: 'INTERFACESv4="{% for item in hoods | list %}{{hoods[item].mesh.iface}} {% endfor%}"'
   tags:
     - dhcp
+  notify: 
+    - restart dhcpd
+
+# due to a bug in isc-dhcp-server dhcpd6 ist not used
 
 - name: Set interfaces in /etc/default/isc-dhcp-server
   become: yes
   replace:
-    path: /etc/default/isc-dhcp-server
+    path: "/etc/default/isc-dhcp-server"
     regexp: 'INTERFACESv6=".*"'
-    replace: 'INTERFACESv6="" # "{{ supernode.dhcp.iface }}"'
+    replace: '#INTERFACESv6="{% for item in hoods | list %}{{hoods[item].mesh.iface}} {% endfor%}"'
   tags:
     - dhcp
+  notify: 
+    - restart dhcpd
+
+- meta: flush_handlers
 ...

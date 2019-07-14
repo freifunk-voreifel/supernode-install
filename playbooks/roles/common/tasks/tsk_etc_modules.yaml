@@ -2,7 +2,7 @@
 # Freifunk Voreifel
 # Thomas Arend
 # Date: 2019-04-13
-- name: Add modules
+- name: add modules
   lineinfile: 
     dest: /etc/modules
     line: "{{ item }}"

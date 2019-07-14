@@ -1,0 +1,13 @@
+---
+# Freifunk Voreifel
+# Thomas Arend
+# Date: 2019-04-13
+
+# create a special /etc/resolv.conf to use nearby dns servers
+
+- name: create /etc/resolv.conf for {{ provider }}
+  template: 
+    src: resolv.conf.j2 
+    dest: /etc/resolv.conf
+  when: provider is defined and dns_provider is defined and dns_provider[provider] is defined
+...

@@ -29,13 +29,17 @@
 
 - include_tasks: tsk_etc_hosts.yaml
 
-# Replace time server in ntp.conf
+# create our specioa /etc/resolv.conf
+
+- include_tasks: tsk_etc_resolv.yaml
+
+# Rotate logs
 
 - include_tasks: tsk_etc_logrotate.yaml
 
-# Update kernel / grub
+# Update grub kernel parameter and grub_timeout
 
-- include_tasks: tsk_kernel.yaml
+- include_tasks: tsk_grub.yaml
 
 # Insert required modules in /etc/modules directory
 

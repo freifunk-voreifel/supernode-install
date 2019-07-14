@@ -1,14 +1,22 @@
-interface {{ supernode.mesh.iface }} {
+{% for item in hoods|list %}
+
+interface {{ hoods[item].mesh.iface }} {
         
         AdvSendAdvert on;
         IgnoreIfMissing on;
         MaxRtrAdvInterval 200;
-        RDNSS {{ supernode.mesh.IPv6 }} {};
+
+        RDNSS 
         
-	prefix {{ supernode.mesh.IPv6_net }} {
+        {{ hoods[item].mesh.IPv6.addr }}
+        
+        {};
+        
+	prefix {{ hoods[item].mesh.IPv6.net }} {
                 AdvOnLink on;
                 AdvAutonomous on;
                 AdvRouterAddr on;
         };
 };
 
+{% endfor %}

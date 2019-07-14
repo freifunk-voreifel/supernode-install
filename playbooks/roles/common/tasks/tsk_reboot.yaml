@@ -23,8 +23,3 @@
     sethostsipv4 is changed or 
     sethostsipv6 is changed or
     sethostname is changed
-
-# Restart ntp to force time update
-
-- name: Set clock # to assure valid time
-  shell: systemctl stop ntp && /usr/sbin/ntpd -q -g && systemctl start ntp

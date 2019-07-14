@@ -1,0 +1,16 @@
+[Unit]
+Description="B.A.T.M.A.N.: Add bridge br-{{ hoods[item].mesh.iface }} to {{ hoods[item].mesh.iface }}"
+Wants=network.target
+After=network-online.target
+Before=isc-dhcp-server.service ntp.service
+
+[Service]
+
+Type=oneshot
+
+ExecStart=/etc/freifunk/batman-up.sh start {{ hoods[item].mesh.iface }} {{ hoods[item].mesh.IPv4.addr }}/{{ hoods[item].mesh.IPv4.CIDR }} {{ hoods[item].mesh.IPv4.brcast }} {{ hoods[item].mesh.IPv6.addr }}/64 {{ hoods[item].mesh.MAC }}
+
+# ExecStop=/etc/freifunk/batman-up.sh stop {{ hoods[item].mesh.iface }}
+
+[Install]
+WantedBy=multi-user.target

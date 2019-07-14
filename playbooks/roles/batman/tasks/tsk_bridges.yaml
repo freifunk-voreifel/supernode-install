@@ -19,7 +19,7 @@
 
 # Copy network templates to /etc/systemd/network/
 
-- name: Create bridge directory if they do not exist
+- name: Delete old bridge dev
   file:
     path: "/etc/systemd/network/{{ item }}"
     state: absent
@@ -32,14 +32,16 @@
 
 - name: Copy bridge templates to /etc/systemd/network/
   template: 
-    src: "{{ item }}.j2"
-    dest: "/etc/systemd/network/90-{{ item }}"
+    src: "{{ item.1 }}.j2"
+    dest: "/etc/systemd/network/90-bridge-{{ hoods[item.0].mesh.iface }}.{{ item.1 }}"
     owner: root
     group: root
     mode: 0644
-  loop:
-    - br-nodes.netdev
-    - br-nodes.link
+  loop: "{{ hoods|product(devtemplate)|list }}"
+  vars:
+    devtemplate:
+      - netdev
+      - link
   tags: 
     - bridge
 
@@ -48,15 +50,24 @@
 # pre or post is going up or down
 
 
+- name: Copy batman-up templates to /etc/freifunk/
+  template: 
+    src: "batman-up.sh.j2"
+    dest: "/etc/freifunk/batman-up.sh"
+    owner: root
+    group: root
+    mode: 0755
+  tags: 
+    - bridge
+
 - name: Copy bridge.service templates to /etc/systemd/
   template: 
-    src: "{{ item }}.j2"
-    dest: "/etc/systemd/system/{{ item }}"
+    src: "batman.service.j2"
+    dest: "/etc/systemd/system/batman@{{ hoods[item].mesh.iface }}.service"
     owner: root
     group: root
     mode: 0644
-  loop:
-    - bridge.service
+  loop: "{{ hoods|list }}"
   tags: 
     - bridge
 
@@ -68,7 +79,7 @@
 
 # Excute "systemctl daemon-reload" after configs have been changed
 
-- name: Enable and restart network services
+- name: Enable and restart network
   service:
     name: "{{ item }}.service"
     state: restarted
@@ -79,7 +90,14 @@
   loop:
     - systemd-resolved
     - systemd-networkd
-    - bridge
+
+- name: Enable and restart batman + bridges
+  service:
+    name: "batman@{{ hoods[item].mesh.iface }}.service"
+    state: restarted
+    enabled: yes
+  ignore_errors: true
+  loop: "{{ hoods|list }}"
     
 # End 
 ...

@@ -1,4 +1,4 @@
-
+---
 
 - name: disable multi CPU Kernel (SMP) # Wg. Fehler batman auf multi proc sys
   lineinfile: 
@@ -9,9 +9,20 @@
   register: grubnosmp
   tags:
     - kernel
+
+- name: reduce timeout to 1 second
+  lineinfile: 
+    dest: /etc/default/grub 
+    regexp: '^GRUB_TIMEOUT='
+    line: 'GRUB_TIMEOUT=1'
+    state: present
+  register: grubtimeout
+  tags:
+    - kernel
     
-- name: Update grub
+- name: update grub
   shell: update-grub2
-  when: grubnosmp.changed
+  when: grubnosmp.changed or grubtimeout.changed
   tags:
     - grub
+...

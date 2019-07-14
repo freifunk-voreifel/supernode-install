@@ -1,4 +1,10 @@
 ---
 # Erstellt von: Thomas Arend
-# Erstellt am:  2019-06-23
+# Erstellt am:  2019-07-13
+
+- name: restart ntp
+  service:
+    name: ntp
+    state: restarted
+    enabled: yes
 ...

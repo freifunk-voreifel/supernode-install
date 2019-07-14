@@ -9,6 +9,14 @@
 #
 #
 
+- name: Stop DNS Server
+  service:
+    name: bind9
+    state: stopped
+  ignore_errors: true
+  tags:
+    - dns
+    
 - name: Create /etc/bind/zones
   file: 
     path: /etc/bind/zones

@@ -5,9 +5,13 @@
 
 - name: "Test supernode"
   hosts: supernodes
-  gather_facts: no
+  gather_facts: yes
   become: yes
   tasks:
-    - include_role:
-        name: testing
+    - raw: "echo '{{ item.1 }}.j2 + /etc/systemd/network/90-bridge-{{ hoods[item.0].mesh.iface }}.{{ item.1 }}' >>/tmp/itemlist"
+      loop: "{{ hoods|product(devtemplate)| list }}"
+      vars:
+        devtemplate:
+          - netdev
+          - link
 ...

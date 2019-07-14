@@ -44,7 +44,7 @@ pmtu=0
 
 ; The batman device of this Hood (e.g. bat2)
 
-batdev={{ supernode.mesh.iface }}
+batdev=bat{{ hoods[item].number }}
 
 [log]
 ; Verbosity
@@ -69,13 +69,13 @@ log_ip_addresses=false
 
 ; Called after the tunnel interface goes up
 
-session.up=/etc/tunneldigger/bataddif.sh
+session.up=/etc/tunneldigger/session-up-{{ hoods[item].namespace }}.sh
 
 ; Called just before the tunnel interface goes down
 ; (However, due to hooks being asynchonous, the hook may actually execute after the interface was
 ; already removed.)
 
-session.pre-down=/etc/tunneldigger/batdelif.sh
+session.pre-down=/etc/tunneldigger/session-pre-down-{{ hoods[item].namespace }}.sh
 
 ; Called after the tunnel interface goes down
 

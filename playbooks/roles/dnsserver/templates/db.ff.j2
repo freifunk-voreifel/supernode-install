@@ -9,17 +9,9 @@ $TTL 600
                                 4W      ; Expire
                                 3H )    ; NX (TTL Negativ Cache)
 
-@                               IN      NS      {{ supernode.hostname }}.infra.ff.
-                                IN      A       {{ supernode.mesh.IPv4 }}
-                                IN      AAAA	{{ supernode.mesh.IPv6 }}
-localhost			IN	A    	127.0.0.1
-				IN  	AAAA    ::1
-nextnode			IN  	A       10.152.61.1
-				IN  	AAAA    2a03:2260:121:1000::1
-;;This Supernode
-{{ supernode.hostname }}.infra		IN	A	{{ supernode.mesh.IPv4 }}
-				IN	AAAA	{{ supernode.mesh.IPv6 }}
-;; Update Servers
-update1.infra			IN      AAAA    2a03:2260:121:4000:6038:61ff:fe34:3461
-update2.infra			IN      AAAA    2a03:2260:121:4000:6038:61ff:fe34:3461
-update3.infra			IN      AAAA    2a03:2260:121:4000:6038:61ff:fe34:3461
+@                               IN      NS      {{ inventory_hostname_short }}.infra.ff.
+                                IN      A       {{ ansible_default_ipv4.address }}
+localhost	IN	    A    	127.0.0.1
+			IN  	AAAA    ::1
+nextnode	IN  	A       10.152.64.1
+			IN  	AAAA    2a03:2260:301a::1

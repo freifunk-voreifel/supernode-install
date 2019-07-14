@@ -4,8 +4,7 @@
 
 # Because batman can't handle many interfaces very well we build a bridge br-nodes
 
-- name: "Configure bridge br-nodes for batman"
-  include_tasks: tsk_br-nodes.yaml
-
+- name: "Create and configure bridge for batman"
+  include_tasks: tsk_bridges.yaml
 
 ...

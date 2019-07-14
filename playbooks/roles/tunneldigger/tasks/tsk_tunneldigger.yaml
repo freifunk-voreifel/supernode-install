@@ -6,32 +6,39 @@
 #
 #
 
+# Stop the running tunneldigger before installing a new one
+# Be aware we are stopping only hoods, which we have in the Ansible
+
+- name: stop service tunneldigger
+  service:
+    name: "tunneldigger@{{ hoods[item].namespace }}.service"
+    state: stopped
+  ignore_errors: true
+  loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger
+
 # Install and configure tunneldigger
 
-- name: Create tunneldigger directories if they do not exist
+- name: create tunneldigger directories if they do not exist
   file:
     path: "/{{ item }}/tunneldigger"
     state: directory
     mode: '0755'
   loop:
     - etc
-    - srv
-    
-# Stop the running tunneldigger before installing a new one
-# Be aware we are stopping only hoods, which we have in the Ansible
 
-- name: Stop service tunneldigger
-  service:
-    name: "tunneldigger@{{ hoods[item].namespace }}.service"
-    state: stopped
-  ignore_errors: True
-  loop: "{{ hoods | list }}"
-  tags: 
-    - tunneldigger
-    
+- name: delete /srv/tunneldigger 
+  file:
+    path: "/{{ item }}/tunneldigger"
+    state: absent
+    mode: '0755'
+  loop:
+    - srv
+
 # Get tunneldigger from github
 
-- name: Get Tunneldigger
+- name: get tunneldigger from git
   git: 
     repo: https://github.com/{{ github_user }}/tunneldigger.git
     dest: /srv/tunneldigger
@@ -41,12 +48,13 @@
 
 # Install tunneldigger
 
-- name: Configure tunneldigger
+- name: configure tunneldigger
   raw: "cd /srv/tunneldigger && virtualenv env_tunneldigger && source env_tunneldigger/bin/activate && cd broker && python setup.py install"
-  tags: 
+  ignore_errors: true
+  tags:
     - tunneldigger
 
-- name: Copy l2tp broker config template
+- name: copy l2tp broker config template
   template: 
     src: "l2tp_broker.cfg.j2"
     dest: "/etc/tunneldigger/hood-{{ hoods[item].namespace }}.cfg"
@@ -57,13 +65,25 @@
   tags: 
     - tunneldigger
 
-- name: Copy tunneldigger bataddif
+- name: copy tunneldigger session-up to add new tunnel to br-bat<n> device
   template: 
-    src: "bataddif.sh.j2"
-    dest: /srv/tunneldigger/bataddif.sh
+    src: "session-up.sh.j2"
+    dest: /etc/tunneldigger/session-up-{{ hoods[item].namespace }}.sh
     owner: root 
     group: root
     mode: 0500
+  loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger
+    
+- name: copy tunneldigger session-down scripts to delete tunnel from br-bat<n>
+  template: 
+    src: "session-pre-down.sh.j2"
+    dest: /etc/tunneldigger/session-pre-down-{{ hoods[item].namespace }}.sh
+    owner: root 
+    group: root
+    mode: 0500
+  loop: "{{ hoods | list }}"
   tags: 
     - tunneldigger
 
@@ -76,7 +96,6 @@
     mode: 0500
   loop:
     - start-broker.sh
-    - batdelif.sh
   tags: 
     - tunneldigger
 

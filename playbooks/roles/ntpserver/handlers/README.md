@@ -2,7 +2,5 @@
 
 Erstellt von **Thomas Arend** am *2019-07-08*
 
-# Achtung, dies ist ein **Muster!**
-
-*(Bitte eine Beschreibung einfügen! Weil: Gute Doku hilft!)*
+At the end of the role we should restart the NTP Server which is only neccessary when we changed the ntpd.conf file. Which we unfortunately do everytime.
 
