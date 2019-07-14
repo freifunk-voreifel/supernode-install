@@ -1,10 +1,10 @@
-# Bridges for Tunneldigger and B.A.T.M.A.N-ADV
+# Tunneldigger and B.A.T.M.A.N-ADV
 Bridges are used to connect L2TP tunnels and BATMAN interfaces and separate the devices in small domains.
 
 Freifunk Voreifel uses a subnet 10.152.64.0/18
 
 The subnet is devided in sub-subnet /20 and /21.
-
+```
 | n  | subnet          | usage                    |
 +----+-----------------+--------------------------+
 |  8 | 10.152.64.0/20  | Meckenheim               |
@@ -13,6 +13,7 @@ The subnet is devided in sub-subnet /20 and /21.
 | 13 | 10.152.104.0/21 | old Meckenheim subnet    |
 | 14 | 10.152.112.0/21 | old domain Rheinbach     |
 | 15 | 10.152.120.0/21 | testfunk                 |
+```
 
 For each subnet the third octet is n *8. 
 
