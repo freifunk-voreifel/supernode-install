@@ -5,9 +5,10 @@
 ACTION="$1"
 BATDEV="$2"
 IPv4="$3"
-BRCAST="$4"
-IPv6="$5"
-MAC="$6"
+IPv4Net="$4"
+BRCAST="$5"
+IPv6="$6"
+MAC="$7"
 
 
 IP=/sbin/ip
@@ -25,16 +26,21 @@ start)
 
   $IP link set address $MAC dev $BATDEV
 
-  $IP link set up dev br-$BATDEV
+#  $IP link set up dev br-$BATDEV
   
   $IP link set up dev $BATDEV
 
   $IP addr add $IPv4 broadcast $BRCAST dev $BATDEV
+
+  $IP route add $IPv4Net dev $BATDEV table 42
   $IP -6 addr add $IPv6 dev $BATDEV
+  
   exit $?
   ;;
 
 stop)
+
+  $IP route del $IPv4Net dev $BATDEV table 42
   $BATCTL -m $BATDEV if del br-$BATDEV
   exit $?
   ;;

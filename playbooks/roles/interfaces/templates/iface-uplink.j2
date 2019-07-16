@@ -5,14 +5,15 @@
 # < Configure own network devices in the directory interface.d/>
 
 # Thomas Arend
-# Stand: 2019-04-16
+# Stand: 2019-07-15
 
 auto {{ ffrl.uplink }}
 
 iface {{ ffrl.uplink }} inet static
+  brigde_ports {% for item in gre|list %} {{ gre[item].dev }} {% endfor %}
     address {{ ffrl.IPv4 }}
     netmask 255.255.255.255
-    pre-up ip link add $IFACE type dummy
+    pre-up ip link add $IFACE type bridge
     post-up ip rule add fwmark 0x4 table 42
     post-up ip rule add from {{ ffrl.IPv4 }}/32 lookup 42
     pre-down ip rule del fwmark 0x4 table 42

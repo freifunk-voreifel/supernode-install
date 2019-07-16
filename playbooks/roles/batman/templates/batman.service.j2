@@ -8,7 +8,7 @@ Before=isc-dhcp-server.service ntp.service
 
 Type=oneshot
 
-ExecStart=/etc/freifunk/batman-up.sh start {{ hoods[item].mesh.iface }} {{ hoods[item].mesh.IPv4.addr }}/{{ hoods[item].mesh.IPv4.CIDR }} {{ hoods[item].mesh.IPv4.brcast }} {{ hoods[item].mesh.IPv6.addr }}/64 {{ hoods[item].mesh.MAC }}
+ExecStart=/etc/freifunk/batman-up.sh start {{ hoods[item].mesh.iface }} {{ hoods[item].mesh.IPv4.addr }}/{{ hoods[item].mesh.IPv4.CIDR }} {{ hoods[item].mesh.IPv4.net }}/{{ hoods[item].mesh.IPv4.CIDR }} {{ hoods[item].mesh.IPv4.brcast }} {{ hoods[item].mesh.IPv6.addr }}/64 {{ hoods[item].mesh.MAC }}
 
 # ExecStop=/etc/freifunk/batman-up.sh stop {{ hoods[item].mesh.iface }}
 

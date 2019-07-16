@@ -54,7 +54,7 @@ hoods:
         brcast: 10.152.79.255
         net: 10.152.64.0
         netmask: 255.255.240.0
-        CIDR: 19
+        CIDR: 20
         xfer: 10.152.64.2
 
   rheinbach: 
@@ -72,7 +72,7 @@ hoods:
       DNS6: 2a03:2260:301a:1000::1
       NTP: 10.152.80.3
     mesh:
-      iface: bat14
+      iface: bat10
       mtu: 1312
       MAC: a2:8c:ae:6f:10:0{{ supernode.number }}
       IPv6:
@@ -84,7 +84,7 @@ hoods:
         brcast: 10.152.95.255
         net: 10.152.80.0
         netmask: 255.255.240.0
-        CIDR: 21
+        CIDR: 20
         xfer: 10.152.80.2
 
   meckenheimold:
@@ -152,7 +152,7 @@ hoods:
     number: 15
     address: "{{ ansible_default_ipv4.address }}"
     interface: "{{ ansible_default_ipv4.alias }}"
-    port: 53842
+    port: 20015
     max_tunnels: 512
     port_base: 15000
     tunnel_id_base: 15000
@@ -162,7 +162,7 @@ hoods:
       DNS6: 2a03:2260:301a:1500::1
       NTP: 10.152.120.3
     mesh:
-      iface: bat14
+      iface: bat15
       mtu: 1312
       MAC: a2:8c:ae:6f:15:0{{ supernode.number }}
       IPv6:
