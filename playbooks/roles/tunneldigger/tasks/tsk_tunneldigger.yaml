@@ -87,18 +87,6 @@
   tags: 
     - tunneldigger
 
-- name: Copy tunneldigger scripts
-  copy: 
-    src: "{{ item }}"
-    dest: "/etc/tunneldigger"
-    owner: root
-    group: root
-    mode: 0500
-  loop:
-    - start-broker.sh
-  tags: 
-    - tunneldigger
-
 - name: Copy tunneldigger service template
   template: 
     src: "tunneldigger.service.j2"

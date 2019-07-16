@@ -10,7 +10,6 @@ BRCAST="$5"
 IPv6="$6"
 MAC="$7"
 
-
 IP=/sbin/ip
 BATCTL=/usr/local/sbin/batctl
 EBT=/sbin/ebtables
@@ -26,8 +25,6 @@ start)
 
   $IP link set address $MAC dev $BATDEV
 
-#  $IP link set up dev br-$BATDEV
-  
   $IP link set up dev $BATDEV
 
   $IP addr add $IPv4 broadcast $BRCAST dev $BATDEV
