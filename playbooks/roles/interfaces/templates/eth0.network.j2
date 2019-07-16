@@ -1,0 +1,14 @@
+[Match]
+Name={{ ansible_default_ipv4.alias }}
+
+[Network]
+Address={{ (ansible_default_ipv4.network + '/' + ansible_default_ipv4.netmask) | ipaddr('network/prefix') }}
+Gateway={{ ansible_default_ipv4.gateway }}
+DNS=8.8.8.8
+DNS=8.8.4.4
+
+{% for item in gre|list %}
+
+Tunnel={{ gre[item].dev }}
+
+{% endfor %}
