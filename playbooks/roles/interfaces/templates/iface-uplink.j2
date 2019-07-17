@@ -7,20 +7,20 @@
 # Thomas Arend
 # Stand: 2019-07-15
 
-auto {{ ffrl.uplink }}
+auto {{ ffrl.iface }}
 
-iface {{ ffrl.uplink }} inet static
+iface {{ ffrl.iface }} inet static
   brigde_ports {% for item in gre|list %} {{ gre[item].dev }} {% endfor %}
-    address {{ ffrl.IPv4 }}
+    address {{ ffrl.IPv4.addr }}
     netmask 255.255.255.255
     pre-up ip link add $IFACE type bridge
     post-up ip rule add fwmark 0x4 table 42
-    post-up ip rule add from {{ ffrl.IPv4 }}/32 lookup 42
+    post-up ip rule add from {{ ffrl.IPv4.addr }}/32 lookup 42
     pre-down ip rule del fwmark 0x4 table 42
-    pre-down ip rule del from {{ ffrl.IPv4 }}/32 lookup 42
+    pre-down ip rule del from {{ ffrl.IPv4.addr }}/32 lookup 42
     post-down ip link del $IFACE
 
-iface {{ ffrl.uplink }} inet6 static
-    address {{ ffrl.IPv6 }}/56
+iface {{ ffrl.iface }} inet6 static
+    address {{ ffrl.IPv6.addr }}/64
 #    post-up ip -6 rule add fwmark 0x4 table 42
 #    post-up ip -6 rule add from ## supernode.mesh.IPv6_net ## lookup 42

@@ -31,7 +31,10 @@ start)
 
   $IP route add $IPv4Net dev $BATDEV table 42
   $IP -6 addr add $IPv6 dev $BATDEV
-  
+
+  $IP -4 rule add dev $BATDEV lookup ffrl
+  $IP -6 rule add dev $BATDEV lookup ffrl
+
   exit $?
   ;;
 

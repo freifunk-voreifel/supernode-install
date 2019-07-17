@@ -6,3 +6,9 @@ MTUBytes={{ gre[item].mtu }}
 [Tunnel]
 Local={{ gre[item].local }}
 Remote={{ gre[item].remote }}
+
+
+[RoutingPolicyRule] 
+Table=42
+FirewallMark=4
+Priority=1000

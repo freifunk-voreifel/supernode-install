@@ -1,3 +1,8 @@
 [NetDev]
-Name=ffrl-uplink
+Name={{ ffrl.iface }}
 Kind=bridge
+
+[RoutingPolicyRule] 
+Table=42
+FirewallMark=4
+Priority=1000

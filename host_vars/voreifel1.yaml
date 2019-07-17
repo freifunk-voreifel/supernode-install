@@ -10,10 +10,12 @@ provider: 'hetzner'
 # New variable names, old obsolte variables moved to end of file
 
 ffrl:
-    net: 2a03:2260:301a::/48
-    IPv4: 185.66.193.126
-    IPv6: 2a03:2260:301a::1
-    uplink: "ffrl_uplink"
+    IPv4: 
+      addr: 185.66.193.126
+    IPv6: 
+      addr: 2a03:2260:301a::1
+      net: 2a03:2260:301a::/48
+    iface: "gre_uplink"
 
 supernode:
     number: 1

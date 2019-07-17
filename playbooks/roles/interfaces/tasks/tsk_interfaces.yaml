@@ -32,7 +32,7 @@
 - name: IFACE FFRL uplink 
   template:
     src: iface-uplink.j2
-    dest: /etc/network/interfaces.d/ffrl_uplink
+    dest: "/etc/network/interfaces.d/{{ ffrl.iface }}"
     owner: root
     group: root
     mode: 0644

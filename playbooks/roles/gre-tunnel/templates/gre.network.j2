@@ -3,3 +3,10 @@ Name={{ gre[item].dev }}
 
 [Network]
 Address={{ gre[item].address }}
+
+[ROUTINGPOLICYRULE]
+From={{ ffrl.IPv6.net }} 
+FirewallMark=4
+Table=42
+IncomingInterface={{ gre[item].dev }}
+OutgoingInterface={{ gre[item].dev }}

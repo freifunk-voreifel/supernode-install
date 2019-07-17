@@ -7,12 +7,12 @@
  *
  **/
 
-router id {{ ansible_default_ipv4.address }} ;
+router id {{ ffrl.IPv4.addr }} ;
 
 protocol direct announce {
         table master;
-        import where net ~ [{{ ffrl.IPv4 }}/32];
-        interface {{ ffrl.IPv4 }};
+        import where net ~ [{{ ffrl.IPv4.addr }}/32];
+        interface "{ ffrl.iface }}";
 };
 
 protocol kernel {
@@ -20,7 +20,7 @@ protocol kernel {
         device routes;
         import none;
         export filter {
-                krt_prefsrc = {{ ffrl.IPv4 }};
+                krt_prefsrc = {{ ffrl.IPv4.addr }};
                 accept;
         };
         kernel table 42;

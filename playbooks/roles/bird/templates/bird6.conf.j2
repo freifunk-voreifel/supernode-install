@@ -10,11 +10,12 @@ log syslog { info };
 
 debug protocols { states, routes, filters, interfaces, events, packets };
 
-router id {{ ansible_default_ipv4.address }} ;
+router id {{ ffrl.IPv4.addr }} ;
 
 protocol direct {
-        interface "-eth0", "*";  # Restrict network interfaces it works with
-
+        table master; # implizit
+        import where net ~ [{{ ffrl.IPv6.net }}];
+        interface "{{ ffrl.iface }}";
 }
 
 protocol kernel {
@@ -25,7 +26,7 @@ protocol kernel {
 }
 
 protocol device {
-        scan time 10;           # Scan interfaces every 10 seconds
+        scan time 15;           # Scan interfaces every 10 seconds
 }
 
 function is_default() {
@@ -33,7 +34,7 @@ function is_default() {
 }
 
 filter hostroute {
-	if net ~ [{{ ffrl.net }}{56,56}] then accept;
+	if net ~ [{{ ffrl.IPv6.net }}{56,56}] then accept;
         reject;
 }
 

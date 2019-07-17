@@ -33,7 +33,7 @@ function is_default() {
 }
 
 filter hostroute {
-	if net ~ [{{ ffrl.net }}{56,56}] then accept;
+	if net ~ [{{ ffrl.IPv6.net }}] then accept;
         reject;
 }
 

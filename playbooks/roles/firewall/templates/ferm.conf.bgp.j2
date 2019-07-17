@@ -25,7 +25,10 @@ domain (ip ip6) {
     }
     table mangle {
         chain PREROUTING {
-            saddr 10.0.0.0/8 daddr ! 10.0.0.0/8 { 
+            saddr 10.152.64.0/18 daddr ! 10.152.64.0/18 { 
+                MARK set-mark 4;
+            }
+            saddr {{ ffrl.IPv6.net }} daddr ! {{ ffrl.IPv6.net }} { 
                 MARK set-mark 4;
             }
         } 
@@ -45,7 +48,7 @@ domain (ip ip6) {
             outerface {{ ansible_default_ipv4.alias }} MASQUERADE;
             
             {% for item in hoods| list %}
-            outerface {{ gre_tunnel_prefix }}+ saddr {{ hoods[item].mesh.IPv4.net }}/{{ hoods[item].mesh.IPv4.CIDR }} SNAT to {{ ffrl.IPv4 }};
+            outerface {{ gre_tunnel_prefix }}+ saddr {{ hoods[item].mesh.IPv4.net }}/{{ hoods[item].mesh.IPv4.CIDR }} SNAT to {{ ffrl.IPv4.addr }};
             {% endfor %}
         }
     }
