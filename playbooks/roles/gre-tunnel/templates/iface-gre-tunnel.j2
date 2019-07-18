@@ -21,10 +21,12 @@ iface {{ gre[item].dev }} inet tunnel
   endpoint {{ gre[item].remote }} 
   mtu {{ gre[item].mtu }}
   ttl {{ gre[item].ttl }}
+  post-up ip -4 rule add dev $IFACE lookup ffrl
   post-down ip tunnel del $IFACE
 
 {% if gre[item].inet6 is defined %}
 iface {{ gre[item].dev }} inet6 static
   address {{ gre[item].inet6 }}/64
+  post-up ip -6 rule add dev $IFACE lookup ffrl
 {% endif %}
 # End GRE Tunnel
