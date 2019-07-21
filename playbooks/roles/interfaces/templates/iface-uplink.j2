@@ -22,4 +22,4 @@ iface {{ ffrl.iface }} inet static
 iface {{ ffrl.iface }} inet6 static
     address {{ ffrl.IPv6.addr }}/64
     post-up ip -6 rule add fwmark 0x4 table 42
-    post-up ip -6 rule add from {{ supernode.mesh.IPv6_net }} lookup 42
+    post-up ip -6 rule add from {{ ffrl.IPv6.net }} lookup 42

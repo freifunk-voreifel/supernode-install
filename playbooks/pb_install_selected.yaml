@@ -1,0 +1,44 @@
+---
+# Playbook to install all components via roles!
+# Thoasm Arend
+# Stand 2019-07-08
+
+# Stage 03
+#
+# Install supernode
+
+- name: Install supernode components
+  hosts: supernodes
+  gather_facts: yes
+  become: true
+  tags:
+    - supernode
+  tasks:
+    - name: Configure modprobe 
+      include_role:
+        name: "{{ required_role }}"
+      loop:
+        - modprobe
+        - netfilter
+        - interfaces
+        - gre-tunnel
+        - radvd
+        - bird
+        #- tunneldigger
+        #- batman
+        #- routing
+        #- dhcpserver
+        #- dnsserver
+        #- firewall
+        #- ntpserver
+      loop_control:
+        loop_var: required_role 
+
+
+    - name: Reboot the server finally
+      shell: sleep 2 && shutdown -r now "Ansible updates triggered"
+      async: 1
+      poll: 0
+      ignore_errors: true
+
+...

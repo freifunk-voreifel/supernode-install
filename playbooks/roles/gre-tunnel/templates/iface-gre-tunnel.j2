@@ -22,13 +22,13 @@ iface {{ gre[item].dev }} inet tunnel
   mtu {{ gre[item].mtu }}
   ttl {{ gre[item].ttl }}
   post-up ip -4 rule add dev $IFACE lookup ffrl
-  post-up ip -4 rule add fwmark 0x4 table 42
+## nur im uplink iface post-up ip -4 rule add fwmark 0x4 table 42
   post-down ip tunnel del $IFACE
 
 {% if gre[item].inet6 is defined %}
 iface {{ gre[item].dev }} inet6 static
   address {{ gre[item].inet6 }}/64
   post-up ip -6 rule add dev $IFACE lookup ffrl
-  post-up ip -6 rule add fwmark 0x4 table 42
+## nur im uplink iface  post-up ip -6 rule add fwmark 0x4 table 42
 {% endif %}
 # End GRE Tunnel

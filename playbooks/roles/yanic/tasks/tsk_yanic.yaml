@@ -10,6 +10,12 @@
 # Install yanic
 #
 
+- name: Create /opt/freifunk directory
+  file: 
+    path: /opt/freifunk
+    state: directory
+    mode: 0755
+
 - name: Stop a running yanic service
   service:
     name: "yanic.service"

@@ -1,11 +1,13 @@
 [Match]
 Name={{ ansible_default_ipv4.alias }}
+MacAddress={{ ansible_default_ipv4.macaddress }} 
 
 [Network]
 Address={{ (ansible_default_ipv4.network + '/' + ansible_default_ipv4.netmask) | ipaddr('network/prefix') }}
 Gateway={{ ansible_default_ipv4.gateway }}
-DNS=8.8.8.8
-DNS=8.8.4.4
+DNS=213.133.98.98
+DNS=213.133.99.99
+DNS=213.133.100.100
 
 {% for item in gre|list %}
 

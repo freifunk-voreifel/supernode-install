@@ -24,22 +24,6 @@ supernode:
     hostname: "{{inventory_hostname_short}}"
     fqdn: "ff"
     asn: 65201
-    dhcp:
-      range: 10.152.81.0 10.152.94.254
-      iface: bat0
-    mesh:
-        iface: bat0
-        mtu: 1312
-        IPv6: 2a03:2260:301a::2
-        IPv6_net: 2a03:2260:301a::/48
-        IPv6_xfer: 2a03:2260:301a::1
-        IPv4: 10.152.80.1
-        IPv4_brcast: 10.152.95.255
-        IPv4_net: 10.152.80.0
-        IPv4_netmask: 255.255.192.0
-        IPv4_CIDR: 18
-        IPv4_xfer: 10.152.64.1
-        MAC: a2:8c:ae:6f:f7:02
 
 ul_mesh_MAC: a2:8c:ae:6f:f7:20
 
@@ -62,6 +46,7 @@ sn_exit: 1
 gre:
   ber_a:
     description: "Rheinland Backbone Berlin A"
+    enabled: true
     remote: '185.66.195.0'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
@@ -76,6 +61,7 @@ gre:
     asn: 201701
   ber_b:
     description: "Rheinland Backbone Berlin B"
+    enabled: true
     remote: '185.66.195.1'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
@@ -90,6 +76,7 @@ gre:
     asn: 201701
   dus_a:
     description: "Rheinland Backbone Duesseldorf A"
+    enabled: true
     remote: '185.66.193.0'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
@@ -104,6 +91,7 @@ gre:
     asn: 201701
   dus_b:
     description: "Rheinland Backbone Duesseldorf B"
+    enabled: true
     remote: '185.66.193.1'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
@@ -118,6 +106,7 @@ gre:
     asn: 201701
   fra_a:
     description: "Rheinland Backbone Frankfurt A"
+    enabled: true
     remote: '185.66.194.0'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
@@ -132,6 +121,7 @@ gre:
     asn: 201701
   fra_b:
     description: "Rheinland Backbone Frankfurt B"
+    enabled: true
     remote: '185.66.194.1'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'

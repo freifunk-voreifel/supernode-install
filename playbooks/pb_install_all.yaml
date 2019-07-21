@@ -7,6 +7,22 @@
 #
 # Install common Linux components (for all servers)
 
+# Only needed after first installation
+
+# This step must be started 
+# with -kK and ssh and become password
+
+#- name: Make ansible compatible and install admin accounts
+#  hosts: all
+#  gather_facts: yes
+#  become: true
+#  tags:
+#    - ansible-compatible
+#  tasks:
+#    - name:  Basic installation for all servers
+#      include_role:
+#        name: ansible-compatible    # common components for all servers
+
 - name: Install common components
   hosts: all
   gather_facts: yes

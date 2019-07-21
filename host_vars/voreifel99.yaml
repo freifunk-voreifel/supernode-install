@@ -46,6 +46,7 @@ sn_exit: 1
 gre:
   ber_a:
     description: "Rheinland Backbone Berlin A"
+    enabled: true
     remote: '192.168.2.71'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'

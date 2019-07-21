@@ -1,0 +1,13 @@
+---
+# Playbook to install all components via roles!
+# Thoasm Arend
+# Stand 2019-04-17
+
+- name: Make host ansible compatible
+  hosts: all
+  gather_facts: yes
+  become: true
+  tasks:
+    - include_role:
+        name: ansible-compatible
+...

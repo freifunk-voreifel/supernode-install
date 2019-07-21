@@ -9,6 +9,13 @@
 #
 #
 
+- name: Enable and start service radvd
+  service: 
+    name: radvd
+    state: stopped
+  tags:
+    - radvd
+
 - name: Copy radvd config template
   template: 
     src: radvd.conf.j2
@@ -18,3 +25,12 @@
     mode: 0444
   tags:
     - radvd
+
+- name: Enable and start service radvd
+  service: 
+    name: radvd
+    state: restarted
+    enabled: yes
+  tags:
+    - radvd
+...
