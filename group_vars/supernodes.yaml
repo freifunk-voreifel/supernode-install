@@ -38,17 +38,18 @@ hoods:
     tunnel_id_base: 8000
     dhcp:
       range: 10.152.65.1 10.152.78.254
-      DNS: 10.152.64.1
-      DNS6: 2a03:2260:301a:0800::1
-      NTP: 10.152.64.3
+      range6: "{{ ffrl.IPv6.prefix48 }}:0800::/64"
+      NTP:  "10.152.64.2"
+      DNS: "10.152.64.1"
+      DNS6: "{{ ffrl.IPv6.prefix48 }}::1 , {{ ffrl.IPv6.prefix48 }}::2"
     mesh:
       iface: bat8
       mtu: 1312
       MAC: a2:8c:ae:6f:08:0{{ supernode.number }}
       IPv6:
-        addr: 2a03:2260:301a:0800::1
-        net: 2a03:2260:301a:0800::/64   # Prefix für radvd
-        xfer: 2a03:2260:301a:0800::2
+        addr: "{{ ffrl.IPv6.prefix48 }}:0800::1"
+        net: "{{ ffrl.IPv6.prefix48 }}:0800::/64"   # Prefix für radvd
+        xfer: "{{ ffrl.IPv6.prefix48 }}:0800::2"
       IPv4:
         addr: 10.152.64.1
         brcast: 10.152.79.255
@@ -68,17 +69,18 @@ hoods:
     tunnel_id_base: 20000
     dhcp:
       range: 10.152.81.1 10.152.94.254
-      DNS: 10.152.80.1
-      DNS6: 2a03:2260:301a:1000::1
-      NTP: 10.152.80.3
+      range6: "{{ ffrl.IPv6.prefix48 }}:1000::/64"
+      NTP:  "10.152.80.2"
+      DNS: "10.152.80.1"
+      DNS6: "{{ ffrl.IPv6.prefix48 }}::1 , {{ ffrl.IPv6.prefix48 }}::2"
     mesh:
       iface: bat10
       mtu: 1312
       MAC: a2:8c:ae:6f:10:0{{ supernode.number }}
       IPv6:
-        addr: 2a03:2260:301a:1000::1
-        net: 2a03:2260:301a:1000::/64   # Prefix für radvd
-        xfer: 2a03:2260:301a:1000::2
+        addr: "{{ ffrl.IPv6.prefix48 }}:1000::1"
+        net: "{{ ffrl.IPv6.prefix48 }}:1000::/64"   # Prefix für radvd
+        xfer: "{{ ffrl.IPv6.prefix48 }}:1000::2"
       IPv4:
         addr: 10.152.80.1
         brcast: 10.152.95.255
@@ -98,17 +100,18 @@ hoods:
     tunnel_id_base: 13000
     dhcp:
       range: 10.152.105.1 10.152.110.254
-      DNS: 10.152.104.1
-      DNS6: 2a03:2260:301a:1300::1
-      NTP: 10.152.104.3
+      range6: "{{ ffrl.IPv6.prefix48 }}:1300::/64"
+      NTP:  "10.152.105.2"
+      DNS: "10.152.105.1"
+      DNS6: "{{ ffrl.IPv6.prefix48 }}::1 , {{ ffrl.IPv6.prefix48 }}::2"
     mesh:
       iface: bat13
       mtu: 1312
       MAC: a2:8c:ae:6f:13:0{{ supernode.number }}
       IPv6:
-        addr: 2a03:2260:301a:1300::1
-        net: 2a03:2260:301a:1300::/64   # Prefix für radvd
-        xfer: 2a03:2260:301a:1300::2
+        addr: "{{ ffrl.IPv6.prefix48 }}:1300::1"
+        net: "{{ ffrl.IPv6.prefix48 }}:1300::/64"   # Prefix für radvd
+        xfer: "{{ ffrl.IPv6.prefix48 }}:1300::2"
       IPv4:
         addr: 10.152.104.1
         brcast: 10.152.111.255
@@ -128,17 +131,18 @@ hoods:
     tunnel_id_base: 14000
     dhcp:
       range: 10.152.113.1 10.152.119.254
-      DNS: 10.152.112.1
-      DNS6: 2a03:2260:301a:1400::1
-      NTP: 10.152.112.3
+      range6: "{{ ffrl.IPv6.prefix48 }}:1400::/64"
+      NTP:  "10.152.112.2"
+      DNS: "10.152.112.1"
+      DNS6: "{{ ffrl.IPv6.prefix48 }}::1 , {{ ffrl.IPv6.prefix48 }}::2"
     mesh:
       iface: bat14
       mtu: 1312
       MAC: a2:8c:ae:6f:14:0{{ supernode.number }}
       IPv6:
-        addr: 2a03:2260:301a:1400::1
-        net: 2a03:2260:301a:1400::/64   # Prefix für radvd
-        xfer: 2a03:2260:301a:1400::2
+        addr: "{{ ffrl.IPv6.prefix48 }}:1400::1"
+        net: "{{ ffrl.IPv6.prefix48 }}:1400::/64"   # Prefix für radvd
+        xfer: "{{ ffrl.IPv6.prefix48 }}:1400::2"
       IPv4:
         addr: 10.152.112.1
         brcast: 10.152.119.255
@@ -158,17 +162,18 @@ hoods:
     tunnel_id_base: 15000
     dhcp:
       range: 10.152.121.1 10.152.126.254
-      DNS: 10.152.120.1
-      DNS6: 2a03:2260:301a:1500::1
-      NTP: 10.152.120.3
+      range6: "{{ ffrl.IPv6.prefix48 }}:1500::/64"
+      NTP:  "10.152.120.2"
+      DNS: "10.152.120.1"
+      DNS6: "{{ ffrl.IPv6.prefix48 }}::1 , {{ ffrl.IPv6.prefix48 }}::2"
     mesh:
       iface: bat15
       mtu: 1312
       MAC: a2:8c:ae:6f:15:0{{ supernode.number }}
       IPv6:
-        addr: 2a03:2260:301a:1500::1
-        net: 2a03:2260:301a:1500::/64   # Prefix für radvd
-        xfer: 2a03:2260:301a:1500::2
+        addr: "{{ ffrl.IPv6.prefix48 }}:1500::1"
+        net: "{{ ffrl.IPv6.prefix48 }}:1500::/64"   # Prefix für radvd
+        xfer: "{{ ffrl.IPv6.prefix48 }}:1500::2"
       IPv4:
         addr: 10.152.120.1
         brcast: 10.152.127.255

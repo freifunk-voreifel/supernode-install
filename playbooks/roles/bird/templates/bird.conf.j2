@@ -34,16 +34,15 @@ function is_default() {
         return (net ~ [0.0.0.0/0]);
 };
 
-template bgp GREUPLINK {
+template bgp uplink {
         local as 65201;
         import where is_default();
         export where proto = "announce";
 };
 
-
 {% for item in gre %}
 
-protocol bgp {{ gre[item].dev }} from GREUPLINK {
+protocol bgp {{ gre[item].dev }} from uplink {
         description "{{ gre[item].description }}";
         source address {{ gre[item].address }};
         neighbor {{ gre[item].daddress }} as {{ gre[item].asn }};

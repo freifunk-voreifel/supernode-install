@@ -7,31 +7,20 @@ ansible_host: "{{inventory_hostname_short}}.freifunk-rhein-sieg.net"
 
 provider: 'hetzner'
 
-# New variable names, old obsolte variables moved to end of file
-
-ffrl:
-    IPv4: 
-      addr: 185.66.193.127
-    IPv6: 
-      addr: 2a03:2260:301a::2
-      net: 2a03:2260:301a::/48
-    iface: "gre_uplink"
-
-# New variable names, old obsolte variables moved to end of file
-
 supernode:
     number: 2
     hostname: "{{inventory_hostname_short}}"
     fqdn: "ff"
     asn: 65201
 
-ul_mesh_MAC: a2:8c:ae:6f:f7:20
-
-## Lokaler exit
-#sn_local_exit: 1
-
-## Exit über FFRL
-sn_exit: 1
+ffrl:
+    iface: "gre_uplink"
+    IPv4: 
+      addr: 185.66.193.127
+    IPv6: 
+      prefix48: 2a03:2260:301a
+      addr: "2a03:2260:301a::{{ supernode.number }}"
+      net: 2a03:2260:301a::/48
 
 ## GRE Tunnel definition
 
@@ -135,4 +124,5 @@ gre:
     dinet6: 2a03:2260:0:528::1
     asn: 201701
 
+ul_mesh_MAC: a2:8c:ae:6f:f7:20
 ...

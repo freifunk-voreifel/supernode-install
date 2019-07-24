@@ -17,4 +17,13 @@
   tags:
     - gre
   loop: "{{ gre | list }}"
-  
+
+- name: FFRL GRE Tunnel configuration
+  file:
+    path: "/etc/network/interfaces.d/{{ item }}"
+    state: absent
+  when: gre[item].enabled is defined and not gre[item].enabled
+  tags:
+    - gre
+  loop: "{{ gre | list }}"
+

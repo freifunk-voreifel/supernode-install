@@ -8,19 +8,20 @@ ansible_user: "thomas"
 
 provider: 'hetzner'
 
-ffrl:
-    IPv4: 
-      addr: 185.66.193.126
-    IPv6: 
-      addr: 2a03:2260:301a::1
-      net: 2a03:2260:301a::/48
-    iface: "gre_uplink"
-
 supernode:
     number: 1
     hostname: "{{inventory_hostname_short}}"
     fqdn: "ff"
     asn: 65201
+
+ffrl:
+    IPv4: 
+      addr: 185.66.193.126
+    IPv6: 
+      addr: "2a03:2260:301a::{{ supernode.number }}"
+      net: "2a03:2260:301a::/48"
+    iface: "gre_uplink"
+
 
 communitymac: 05:32:be:5b:12
 

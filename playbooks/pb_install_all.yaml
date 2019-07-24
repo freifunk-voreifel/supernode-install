@@ -51,17 +51,18 @@
       loop:
         - modprobe
         - netfilter
-        - interfaces
-        - batman
-        - gre-tunnel
-        - tunneldigger
         - routing
-        - bird
-        - firewall
-        - dnsserver
-        - dhcpserver
+        - interfaces
+        - gre-tunnel
         - radvd
+        - bird
+        - tunneldigger
+        - batman
+        - dhcpserver
+        - dnsserver
+        - firewall
         - ntpserver
+
       loop_control:
         loop_var: required_role 
 

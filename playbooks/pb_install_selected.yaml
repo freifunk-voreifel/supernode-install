@@ -20,13 +20,13 @@
       loop:
         - modprobe
         - netfilter
+        - routing
         - interfaces
         - gre-tunnel
         - radvd
         - bird
         #- tunneldigger
         #- batman
-        #- routing
         #- dhcpserver
         #- dnsserver
         #- firewall

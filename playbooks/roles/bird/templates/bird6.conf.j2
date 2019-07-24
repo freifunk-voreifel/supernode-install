@@ -13,11 +13,8 @@ debug protocols { states, routes, filters, interfaces, events, packets };
 router id {{ ffrl.IPv4.addr }} ;
 
 protocol direct {
-        table master; # implizit
-        import where net ~ [{{ ffrl.IPv6.net }}];
-        interface "{{ ffrl.iface }}";
+        interface "-ens18", "*";  # Restrict network interfaces it works with
 }
-
 protocol kernel {
         device routes;
         import none;
@@ -26,7 +23,7 @@ protocol kernel {
 }
 
 protocol device {
-        scan time 15;           # Scan interfaces every 10 seconds
+        scan time 10;           # Scan interfaces every 10 seconds
 }
 
 function is_default() {

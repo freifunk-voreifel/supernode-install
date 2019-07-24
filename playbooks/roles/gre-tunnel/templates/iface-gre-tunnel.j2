@@ -28,7 +28,9 @@ iface {{ gre[item].dev }} inet tunnel
 {% if gre[item].inet6 is defined %}
 iface {{ gre[item].dev }} inet6 static
   address {{ gre[item].inet6 }}/64
+  post-up ip -6 route add default dev $IFACE
   post-up ip -6 rule add dev $IFACE lookup ffrl
+  
 ## nur im uplink iface  post-up ip -6 rule add fwmark 0x4 table 42
 {% endif %}
 # End GRE Tunnel

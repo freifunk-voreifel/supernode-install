@@ -29,6 +29,6 @@ iface {{ ansible_default_ipv4.alias }} inet static
         gateway {{ ansible_default_ipv4.gateway }}
 # Firewall rules moved to ferm.configuration
 
-auto 6to4
-        iface 6to4 inet6 6to4
-        local {{ ansible_default_ipv4.address }}
+#auto 6to4
+#        iface 6to4 inet6 6to4
+#        local {{ ansible_default_ipv4.address }}
