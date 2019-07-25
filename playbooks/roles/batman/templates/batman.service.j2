@@ -1,5 +1,5 @@
 [Unit]
-Description="B.A.T.M.A.N.: Add bridge mesh-{{ hoods[item].mesh.iface }} to {{ hoods[item].mesh.iface }}"
+Description="B.A.T.M.A.N.: Start bat<n> and add bridge mesh-* to a
 Wants=network.target
 After=network-online.target
 Before=isc-dhcp-server.service ntp.service
@@ -10,7 +10,7 @@ Type=oneshot
 
 ExecStart=/etc/freifunk/batman-up.sh start %I
 
-# ExecStop=/etc/freifunk/batman-up.sh stop {{ hoods[item].mesh.iface }}
+# ExecStop=/etc/freifunk/batman-up.sh stop %I
 
 [Install]
 WantedBy=multi-user.target
