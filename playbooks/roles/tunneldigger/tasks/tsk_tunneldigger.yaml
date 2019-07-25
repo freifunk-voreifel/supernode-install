@@ -65,7 +65,7 @@
   tags: 
     - tunneldigger
 
-- name: copy tunneldigger session-up to add new tunnel to br-bat<n> device
+- name: copy tunneldigger session-up to add new tunnel to mesh-bat<n> device
   template: 
     src: "session-up.sh.j2"
     dest: /etc/tunneldigger/session-up-{{ hoods[item].namespace }}.sh
@@ -76,7 +76,7 @@
   tags: 
     - tunneldigger
     
-- name: copy tunneldigger session-down scripts to delete tunnel from br-bat<n>
+- name: copy tunneldigger session-down scripts to delete tunnel from mesh-bat<n>
   template: 
     src: "session-pre-down.sh.j2"
     dest: /etc/tunneldigger/session-pre-down-{{ hoods[item].namespace }}.sh

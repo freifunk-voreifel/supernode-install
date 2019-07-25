@@ -20,9 +20,9 @@
 #- name: "Configure interfaces"
 #  include_tasks: tsk_interfaces.yaml
 
-# br-nodes configuration is moved to role
-#- name: "Configure bridge br-nodes for batman"
-#  include_tasks: tsk_br-nodes.yaml
+# mesh-nodes configuration is moved to role
+#- name: "Configure bridge mesh-nodes for batman"
+#  include_tasks: tsk_mesh-nodes.yaml
 
 
 # moved to role

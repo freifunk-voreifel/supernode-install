@@ -5,4 +5,4 @@ brctl=/sbin/brctl
 
 /bin/ip link set up dev $INTERFACE mtu 1312
 
-$brctl addif br-{{ hoods[item].mesh.iface }} $INTERFACE
+$brctl addif mesh-{{ hoods[item].mesh.iface }} $INTERFACE

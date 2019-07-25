@@ -1,12 +1,12 @@
 ---
-# file: playbooks/roles/gateways/tasks/tsk_br-nodes.yaml
+# file: playbooks/roles/gateways/tasks/tsk_mesh-nodes.yaml
 #
 # Thomas Arend
 # Date 2019-06-22
 #
 #
 
-# Install and configure br-nodes as a service
+# Install and configure mesh-nodes as a service
 
 - name: Create bridge directory if they do not exist
   file:
@@ -18,17 +18,6 @@
     - bridge
 
 # Copy network templates to /etc/systemd/network/
-
-- name: Delete old bridge dev
-  file:
-    path: "/etc/systemd/network/{{ item }}"
-    state: absent
-  ignore_errors: true
-  loop:
-    - br-nodes.netdev
-    - br-nodes.link
-  tags: 
-    - bridge
 
 - name: Copy bridge templates to /etc/systemd/network/
   template: 
@@ -45,10 +34,9 @@
   tags: 
     - bridge
 
-# Tempate to add br-nodes to batman
+# Tempate to add mesh-nodes to batman
 # systemd-networkd hasn't any features to execute a command
 # pre or post is going up or down
-
 
 - name: Copy batman-up templates to /etc/freifunk/
   template: 
@@ -60,14 +48,24 @@
   tags: 
     - bridge
 
-- name: Copy bridge.service templates to /etc/systemd/
+- name: Copy batman config /etc/freifunk/
   template: 
-    src: "batman.service.j2"
-    dest: "/etc/systemd/system/batman@{{ hoods[item].mesh.iface }}.service"
+    src: "bat.conf.j2"
+    dest: "/etc/freifunk/bat-{{ hoods[item].mesh.iface }}.conf"
     owner: root
     group: root
     mode: 0644
   loop: "{{ hoods|list }}"
+  tags: 
+    - bridge
+
+- name: Copy bridge.service templates to /etc/systemd/
+  template: 
+    src: "batman.service.j2"
+    dest: "/etc/systemd/system/batman@.service"
+    owner: root
+    group: root
+    mode: 0644
   tags: 
     - bridge
 
@@ -98,6 +96,6 @@
     enabled: yes
   ignore_errors: true
   loop: "{{ hoods|list }}"
-    
+
 # End 
 ...

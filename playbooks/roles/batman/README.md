@@ -1,4 +1,4 @@
-# Rolle: br-nodes
+# Rolle: mesh-nodes
 
 Erstellt von **Thomas Arend** am *2019-07-11*
 
@@ -32,7 +32,7 @@ Die Rolle verwendet folgende Unterverzeichnisse
 
 ### tasks
 
-Die Rolle br-nodes führt Tasks aus, die wie folgt gruppiert sind:
+Die Rolle mesh-nodes führt Tasks aus, die wie folgt gruppiert sind:
 
 - Installation
 - Konfiguration
@@ -48,9 +48,9 @@ Die Fehlerbehandlung wird durch Handler in *handlers* übernommen.
 
 ### defaults / vars
 
-Die Rolle br-nodes nutzt folgende Variablen in *defaults* und / oder *vars*:
+Die Rolle mesh-nodes nutzt folgende Variablen in *defaults* und / oder *vars*:
 
-Die Rolle br-nodes nutzt folgende Variablen in vars:
+Die Rolle mesh-nodes nutzt folgende Variablen in vars:
 
 **Näheres** zu den *defaults* und *variablen* findest du **im README.md** im Verzeichnis *defaults* / *handlers*.
 
@@ -58,7 +58,7 @@ Die Rolle br-nodes nutzt folgende Variablen in vars:
 
 Templates im *j2* werden durch Ansible anhand der Varibalen und des Programmcodes in den Templates modifiziert und als Dateien auf das Zielsystem kopiert.
 
-Die Rolle br-nodes nutzt folgende Templates in *templates*:
+Die Rolle mesh-nodes nutzt folgende Templates in *templates*:
 
 - A.j2
 - B.j2
@@ -68,7 +68,7 @@ Die Rolle br-nodes nutzt folgende Templates in *templates*:
 
 ### files
 
-Die Rolle br-nodes nutzt folgende Dateien in *files*:
+Die Rolle mesh-nodes nutzt folgende Dateien in *files*:
 
 Dateien werden 1:1 in der Regel 1:1 auf den Zielserver kopiert.
 
@@ -76,7 +76,7 @@ Dateien werden 1:1 in der Regel 1:1 auf den Zielserver kopiert.
 
 ### meta
 
-Die Rolle br-nodes nutzt folgende Meta-Daten:
+Die Rolle mesh-nodes nutzt folgende Meta-Daten:
 
 **Näheres** zu den *Meta-Daten* findest du **im README.md** im Verzeichnis *meta*.
 

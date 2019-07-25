@@ -66,7 +66,7 @@
   sysctl:
     name: "net.ipv4.conf.{{ hoods[item].mesh.iface }}.rp_filter"
     value: "0"
-    sysctl_set: yes
+    sysctl_set: no
     state: present
     reload: no
   loop: "{{ hoods|list }}"

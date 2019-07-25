@@ -1,4 +1,4 @@
 #!/bin/bash
 INTERFACE="$3"
 
-/sbin/brctl delif br-nodes $INTERFACE
+/sbin/brctl delif mesh-nodes $INTERFACE

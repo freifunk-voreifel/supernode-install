@@ -7,7 +7,7 @@ Die Einrichtung erfolgt mit den Werten der Varibalen **hood:**, die es ermöglic
 Jede Hood erhält einen eindeutigen Namen und eine eindeutige Nummer.
 Eine Hood benötigt einen eindeutigen Port, auf über den die Clients den L2TP Tunnel aufbauen. Die Portnummer ergibt sich aus 20000 + hoods[name].number. Ausnahme voreifel = 53842.
 
-Jeder Hood wird ein batman device bat{{ hoods[name].number}} und eine Bridge br-nodes{{ hoods[name].number}} zugeordnet, auf der das batman-device gestartet wird. 
+Jeder Hood wird ein batman device bat{{ hoods[name].number}} und eine Bridge mesh-nodes{{ hoods[name].number}} zugeordnet, auf der das batman-device gestartet wird. 
 
 Auf dem bat-device eines Hoods verteilt isc-dhcp-server die IP-Adressen aus dem Bereich 10.152.{{ 8 * hoods[name].number }}.0/21. Damit stehen auf einer Hood IPv4 etwa 2.000 IP-Adressen für Clients zur Verfügung.
 

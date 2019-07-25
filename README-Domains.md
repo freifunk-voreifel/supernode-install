@@ -24,7 +24,7 @@ Example: n = 13 => 8 * 13 = 104 => 10.152.104.0/21
 
 Each subnet is assocciated with one tunneldigger hood. Tunneldigger is listenning on port 20000 + n.
 
-For each tunneldigger hood a bridge interface br-bat<n> is started. The bridge is added to a batman interface bat<n>.
+For each tunneldigger hood a bridge interface mesh-bat<n> is started. The bridge is added to a batman interface bat<n>.
 
 The interfaces are started with a servide batman@bat<n>.service
 

@@ -4,7 +4,7 @@ domain (ip ip6) {
             policy ACCEPT;
             mod state state INVALID DROP;
             mod state state (ESTABLISHED RELATED) ACCEPT;
-            interface ( lo l2tp+ br-bat+ bat+ gre_+ ) ACCEPT;
+            interface ( lo l2tp+ mesh-+ bat+ {{ gre_tunnel_prefix }} ) ACCEPT;
             proto ( icmp esp udp ) ACCEPT;
             proto tcp dport ( ssh http https 8080) ACCEPT;
 

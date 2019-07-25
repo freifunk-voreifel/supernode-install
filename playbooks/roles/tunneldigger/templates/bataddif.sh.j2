@@ -5,4 +5,4 @@ brctl=/sbin/brctl
 
 /bin/ip link set dev $INTERFACE up mtu 1312
 
-$brctl addif br-nodes{{ hoods[item].number}} $INTERFACE
+$brctl addif mesh-nodes{{ hoods[item].number}} $INTERFACE

@@ -13,35 +13,37 @@ MAC="$7"
 IP=/sbin/ip
 BATCTL=/usr/local/sbin/batctl
 EBT=/sbin/ebtables
+DBG=""
+#DBG="echo -e "
 
 case $ACTION in
 
 start)
 
-  $IP link set up dev br-$BATDEV
+  $DBG $IP link set up dev mesh-$BATDEV
 
-  $BATCTL -m $BATDEV if add br-$BATDEV
-  $BATCTL -m $BATDEV gw_mode server
+  $DBG $BATCTL -m $BATDEV if add mesh-$BATDEV
+  $DBG $BATCTL -m $BATDEV gw_mode server
 
-  $IP link set address $MAC dev $BATDEV
+  $DBG $IP link set address $MAC dev $BATDEV
 
-  $IP link set up dev $BATDEV
+  $DBG $IP link set up dev $BATDEV
 
-  $IP addr add $IPv4 broadcast $BRCAST dev $BATDEV
+  $DBG $IP addr add $IPv4 broadcast $BRCAST dev $BATDEV
 
-  $IP route add $IPv4Net dev $BATDEV table 42
-  $IP -6 addr add $IPv6 dev $BATDEV
+  $DBG $IP route add $IPv4Net dev $BATDEV table 42
+  $DBG $IP -6 addr add $IPv6 dev $BATDEV
 
-  $IP -4 rule add dev $BATDEV lookup ffrl
-  $IP -6 rule add dev $BATDEV lookup ffrl
+  $DBG $IP -4 rule add dev $BATDEV lookup ffrl
+  $DBG $IP -6 rule add dev $BATDEV lookup ffrl
 
   exit $?
   ;;
 
 stop)
 
-  $IP route del $IPv4Net dev $BATDEV table 42
-  $BATCTL -m $BATDEV if del br-$BATDEV
+  $DBG $IP route del $IPv4Net dev $BATDEV table 42
+  $DBG $BATCTL -m $BATDEV if del mesh-$BATDEV
   exit $?
   ;;
   

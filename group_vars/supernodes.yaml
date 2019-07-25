@@ -45,18 +45,16 @@ hoods:
     mesh:
       iface: bat8
       mtu: 1312
-      MAC: a2:8c:ae:6f:08:0{{ supernode.number }}
+      MAC: "a2:8c:ae:6f:08:0{{ supernode.number }}"
       IPv6:
-        addr: "{{ ffrl.IPv6.prefix48 }}:0800::1"
+        addr: "{{ ffrl.IPv6.prefix48 }}:0800::{{ supernode.number + 1 }}"
         net: "{{ ffrl.IPv6.prefix48 }}:0800::/64"   # Prefix für radvd
-        xfer: "{{ ffrl.IPv6.prefix48 }}:0800::2"
       IPv4:
-        addr: 10.152.64.1
+        addr: "10.152.64.{{ supernode.number + 1 }}"
         brcast: 10.152.79.255
         net: 10.152.64.0
         netmask: 255.255.240.0
         CIDR: 20
-        xfer: 10.152.64.2
 
   rheinbach: 
     namespace: "rheinbach"
@@ -76,18 +74,16 @@ hoods:
     mesh:
       iface: bat10
       mtu: 1312
-      MAC: a2:8c:ae:6f:10:0{{ supernode.number }}
+      MAC: "a2:8c:ae:6f:10:0{{ supernode.number }}"
       IPv6:
-        addr: "{{ ffrl.IPv6.prefix48 }}:1000::1"
+        addr: "{{ ffrl.IPv6.prefix48 }}:1000::{{ supernode.number + 1 }}"
         net: "{{ ffrl.IPv6.prefix48 }}:1000::/64"   # Prefix für radvd
-        xfer: "{{ ffrl.IPv6.prefix48 }}:1000::2"
       IPv4:
-        addr: 10.152.80.1
+        addr: "10.152.80.{{ supernode.number + 1 }}"
         brcast: 10.152.95.255
         net: 10.152.80.0
         netmask: 255.255.240.0
         CIDR: 20
-        xfer: 10.152.80.2
 
   meckenheimold:
     namespace: "meckenheimold"
@@ -109,16 +105,14 @@ hoods:
       mtu: 1312
       MAC: a2:8c:ae:6f:13:0{{ supernode.number }}
       IPv6:
-        addr: "{{ ffrl.IPv6.prefix48 }}:1300::1"
+        addr: "{{ ffrl.IPv6.prefix48 }}:1300::{{ supernode.number + 1 }}"
         net: "{{ ffrl.IPv6.prefix48 }}:1300::/64"   # Prefix für radvd
-        xfer: "{{ ffrl.IPv6.prefix48 }}:1300::2"
       IPv4:
-        addr: 10.152.104.1
+        addr: "10.152. 104.{{ supernode.number + 1 }}"
         brcast: 10.152.111.255
         net: 10.152.104.0
         netmask: 255.255.248.0
         CIDR: 21
-        xfer: 10.152.104.1
 
   rheinbachold: 
     namespace: "rheinbachold"
@@ -138,18 +132,16 @@ hoods:
     mesh:
       iface: bat14
       mtu: 1312
-      MAC: a2:8c:ae:6f:14:0{{ supernode.number }}
+      MAC: "a2:8c:ae:6f:14:0{{ supernode.number }}"
       IPv6:
-        addr: "{{ ffrl.IPv6.prefix48 }}:1400::1"
+        addr: "{{ ffrl.IPv6.prefix48 }}:1400::{{ supernode.number + 1 }}"
         net: "{{ ffrl.IPv6.prefix48 }}:1400::/64"   # Prefix für radvd
-        xfer: "{{ ffrl.IPv6.prefix48 }}:1400::2"
       IPv4:
-        addr: 10.152.112.1
+        addr: "10.152.112.{{ supernode.number + 1 }}"
         brcast: 10.152.119.255
         net: 10.152.112.0
         netmask: 255.255.248.0
         CIDR: 21
-        xfer: 10.152.112.2
 
   testfunk: 
     namespace: "testfunk"
@@ -169,17 +161,14 @@ hoods:
     mesh:
       iface: bat15
       mtu: 1312
-      MAC: a2:8c:ae:6f:15:0{{ supernode.number }}
+      MAC: "a2:8c:ae:6f:15:0{{ supernode.number }}"
       IPv6:
-        addr: "{{ ffrl.IPv6.prefix48 }}:1500::1"
+        addr: "{{ ffrl.IPv6.prefix48 }}:1500::{{ supernode.number + 1 }}"
         net: "{{ ffrl.IPv6.prefix48 }}:1500::/64"   # Prefix für radvd
-        xfer: "{{ ffrl.IPv6.prefix48 }}:1500::2"
       IPv4:
-        addr: 10.152.120.1
+        addr: "10.152.120.{{ supernode.number + 1 }}"
         brcast: 10.152.127.255
         net: 10.152.120.0
         netmask: 255.255.248.0
         CIDR: 21
-        xfer: 10.152.120.2
-
 ...
