@@ -3,20 +3,15 @@
 
 # Configure LAN Interfaces in /etc/network/interfaces.conf
 
-- name: create /etc/network 
-  file:
-    path: /etc/network
-    state: directory
-    mode: 0755
-
 # Create directory for interfaces
 
-- name: create /etc/network/interfaces.d 
+- name: delete old directories and files
   file:
-    path: /etc/network/interfaces.d
-    state: directory
-    mode: 0755
-# Create directory for interfaces
+    path: {{ item }}
+    state: absent
+  loop:
+    - /etc/network/interfaces.d
+    - /etc/network/interfaces
 
 - name: create /etc/systemd/network 
   file:
@@ -24,20 +19,15 @@
     state: directory
     mode: 0755
 
-- name: delete /etc/network/interfaces
-  file:
-    path: /etc/network/interfaces
-    state: absent
-
 # Configure default Interfaces
 
-#- name: create ethernet config
-#  template:
-#    src: iface-lan.j2
-#    dest: /etc/network/interfaces
-#    owner: root
-#    group: root
-#    mode: 0644
+- name: create ethernet config
+  template:
+    src: lo.network.j2
+    dest: /etc/systemd/network/00-lo.network
+    owner: root
+    group: root
+    mode: 0644
 
 # Configure systemd/network
 
@@ -50,19 +40,6 @@
     mode: 0644
 
 # Configure default Interfaces
-
-- name: delete /etc/network/interfaces.d ffrl uplink
-  file:
-    path: "/etc/network/interfaces.d/{{ ffrl.iface }}"
-    state: absent
-
-#- name: IFACE FFRL uplink 
-#  template:
-#    src: iface-uplink.j2
-#    dest: "/etc/network/interfaces.d/{{ ffrl.iface }}"
-#    owner: root
-#    group: root
-#    mode: 0644
 
 - name: Disable services
   service:
@@ -99,5 +76,4 @@
     owner: root
     group: root
     state: link
-    
 ...

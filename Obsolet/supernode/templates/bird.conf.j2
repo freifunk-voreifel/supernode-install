@@ -46,7 +46,7 @@ template bgp GREUPLINK {
 protocol bgp {{ gre[item].dev }} from GREUPLINK {
         description "{{ gre[item].description }}";
         source address {{ gre[item].address }};
-        neighbor {{ gre[item].daddress }} as {{ gre[item].asn }};
+        neighbor {{ gre[item].peer }} as {{ gre[item].asn }};
 }
 
 {% endfor %} 

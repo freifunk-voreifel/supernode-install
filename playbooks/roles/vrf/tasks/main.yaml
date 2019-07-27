@@ -1,0 +1,9 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-27
+
+# Ab hier muss noch dein Code hinein
+
+- name: "Configure Virtual Routing and Forwarding (VRF) to FFRL"
+  include_tasks: tsk_vrf.yaml
+...

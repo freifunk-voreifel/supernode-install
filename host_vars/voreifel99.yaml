@@ -55,10 +55,10 @@ gre:
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}ber_a' # Used for Bird, '-' not allowed
     address: '100.64.10.43'
-    daddress: '100.64.10.42'
+    peer: '100.64.10.42'
     network: '100.64.10.42/32'
     inet6: '2003:e2:af12:1a00:a00:27ff:fe06:3531'
-    dinet6: '2003:e2:af12:1a00:a00:27ff:fe5e:7702'
+    peer6: '2003:e2:af12:1a00:a00:27ff:fe5e:7702'
     asn: 201701
 
 ...

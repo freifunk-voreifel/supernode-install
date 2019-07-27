@@ -46,7 +46,7 @@ template bgp uplink {
 protocol bgp {{ gre[item].dev }} from uplink {
         description "{{ gre[item].description }}";
         source address {{ gre[item].inet6 }};
-        neighbor {{ gre[item].dinet6 }} as {{ gre[item].asn }};
+        neighbor {{ gre[item].peer6 }} as {{ gre[item].asn }};
 }
 
 {% endfor %}

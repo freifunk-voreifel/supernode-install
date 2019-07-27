@@ -43,10 +43,10 @@ gre:
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}ber_a'
     address: '100.64.10.55'
-    daddress: '100.64.10.54'
+    peer: '100.64.10.54'
     network: '100.64.10.54/31'
     inet6: 2a03:2260:0:524::2
-    dinet6: 2a03:2260:0:524::1
+    peer6: 2a03:2260:0:524::1
     asn: 201701
   ber_b:
     description: "Rheinland Backbone Berlin B"
@@ -58,10 +58,10 @@ gre:
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}ber_b'
     address: '100.64.10.61'
-    daddress: '100.64.10.60'
+    peer: '100.64.10.60'
     network: '100.64.10.60/31'
     inet6: 2a03:2260:0:527::2
-    dinet6: 2a03:2260:0:527::1
+    peer6: 2a03:2260:0:527::1
     asn: 201701
   dus_a:
     description: "Rheinland Backbone Duesseldorf A"
@@ -73,10 +73,10 @@ gre:
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}dus_a'
     address: '100.64.10.59'
-    daddress: '100.64.10.58'
+    peer: '100.64.10.58'
     network: '100.64.10.58/31'
     inet6: 2a03:2260:0:526::2
-    dinet6: 2a03:2260:0:526::1
+    peer6: 2a03:2260:0:526::1
     asn: 201701
   dus_b:
     description: "Rheinland Backbone Duesseldorf B"
@@ -88,10 +88,10 @@ gre:
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}dus_b'
     address: '100.64.10.65'
-    daddress: '100.64.10.64'
+    peer: '100.64.10.64'
     network: '100.64.10.64/31'
     inet6: 2a03:2260:0:529::2
-    dinet6: 2a03:2260:0:529::1
+    peer6: 2a03:2260:0:529::1
     asn: 201701
   fra_a:
     description: "Rheinland Backbone Frankfurt A"
@@ -103,10 +103,10 @@ gre:
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}fra_a'
     address: '100.64.10.57'
-    daddress: '100.64.10.56'
+    peer: '100.64.10.56'
     network: '100.64.10.42/31'
     inet6: 2a03:2260:0:525::2
-    dinet6: 2a03:2260:0:525::1
+    peer6: 2a03:2260:0:525::1
     asn: 201701
   fra_b:
     description: "Rheinland Backbone Frankfurt B"
@@ -118,10 +118,10 @@ gre:
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}fra_b'
     address: '100.64.10.63'
-    daddress: '100.64.10.62'
+    peer: '100.64.10.62'
     network: '100.64.10.62/31'
     inet6: 2a03:2260:0:528::2
-    dinet6: 2a03:2260:0:528::1
+    peer6: 2a03:2260:0:528::1
     asn: 201701
 
 ul_mesh_MAC: a2:8c:ae:6f:f7:20

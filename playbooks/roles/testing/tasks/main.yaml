@@ -18,14 +18,14 @@
     #- testing
 
 - name: "Are the GRE Tunnel endpoints reachable via IPv4?"
-  shell: "ping -4 -c 4 {{ gre[item].daddress }}"
+  shell: "ping -4 -c 4 {{ gre[item].peer }}"
   ignore_errors: True
   loop: "{{ gre | list }}"
   tags:
     - testing
 
 - name: "Are the GRE Tunnel endpoints reachable via IPv6?"
-  shell: "ping -m 4 -6 -c 4 {{ gre[item].dinet6 }}"
+  shell: "ping -m 4 -6 -c 4 {{ gre[item].peer6 }}"
   ignore_errors: True
   loop: "{{ gre | list }}"
   tags:
