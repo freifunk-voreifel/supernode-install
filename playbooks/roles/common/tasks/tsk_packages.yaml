@@ -47,13 +47,22 @@
     cache_valid_time: 86400 # One day 
   tags:
     - apt
-    
+
 - name: Install common required packages
   apt:
     name: "{{ common_required_packages }}"
     state: present
     update_cache: no
   register: aptupdates
+  tags:
+    - apt
+
+- name: Upgrade from stretch to buster
+  replace:
+    path: /etc/apt/sources.list
+    regexp: 'stretch'
+    replace: 'buster'
+  notify: apt upgrade
   tags:
     - apt
 

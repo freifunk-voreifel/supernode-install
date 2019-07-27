@@ -12,7 +12,7 @@ auto {{ ffrl.iface }}
 iface {{ ffrl.iface }} inet static
     address {{ ffrl.IPv4.addr }}
     netmask 255.255.255.255
-    pre-up ip link add $IFACE type bridge
+    pre-up ip link add $IFACE type dummy
     post-up ip rule add fwmark 0x4 table 42
     post-up ip rule add from {{ ffrl.IPv4.addr }}/32 lookup 42
     pre-down ip rule del fwmark 0x4 table 42

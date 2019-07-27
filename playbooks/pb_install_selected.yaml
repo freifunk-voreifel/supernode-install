@@ -19,18 +19,19 @@
         name: "{{ required_role }}"
       loop:
         - modprobe
-        - netfilter
         - routing
-        - interfaces
         - gre-tunnel
-        - radvd
-        - bird
+        - interfaces
         - tunneldigger
         - batman
-        #- dhcpserver
-        #- dnsserver
-        #- firewall
-        #- ntpserver
+        - vrf
+        - firewall
+        - netfilter
+#        - radvd
+#        - bird
+#        - dhcpserver
+#        - dnsserver
+#        - ntpserver
       loop_control:
         loop_var: required_role 
 

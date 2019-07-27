@@ -30,7 +30,7 @@ start)
   $BATCTL -m $BATDEV gw_mode server
 
   $IP link set up dev mesh-$BATDEV
-  $IP link set address MAC dev $BATDEV
+  $IP link set address $MAC dev $BATDEV
   $IP link set up dev $BATDEV
 
   $IP addr add $IPv4 broadcast $BRCAST dev $BATDEV

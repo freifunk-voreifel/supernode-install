@@ -52,15 +52,16 @@
         - modprobe
         - netfilter
         - routing
-        - interfaces
         - gre-tunnel
-        - radvd
-        - bird
+        - interfaces
         - tunneldigger
         - batman
+        - vrf
+        - firewall
+        - radvd
+        - bird
         - dhcpserver
         - dnsserver
-        - firewall
         - ntpserver
 
       loop_control:

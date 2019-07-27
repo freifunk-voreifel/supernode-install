@@ -40,7 +40,7 @@
   sysctl:
     name: "net.netfilter.nf_conntrack_generic_timeout"
     value: "240"
-    sysctl_set: yes
+    sysctl_set: no
     state: present
     reload: no
 
@@ -50,7 +50,7 @@
   sysctl:
     name: "net.netfilter.nf_conntrack_tcp_timeout_established"
     value: "54000"
-    sysctl_set: yes
+    sysctl_set: no
     state: present
     reload: no
 
@@ -58,7 +58,7 @@
   sysctl:
     name: "net.netfilter.nf_conntrack_max"
     value: "65536"
-    sysctl_set: yes
+    sysctl_set: no
     state: present
     reload: no
 

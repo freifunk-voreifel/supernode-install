@@ -4,47 +4,42 @@
 
 ACTION="$1"
 BATDEV="$2"
-IPv4="$3"
-IPv4Net="$4"
-BRCAST="$5"
-IPv6="$6"
-MAC="$7"
+
+# Load bat device  configuration
+
+. $(dirname $0)/$BATDEV.conf
+
+# IPv4
+# IPv4Net
+# BRCAST
+# MAC
 
 IP=/sbin/ip
 BATCTL=/usr/local/sbin/batctl
 EBT=/sbin/ebtables
-DBG=""
-#DBG="echo -e "
+
+# Load bat device  configuration
+
+. $(dirname $0)/bat-$BATDEV.conf
 
 case $ACTION in
 
 start)
 
-  $DBG $IP link set up dev mesh-$BATDEV
+  $BATCTL -m $BATDEV if add mesh-$BATDEV
+  $BATCTL -m $BATDEV gw_mode server
 
-  $DBG $BATCTL -m $BATDEV if add mesh-$BATDEV
-  $DBG $BATCTL -m $BATDEV gw_mode server
-
-  $DBG $IP link set address $MAC dev $BATDEV
-
-  $DBG $IP link set up dev $BATDEV
-
-  $DBG $IP addr add $IPv4 broadcast $BRCAST dev $BATDEV
-
-  $DBG $IP route add $IPv4Net dev $BATDEV table 42
-  $DBG $IP -6 addr add $IPv6 dev $BATDEV
-
-  $DBG $IP -4 rule add dev $BATDEV lookup ffrl
-  $DBG $IP -6 rule add dev $BATDEV lookup ffrl
-
-  exit $?
+  $IP link set up dev mesh-$BATDEV
+  $IP link set address $MAC dev $BATDEV
+  $IP link set dev bat15 master vrf-ffrl1
+  $IP link set up dev $BATDEV
+ 
+  $IP addr add $IPv4 broadcast $BRCAST dev $BATDEV
+  $IP -6 addr add $IPv6 dev $BATDEV
   ;;
 
 stop)
-
-  $DBG $IP route del $IPv4Net dev $BATDEV table 42
-  $DBG $BATCTL -m $BATDEV if del mesh-$BATDEV
-  exit $?
+  $BATCTL -m $BATDEV if del mesh-$BATDEV
   ;;
   
 esac

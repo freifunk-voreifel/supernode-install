@@ -1,11 +1,11 @@
 [NetDev]
-Name={{ gre[item].dev }}
+Name={{ gre[item.0].dev }}
 Kind=gre
-MTUBytes={{ gre[item].mtu }}
+MTUBytes={{ gre[item.0].mtu }}
 
 [Tunnel]
-Local={{ gre[item].local }}
-Remote={{ gre[item].remote }}
+Local={{ gre[item.0].local }}
+Remote={{ gre[item.0].remote }}
 
 
 [RoutingPolicyRule] 

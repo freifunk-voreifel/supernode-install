@@ -1,12 +1,18 @@
 [Match]
-Name={{ gre[item].dev }}
+Name={{ gre[item.0].dev }}
 
 [Network]
-Address={{ gre[item].address }}
+Address={{ gre[item.0].inet6 }}/64
+VRF=vrf-ffrl1
 
-[ROUTINGPOLICYRULE]
+[Address]
+Address={{ gre[item.0].address }}/31
+Peer={{ gre[item.0].daddress }}/31
+
+[RoutingPolicyRule]
 From={{ ffrl.IPv6.net }} 
+To={{ ffrl.IPv6.net }} 
 FirewallMark=4
 Table=42
-IncomingInterface={{ gre[item].dev }}
-OutgoingInterface={{ gre[item].dev }}
+#IncomingInterface={{ gre[item.0].dev }}
+#OutgoingInterface={{ gre[item.0].dev }}

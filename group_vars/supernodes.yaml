@@ -108,7 +108,7 @@ hoods:
         addr: "{{ ffrl.IPv6.prefix48 }}:1300::{{ supernode.number + 1 }}"
         net: "{{ ffrl.IPv6.prefix48 }}:1300::/64"   # Prefix für radvd
       IPv4:
-        addr: "10.152. 104.{{ supernode.number + 1 }}"
+        addr: "10.152.104.{{ supernode.number + 1 }}"
         brcast: 10.152.111.255
         net: 10.152.104.0
         netmask: 255.255.248.0

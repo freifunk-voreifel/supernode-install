@@ -14,7 +14,7 @@ supernode:
     asn: 65201
 
 ffrl:
-    iface: "gre_uplink"
+    iface: "ffrl_uplink"
     IPv4: 
       addr: 185.66.193.126
     IPv6: 
