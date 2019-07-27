@@ -31,11 +31,14 @@ start)
 
   $IP link set up dev mesh-$BATDEV
   $IP link set address $MAC dev $BATDEV
-  $IP link set dev bat15 master vrf-ffrl1
+#  $IP link set dev bat15 master vrf-ffrl1
   $IP link set up dev $BATDEV
  
   $IP addr add $IPv4 broadcast $BRCAST dev $BATDEV
   $IP -6 addr add $IPv6 dev $BATDEV
+  $IP -4 rule add iif $BATDEV table 42 pref 3000
+  $IP -6 rule add iif $BATDEV table 42 pref 3000
+
   ;;
 
 stop)

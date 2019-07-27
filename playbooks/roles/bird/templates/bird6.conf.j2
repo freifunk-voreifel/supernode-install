@@ -12,27 +12,34 @@ debug protocols { states, routes, filters, interfaces, events, packets };
 
 router id {{ ffrl.IPv4.addr }} ;
 
-protocol direct {
-        interface "-ens18", "*";  # Restrict network interfaces it works with
-}
-protocol kernel {
-        device routes;
-        import none;
-        export all;             # Default is export none
-        kernel table 42;        # Kernel table to synchronize with (default: main)
-}
-
-protocol device {
-        scan time 10;           # Scan interfaces every 10 seconds
-}
-
 function is_default() {
         return (net ~ [::/0]);
 }
 
+filter not_local {
+    if net ~ [{{ ffrl.IPv6.net }}] then reject;
+    else accept;
+};
+
 filter hostroute {
-	if net ~ [{{ ffrl.IPv6.net }}{56,56}] then accept;
+	if net ~ [{{ ffrl.IPv6.net }}] then accept;
         reject;
+}
+
+protocol direct {
+        interface "-ens18", "*";  # Restrict network interfaces it works with
+}
+
+protocol kernel {
+    device routes;
+    import all;
+    export filter not_local;    # Default is export none
+    kernel table 42;            # 
+
+}
+
+protocol device {
+    scan time 10;           # Scan interfaces every 10 seconds
 }
 
 template bgp uplink {

@@ -34,10 +34,18 @@ function is_default() {
         return (net ~ [0.0.0.0/0]);
 };
 
+filter hostroute {
+        if net ~ {{ ffrl.IPv4.addr }}/32 then accept;
+        reject;
+};
+
 template bgp uplink {
-        local as 65201;
+        local as {{ supernode.asn }};
         import where is_default();
-        export where proto = "announce";
+        export filter hostroute;
+        next hop self;
+        multihop 64;
+        default bgp_local_pref 200;
 };
 
 {% for item in gre %}

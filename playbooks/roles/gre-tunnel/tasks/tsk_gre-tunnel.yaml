@@ -4,28 +4,6 @@
 # Date 2019-04-13
 #
 
-# Configure GRE Tunnles in /etc/network/interfaces.d/{{ item }}.conf
-
-#- name: FFRL GRE Tunnel configuration
-#  template:
-#    src: "iface-gre-tunnel.j2"
-#    dest: "/etc/network/interfaces.d/{{ item }}"
-#    owner: root
-#    group: root
-#    mode: 0644
-#  when: gre[item].enabled is defined and gre[item].enabled == true
-#  tags:
-#    - gre
-#  loop: "{{ gre | list }}"
-
-- name: Remove old GRE Tunnel from /etc/network/interfaces.d
-  file:
-    path: "/etc/network/interfaces.d/{{ item }}"
-    state: absent
-  tags:
-    - gre
-  loop: "{{ gre | list }}"
-
 - name: Copy GRE tunnel templates to /etc/systemd/network/
   template: 
     src: "gre.{{ item.1 }}.j2"

@@ -13,9 +13,3 @@ DNS=213.133.100.100
 {% for item in gre|list %}
 Tunnel={{ gre[item].dev }}
 {% endfor %}
-
-[RoutingPolicyRule]
-From={{ ffrl.IPv6.net }} 
-FirewallMark=4
-Table=42
-

@@ -4,7 +4,7 @@ domain (ip ip6) {
             policy ACCEPT;
             mod state state INVALID DROP;
             mod state state (ESTABLISHED RELATED) ACCEPT;
-            interface ( lo l2tp+ mesh-+ bat+ {{ gre_tunnel_prefix }} ) ACCEPT;
+            interface ( lo l2tp+ mesh+ bat+ {{ gre_tunnel_prefix }}+ ) ACCEPT;
             proto ( icmp esp udp ) ACCEPT;
             proto tcp dport ( ssh http https 8080) ACCEPT;
 
@@ -46,7 +46,7 @@ domain (ip ip6) {
         chain POSTROUTING {
             policy ACCEPT;
             outerface {{ ansible_default_ipv4.alias }} MASQUERADE;
-            
+
             {% for item in hoods| list %}
             outerface {{ gre_tunnel_prefix }}+ saddr {{ hoods[item].mesh.IPv4.net }}/{{ hoods[item].mesh.IPv4.CIDR }} SNAT to {{ ffrl.IPv4.addr }};
             {% endfor %}

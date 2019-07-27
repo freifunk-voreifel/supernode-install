@@ -5,19 +5,6 @@
 
 # Install additional packages for Freifunk
 
-- name: add default repo
-  #Freifunk- und Rollen-Repos erst in den jeweiligen Rollen
-  apt_repository:
-    repo: "{{ item }}"
-    state: present
-  loop:
-    - "deb http://ftp.de.debian.org/debian/ {{ ansible_distribution_release }} main"
-    - "deb http://ftp.de.debian.org/debian/ {{ ansible_distribution_release }}-updates main"
-    - "deb http://security.debian.org/ {{ ansible_distribution_release }}/updates main"
-  when: ansible_distribution == "Debian"
-  tags:
-    - apt
-    
 - name: Adding Freifuck GPG Key
   apt_key:
     id: B2522557E6AB9BF5
@@ -26,20 +13,20 @@
   tags:
     - apt
 
-- name: Add Freifuck repo to source list
-  apt_repository: 
-    repo: 'deb https://freifuck.de/debian stretch main' 
+- name: add default repo
+  apt_repository:
+    repo: "{{ item }}"
     state: present
+  loop:
+    - "deb http://ftp.de.debian.org/debian/ {{ ansible_distribution_release }} main"
+    - "deb http://ftp.de.debian.org/debian/ {{ ansible_distribution_release }}-updates main"
+    - "deb http://security.debian.org/ {{ ansible_distribution_release }}/updates main"
+    - "deb http://http.debian.net/debian {{ ansible_distribution_release }}-backports main"
+    - "deb https://freifuck.de/debian {{ ansible_distribution_release }} main"
+  when: ansible_distribution == "Debian"
   tags:
     - apt
-  
-- name: Add backport repo to source list
-  apt_repository: 
-    repo: 'deb http://http.debian.net/debian stretch-backports main'
-    state: present
-  tags:
-    - apt
-  
+
 - name: Update and upgrade packages
   apt:
     upgrade: 'yes'
