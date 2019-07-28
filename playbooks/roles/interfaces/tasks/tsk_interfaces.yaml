@@ -39,7 +39,7 @@
     group: root
     mode: 0644
 
-# Configure default Interfaces
+# We disabel old networkservices to switch to systemd networkd and resolved
 
 - name: Disable services
   service:
@@ -56,24 +56,37 @@
     enabled: yes
   loop:
     - systemd-networkd
-    - systemd-resolved
 
-- name: Disable services
-  service:
-    name: systemd-resolved
-    state: restarted
-    enabled: yes
+# We must direct static /etc/resolv.conf to systemd-reolved
+
+- name: get status of /etc/resolv.conf
+  stat: 
+    path: /etc/resolv.conf
+  register: sym
 
 - name: remove resolv.conf
   file:
     path: /etc/resolv.conf
     state: absent
+  when: sym.stat.islnk is defined and sym.stat.islnk == False
 
-- name: create link to systemd resolv.conf
+- name: create sym link /etc/resolv.conf to systemd resolv.conf
   file:
     src: /run/systemd/resolve/resolv.conf
     dest: /etc/resolv.conf
     owner: root
     group: root
     state: link
+
+# Now we can enable systemd-resolved
+
+- name: Enable services
+  service:
+    name: "{{ item }}"
+    enabled: yes
+  loop:
+    - systemd-resolved
+
+
+
 ...
