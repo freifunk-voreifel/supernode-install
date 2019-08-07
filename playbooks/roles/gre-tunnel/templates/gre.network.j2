@@ -10,12 +10,12 @@ Address={{ gre[item.0].address }}/31
 Peer={{ gre[item.0].peer }}/31
 
 [Route]
-Gateway={{ gre[item.0].peer6 }}/64
+Gateway={{ gre[item.0].peer6 }}
 Destination=::0/0
 Table=42
 
 [Route]
-Gateway={{ gre[item.0].peer }}/64
+Gateway={{ gre[item.0].peer }}
 Destination=0.0.0.0/0
 Table=42
 

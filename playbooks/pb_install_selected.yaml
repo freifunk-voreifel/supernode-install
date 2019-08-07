@@ -24,8 +24,8 @@
         - gre-tunnel
         #- interfaces
         #- tunneldigger
-        - batman
-        - vrf
+        #- batman
+        #- vrf
         #- firewall
         #- radvd
         - bird
