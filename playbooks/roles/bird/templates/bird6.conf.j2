@@ -16,13 +16,8 @@ function is_default() {
         return (net ~ [::/0]);
 }
 
-filter not_local {
-    if net ~ [{{ ffrl.IPv6.net }}] then reject;
-    else accept;
-};
-
 filter hostroute {
-	if net ~ [{{ ffrl.IPv6.net }}] then accept;
+	if net ~ [{{ ffrl.IPv6.net }}{56,56}] then accept;
         reject;
 }
 
@@ -33,7 +28,7 @@ protocol direct {
 protocol kernel {
     device routes;
     import all;
-    export filter not_local;    # Default is export none
+    export all;    # Default is export none
     kernel table 42;            # 
 
 }

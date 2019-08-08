@@ -4,4 +4,10 @@
 
 # Ab hier muss noch dein Code hinein
 
+- name: restart systemd-networkd
+  service:
+    name: systemd-networkd
+    enabled: yes
+    state: restarted
+
 ...

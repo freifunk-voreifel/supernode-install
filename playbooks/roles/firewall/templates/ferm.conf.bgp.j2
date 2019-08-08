@@ -31,9 +31,6 @@ domain (ip ip6) {
             saddr {{ ffrl.IPv6.net }} daddr ! {{ ffrl.IPv6.net }} { 
                 MARK set-mark 4;
             }
-        } 
-
-        chain PREROUTING {
             interface {{ gre_tunnel_prefix }}+ {
                 MARK set-mark 4;
             }

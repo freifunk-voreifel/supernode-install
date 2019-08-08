@@ -12,8 +12,10 @@
     group: root
     mode: 0644
   when: gre[item.0].enabled is defined and gre[item.0].enabled == true
+  notify: restart systemd-networkd
   loop: "{{ gre|product(devtemplate)|list }}"
   vars:
     devtemplate:
       - netdev
       - network
+
