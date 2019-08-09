@@ -8,6 +8,13 @@
 
 # Install and configure mesh-nodes as a service
 
+- name: stop batman + bridges
+  service:
+    name: "batman@{{ hoods[item].mesh.iface }}.service"
+    state: stopped
+  ignore_errors: true
+  loop: "{{ hoods|list }}"
+
 - name: Create bridge directory if they do not exist
   file:
     path: "/etc/freifunk"
@@ -40,8 +47,8 @@
 
 - name: Copy batman-up templates to /etc/freifunk/
   template: 
-    src: "batman-up.sh.j2"
-    dest: "/etc/freifunk/batman-up.sh"
+    src: "batman.sh.j2"
+    dest: "/etc/freifunk/batman.sh"
     owner: root
     group: root
     mode: 0755

@@ -19,3 +19,5 @@
       - netdev
       - network
 
+- meta: flush_handlers
+

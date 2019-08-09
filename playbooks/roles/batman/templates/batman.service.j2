@@ -8,9 +8,9 @@ Before=isc-dhcp-server.service ntp.service
 
 Type=oneshot
 
-ExecStart=/etc/freifunk/batman-up.sh start %I
+ExecStart=/etc/freifunk/batman.sh start %I
 
-# ExecStop=/etc/freifunk/batman-up.sh stop %I
+ExecStop=/etc/freifunk/batman.sh stop %I
 
 [Install]
 WantedBy=multi-user.target
