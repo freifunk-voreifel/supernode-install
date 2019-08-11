@@ -50,11 +50,11 @@ template bgp uplink {
 };
 
 {% for item in gre %}
-
+{% if gre[item].enabled %}
 protocol bgp {{ gre[item].dev }} from uplink {
         description "{{ gre[item].description }}";
         source address {{ gre[item].address }};
         neighbor {{ gre[item].peer }} as {{ gre[item].asn }};
 }
-
+{% endif %}
 {% endfor %} 

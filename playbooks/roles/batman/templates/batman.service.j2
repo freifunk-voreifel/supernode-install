@@ -5,11 +5,9 @@ After=network-online.target
 Before=isc-dhcp-server.service ntp.service
 
 [Service]
-
 Type=oneshot
-
+RemainAfterExit=true
 ExecStart=/etc/freifunk/batman.sh start %I
-
 ExecStop=/etc/freifunk/batman.sh stop %I
 
 [Install]

@@ -24,9 +24,9 @@
         - gre-tunnel
         #- interfaces
         #- tunneldigger
-        - batman
+        #- batman
         #- vrf
-        #- firewall
+        - firewall
         #- radvd
         - bird
         #- dhcpserver

@@ -19,5 +19,17 @@
       - netdev
       - network
 
+- name: delete disabled GRE tunnels
+  file: 
+    path: "/etc/systemd/network/20-gre-{{ item.0 }}.{{ item.1 }}"
+    state: absent
+  when: gre[item.0].enabled is defined and gre[item.0].enabled == false
+  notify: restart systemd-networkd
+  loop: "{{ gre|product(devtemplate)|list }}"
+  vars:
+    devtemplate:
+      - netdev
+      - network
+
 - meta: flush_handlers
 

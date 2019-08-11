@@ -4,9 +4,9 @@
 
 ntp_server:
   hetzner:
-    - "ntp1.hetzner.de"
-    - "ntp2.hetzner.com"
-    - "ntp3.hetzner.net"
+    - "213.239.239.164"
+    - "213.239.239.165"
+    - "213.239.239.166"
   strato:
     - "ntp1.rz-ip.net"
     - "ntp2.rz-ip.net"

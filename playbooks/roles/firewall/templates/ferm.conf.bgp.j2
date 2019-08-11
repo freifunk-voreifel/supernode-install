@@ -4,9 +4,18 @@ domain (ip ip6) {
             policy ACCEPT;
             mod state state INVALID DROP;
             mod state state (ESTABLISHED RELATED) ACCEPT;
-            interface ( lo l2tp+ mesh+ bat+ {{ gre_tunnel_prefix }}+ ) ACCEPT;
             proto ( icmp esp udp ) ACCEPT;
-            proto tcp dport ( ssh http https 8080) ACCEPT;
+            # allow ssh
+            proto tcp dport ( ssh ) ACCEPT;
+            # allow www
+            proto tcp dport ( http https 8080) ACCEPT;
+            # allow DNS
+            proto tcp dport ( 53 ) ACCEPT;
+            # allow NTP
+            proto tcp dport ( 123 ) ACCEPT;
+            # allow BGP
+            proto tcp dport ( 179 ) ACCEPT;
+            interface ( lo l2tp+ mesh+ bat+ {{ gre_tunnel_prefix }}+ ) ACCEPT;
 
         }
         chain OUTPUT {
@@ -29,9 +38,6 @@ domain (ip ip6) {
                 MARK set-mark 4;
             }
             saddr {{ ffrl.IPv6.net }} daddr ! {{ ffrl.IPv6.net }} { 
-                MARK set-mark 4;
-            }
-            interface {{ gre_tunnel_prefix }}+ {
                 MARK set-mark 4;
             }
         }
