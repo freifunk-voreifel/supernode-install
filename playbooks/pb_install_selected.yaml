@@ -22,13 +22,13 @@
         #- netfilter
         #- routing
         - gre-tunnel
-        #- interfaces
+        - interfaces
         #- tunneldigger
         #- batman
         #- vrf
-        - firewall
+        #- firewall
         #- radvd
-        - bird
+        #- bird
         #- dhcpserver
         #- dnsserver
         #- ntpserver

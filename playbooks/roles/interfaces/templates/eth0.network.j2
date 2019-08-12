@@ -1,6 +1,6 @@
 [Match]
 Name={{ ansible_default_ipv4.alias }}
-MacAddress={{ ansible_default_ipv4.macaddress }} 
+MACAddress={{ ansible_default_ipv4.macaddress }} 
 
 [Network]
 Address={{ ansible_default_ipv4.address }}/{{ ( ansible_default_ipv4.address +'/'+ ansible_default_ipv4.netmask ) | ipaddr('prefix') }}
