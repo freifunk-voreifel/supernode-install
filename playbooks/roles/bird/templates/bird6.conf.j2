@@ -17,17 +17,17 @@ function is_default() {
 }
 
 filter hostroute {
-	if net ~ [{{ ffrl.IPv6.net }}{56,56}] then accept;
+	if net ~ [{{ ffrl.IPv6.net }}{48,56}] then accept;
         reject;
 }
 
 protocol direct {
-        interface "-ens18", "bat*", "gre*" , "lo" ;  # Restrict network interfaces it works with
+        interface -"ens*", "bat*", "gre*" , "lo" ;  # Restrict network interfaces it works with
 }
 
 protocol kernel {
     device routes;
-    import all;
+    import none;
     export all;    # Default is export none
     kernel table 42;            # 
 
