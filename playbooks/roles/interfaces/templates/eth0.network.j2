@@ -13,3 +13,8 @@ DNS=213.133.100.100
 {% for item in gre|list %}
 Tunnel={{ gre[item].dev }}
 {% endfor %}
+
+# define VLAN for X-link of hoods
+{% for item in hoods|list %}
+VLAN=mesh-x.{{ hoods[item].number }}
+{% endfor %}

@@ -29,7 +29,7 @@
     group: root
     mode: 0644
 
-# Configure systemd/network
+# Configure default interface
 
 - name: Supernode LAN interface
   template:
@@ -38,6 +38,26 @@
     owner: root
     group: root
     mode: 0644
+
+# Configure VLAN for X-link BATMAN
+
+- name: Supernode VLAN interface for BATMAN X-link netdev
+  template:
+    src: "meshx.netdev.j2"
+    dest: "/etc/systemd/network/40-meshx-{{ hoods[item].number }}.netdev"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ hoods|list }}"
+
+- name: Supernode VLAN interface for BATMAN X-link network
+  template:
+    src: "meshx.network.j2"
+    dest: "/etc/systemd/network/40-meshx-{{ hoods[item].number }}.network"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ hoods|list }}"
 
 # We disabel old networkservices to switch to systemd networkd and resolved
 
