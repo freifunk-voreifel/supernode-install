@@ -21,10 +21,10 @@
         #- modprobe
         #- netfilter
         #- routing
-        - gre-tunnel
+        # - gre-tunnel
         - interfaces
         #- tunneldigger
-        #- batman
+        # - batman
         #- vrf
         #- firewall
         #- radvd
