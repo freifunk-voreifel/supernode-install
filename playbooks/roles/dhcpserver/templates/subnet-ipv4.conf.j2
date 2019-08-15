@@ -2,11 +2,14 @@
 
 subnet {{ hoods[item].mesh.IPv4.net }} netmask {{ hoods[item].mesh.IPv4.netmask }} {
 	authoritative;
-	range {{ hoods[item].dhcp.range }};
 	option subnet-mask {{ hoods[item].mesh.IPv4.netmask }};
 	option domain-name-servers {{ hoods[item].dhcp.DNS }};
 	option ntp-servers {{ hoods[item].dhcp.NTP }};
 	option routers {{ hoods[item].mesh.IPv4.addr }};
 	option interface-mtu {{ hoods[item].mesh.mtu }};
 	interface {{ hoods[item].mesh.iface }};
+    pool {
+        failover peer "{{ dhcp.name }}";
+        range {{ hoods[item].dhcp.range }};
+    }
 }

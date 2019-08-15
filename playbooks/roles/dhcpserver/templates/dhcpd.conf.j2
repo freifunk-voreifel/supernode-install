@@ -12,6 +12,29 @@ default-lease-time 300;
 max-lease-time 3600;
 log-facility local7;
 
+failover peer "{{ dhcp.name }}" {
+    {{ dhcp.type }};
+    address {{ dhcp.address }};
+    port {{ dhcp.port }};
+    peer address {{ dhcp.peer_address }};
+    peer port {{ dhcp.peer_port }};
+    max-response-delay {{ dhcp.max_response_delay }};
+    max-unacked-updates {{ dhcp.max_unacked_updates }};
+    {% if dhcp.type == "primary" %}
+    mclt {{ dhcp.mclt }};
+    split {{ dhcp.split }};
+    {% endif %}
+    load balance max seconds {{ dhcp.load_balance_max_seconds }};
+}
+
+omapi-port 7911;
+omapi-key omapi_key;
+
+key omapi_key {
+     algorithm hmac-md5;
+     secret Xl05rz0Iz6FH7O7Hj8BSGmoiDQ1bgZ60ycJva/be/pMz1Xsqlgph7WqDm7GjBnXrK6c+qsYLQtX6e13ve+AnwA== ;
+}
+
 {% for item in hoods %}
 
 include "/etc/dhcp/dhcpd.conf.d/subnet-hood-{{ hoods[item].namespace }}.conf" ;
