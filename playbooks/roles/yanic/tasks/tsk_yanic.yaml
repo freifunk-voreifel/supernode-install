@@ -77,6 +77,6 @@
     state: restarted
   when: compile_yanic is succeeded
   tags: 
-    - yannic
+    - yanic
 
 ...
