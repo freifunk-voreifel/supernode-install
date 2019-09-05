@@ -12,8 +12,8 @@ router id {{ ffrl.IPv4.addr }} ;
 protocol direct announce {
         table master;
         import where net ~ [{{ ffrl.IPv4.addr }}/32];
-/* interface "{{ ffrl.iface }}"; */
-
+        /* interface "ens*", "bat*", "gre*" , "lo" ;  # Restrict network interfaces it works with
+*/
 };
 
 protocol kernel {

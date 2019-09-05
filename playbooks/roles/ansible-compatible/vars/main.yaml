@@ -1,10 +1,11 @@
 ---
 # Erstellt von: Thomas Arend
 # Erstellt am:  2019-07-20
-
 # Ab hier muss noch dein Code hinein
+sn_rootpasswd: $6$reyEQ23CGON4$6c4rLszGLMmMniL2ImN.uVwSqM/VUnqPgwt73UfqCzKJl08EuTJ2XpAXRlcPbAI9oEJuWmcaznhWUSe6POq6B.
 
-- name: Include encrypted root password from file
-  include_vars:
-    file: root_pwd.yaml
- ...
+#- name: Include encrypted root password from file
+#  include_vars:
+#    file: root_pwd.yaml
+#    name: Password
+...

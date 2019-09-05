@@ -50,12 +50,12 @@
         name: "{{ required_role }}"
       loop:
         - modprobe
-        - netfilter
         - routing
         - gre-tunnel
         - interfaces
         - tunneldigger
         - batman
+        - netfilter    # netfilter erst nach batman konfigurieren, da die devices erst jetzt bestehen 
         - vrf
         - firewall
         - radvd

@@ -22,7 +22,7 @@ filter hostroute {
 }
 
 protocol direct {
-        interface -"ens*", "bat*", "gre*" , "lo" ;  # Restrict network interfaces it works with
+        interface "ens*", "bat*", "gre*" , "lo" ;  # Restrict network interfaces it works with
 }
 
 protocol kernel {

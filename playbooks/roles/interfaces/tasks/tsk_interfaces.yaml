@@ -31,10 +31,20 @@
 
 # Configure default interface
 
-- name: Supernode LAN interface
+- name: Supernode 1. LAN interface
   template:
     src: eth0.network.j2
     dest: /etc/systemd/network/00-ether.network
+    owner: root
+    group: root
+    mode: 0644
+
+# Configure default interface
+
+- name: Supernode 2. LAN interface
+  template:
+    src: eth1.network.j2
+    dest: /etc/systemd/network/01-ether.network
     owner: root
     group: root
     mode: 0644
@@ -77,12 +87,21 @@
   loop:
     - systemd-networkd
 
-# We must direct static /etc/resolv.conf to systemd-reolved
+# Now we can enable systemd-resolved
+
+- name: Enable services
+  service:
+    name: "{{ item }}"
+    enabled: yes
+  loop:
+    - systemd-resolved
 
 - name: get status of /etc/resolv.conf
   stat: 
     path: /etc/resolv.conf
   register: sym
+
+# We must direct static /etc/resolv.conf to systemd-reolved
 
 - name: remove resolv.conf
   file:
@@ -97,16 +116,7 @@
     owner: root
     group: root
     state: link
-
-# Now we can enable systemd-resolved
-
-- name: Enable services
-  service:
-    name: "{{ item }}"
-    enabled: yes
-  loop:
-    - systemd-resolved
-
+    force: yes
 
 
 ...

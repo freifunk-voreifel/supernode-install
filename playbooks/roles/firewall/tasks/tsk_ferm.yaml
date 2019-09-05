@@ -31,8 +31,20 @@
     regexp: '(10\.0\.0\.0\/8|172\.16\.0\.0\/12|192\.168\.0\.0\/16) DROP\;'
     state: absent
   tags:
-    - ferm    
-    
+    - ferm
+
+# Da ferm neuerdings (04.09.2019) einen Installtionsfehler hat,
+# installieren wir ferm erst jetzt.
+
+- name: Install ferm
+  apt:
+    name: ferm
+    state: present
+    update_cache: no
+  register: aptupdates
+  tags:
+    - apt
+
 - name: Enable and restart firewall ferm (ferm.service)
   service:
     name: "ferm.service"

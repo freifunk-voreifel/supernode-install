@@ -9,7 +9,7 @@ common_required_packages:
   - dnsutils
   - ebtables
   - ethtool
-  - ferm
+  #- ferm
   - gcc
   - git
   - htop
@@ -29,6 +29,7 @@ common_required_packages:
   - libnl-genl-3-dev
   - make
   - netfilter-persistent
+  - nmap
   - ntp
   - pkg-config
   - psmisc

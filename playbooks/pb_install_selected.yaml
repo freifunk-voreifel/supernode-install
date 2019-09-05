@@ -28,7 +28,7 @@
         #- vrf
         #- firewall
         #- radvd
-        #- bird
+        - bird
         #- dhcpserver
         #- dnsserver
         #- ntpserver
