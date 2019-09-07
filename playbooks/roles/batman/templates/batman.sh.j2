@@ -1,6 +1,10 @@
 #!/bin/bash
 
-#Start batman on bridge of hood
+# Start batman on bridge of hood 
+
+IP=/sbin/ip
+BATCTL=/usr/local/sbin/batctl
+EBT=/sbin/ebtables
 
 ACTION="$1"
 BATDEV="$2"
@@ -14,14 +18,6 @@ HOOD=${BATDEV:3}
 # IPv4Net
 # BRCAST
 # MAC
-
-IP=/sbin/ip
-BATCTL=/usr/local/sbin/batctl
-EBT=/sbin/ebtables
-
-# Load bat device  configuration
-
-. $(dirname $0)/${BATDEV}.conf
 
 case $ACTION in
 
