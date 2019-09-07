@@ -4,6 +4,7 @@ domain (ip ip6) {
             policy ACCEPT;
             mod state state INVALID DROP;
             mod state state (ESTABLISHED RELATED) ACCEPT;
+            interface ( ens+ ) proto udp dport 1001 DROP;
             proto ( icmp esp udp ) ACCEPT;
             # allow ssh
             proto tcp dport ( ssh ) ACCEPT;

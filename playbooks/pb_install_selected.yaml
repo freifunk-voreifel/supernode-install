@@ -21,17 +21,18 @@
         #- modprobe
         #- netfilter
         #- routing
-        # - gre-tunnel
-        - interfaces
+        #- gre-tunnel
+        #- interfaces
         #- tunneldigger
-        # - batman
+        #- batman
         #- vrf
         #- firewall
         #- radvd
-        - bird
+        #- bird
         #- dhcpserver
         #- dnsserver
         #- ntpserver
+        - respondd
       loop_control:
         loop_var: required_role 
 

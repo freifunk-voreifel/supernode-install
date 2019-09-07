@@ -1,0 +1,11 @@
+{
+	"directory"	: "./providers",
+	"group"	: "ff02::2:1001",
+	"port"	: 1001,
+	"mcast_ifaces"	: ["{{ hoods[item].mesh.iface }}"],
+	"batadv_iface"	: "{{ hoods[item].mesh.iface }}",
+	"mesh_ipv4"	: "{{ hoods[item].mesh.IPv4.addr }}",
+	"site_code"	: "su-su",
+	"domain_code"	: "dom15",
+	"node_id"	: "{{ ansible_default_ipv4.macaddress | replace(':','')}}"
+}

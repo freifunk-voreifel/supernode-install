@@ -9,42 +9,54 @@
 # respondd
 #
 
-- name: Enable and restart service respondd
+- name: Stop and disable respondd service
   service:
     name: "respondd.service"
-    enabled: yes
+    enabled: no
     state: stopped
   ignore_errors: True
-  tags: 
-    - respondd
 
 - name: Get respondd
   git: 
-    repo: "https://github.com/{{ github_user }}/mesh-announce.git"
+#    repo: "https://github.comg/{{ github_user }}/mesh-announce.git"
+    repo: "https://github.com/Byggvir/mesh-announce.git"
     dest: "/opt/mesh-announce"
   register: get_respondd
-  tags: 
-    - respondd
 
-- name: Copy respondd service template
-  shell: "cp /opt/mesh-announce/respondd.service /etc/systemd/system"
-  when: get_respondd is succeeded
-  tags: 
-    - respondd
+- name: Create respondd config dir in /etc
+  file:
+    path: "/etc/respondd"
+    state: directory
+    mode: '0755'
+  ignore_errors: true
+
+- name: Copy respondd.service template to /etc/systemd/system
+  template: 
+    src: "respondd@.service.j2"
+    dest: "/etc/systemd/system/respondd@.service"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy resspondd config to /etc/respondd/
+  template: 
+    src: "respondd.json.j2"
+    dest: "/etc/respondd/{{ hoods[item].mesh.iface }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ hoods|list }}"
 
 - name: Enable respondd service
   command: "systemctl daemon-reload"
   when: get_respondd is succeeded
-  tags: 
-    - respondd
-    
-- name: Enable and restart service respondd
-  service:
-    name: "respondd.service"
-    enabled: yes
-    state: restarted
-  when: get_respondd is succeeded
-  tags: 
-    - respondd
 
+- name: Enable and restart respondd
+  service:
+    name: "respondd@{{ hoods[item].mesh.iface }}.service"
+    state: restarted
+    enabled: yes
+  ignore_errors: true
+  loop: "{{ hoods|list }}"
+  when: get_respondd is succeeded
 ...
