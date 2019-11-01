@@ -42,6 +42,7 @@ template bgp uplink {
         import where is_default();
         export filter hostroute;
         gateway recursive;
+        multihop 64;
 }
 
 {% for item in gre %}
