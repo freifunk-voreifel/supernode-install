@@ -3,7 +3,7 @@
 # Start batman on bridge of hood 
 
 IP=/sbin/ip
-BATCTL=/usr/local/sbin/batctl
+BATCTL=/usr/sbin/batctl
 EBT=/sbin/ebtables
 
 ACTION="$1"
@@ -23,9 +23,9 @@ case $ACTION in
 
 start)
 
-  $BATCTL -m ${BATDEV} if add mesh-${BATDEV}
-  $BATCTL -m ${BATDEV} if add mesh-x.${HOOD}
-  $BATCTL -m bat${HOOD} gw_mode server
+  $BATCTL meshif ${BATDEV} if add mesh-${BATDEV}
+  $BATCTL meshif ${BATDEV} if add mesh-x.${HOOD}
+  $BATCTL meshif ${BATDEV} gw_mode server
 
   $IP link set up dev mesh-${BATDEV}
   $IP link set address $MAC dev ${BATDEV}
@@ -48,8 +48,8 @@ stop)
   $IP -6 addr del $IPv6 dev ${BATDEV}
   $IP link set down dev ${BATDEV}
   $IP link set down dev mesh-${BATDEV}
-  $BATCTL -m ${BATDEV} if del mesh-x.${HOOD}
-  $BATCTL -m ${BATDEV} if del mesh-${BATDEV}
+  $BATCTL meshif ${BATDEV} if del mesh-x.${HOOD}
+  $BATCTL meshif ${BATDEV} if del mesh-${BATDEV}
   ;;
   
 esac
