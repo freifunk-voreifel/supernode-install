@@ -1,4 +1,7 @@
 # Interfaces der Supernodes
+
+Die Supernodes verfügen nur über öffentliche IPv4 Adressen. Über IPv6 siond sie nur über die GRE-Tunnel zum Freifung Rheinland e.V. (FFRL) erreichbar.
+
 ## Kurzbeschreibung der Interfaces
 
 ##Devicename: lo
@@ -18,7 +21,7 @@ Beispiel:
        valid_lft forever preferred_lft forever
 ```
       
-##Devicename: ens18
+##Erstes (physisches) Interface: ens18
 
 Erstes physisches Interface. Auf diesem Interfaces werden die VLAN zur Verbindung der BATMAN interfaces bat[n] definiert.
 
@@ -30,6 +33,21 @@ Erstes physisches Interface. Auf diesem Interfaces werden die VLAN zur Verbindun
     inet 46.4.156.121/28 brd 46.4.156.127 scope global ens18
        valid_lft forever preferred_lft forever
     inet6 fe80::24d0:63ff:fe50:e9c7/64 scope link 
+       valid_lft forever preferred_lft forever
+```
+
+##Zweites (physisches) Interface: ens19 
+
+Das zweite pysisches Interface dient der Verbindung der beiden Supernodes untereinander. Über die IPv6 Adresse sind die Supernodes untereinander erreichbar, ohne über die GRE-Tunnel des FFRL zu gehen. Außerdem sorgt dieses Interface dafür, dass bird6 die Route akzeptiert.
+
+###Beispiel: Voreifel1
+
+```
+3: ens19: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 4e:43:a5:78:9b:85 brd ff:ff:ff:ff:ff:ff
+    inet6 2a03:2260:301a::1/48 scope global 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::4c43:a5ff:fe78:9b85/56 scope link 
        valid_lft forever preferred_lft forever
 ```
 

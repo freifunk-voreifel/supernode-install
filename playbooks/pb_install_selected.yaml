@@ -33,6 +33,7 @@
         #- dnsserver
         #- ntpserver
         - respondd
+        - yanic
       loop_control:
         loop_var: required_role 
 

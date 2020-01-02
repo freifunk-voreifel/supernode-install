@@ -5,8 +5,10 @@
 # Send respondd request to update information
 [respondd]
 enable           = true
+
 # Delay startup until a multiple of the period since zero time
 synchronize      = "1m"
+
 # how often request per multicast
 collect_interval = "1m"
 
@@ -15,13 +17,25 @@ collect_interval = "1m"
 ## list of domains on this site to save stats for (empty for global only)
 #domains = []
 ## example
+
 [respondd.sites.ff]
 domains            = ["{{ yanic_domain }}"]
 
 # interface that has an IP in your mesh network
 [[respondd.interfaces]]
+ifname = "bat8"
+[[respondd.interfaces]]
+ifname = "bat10"
+[[respondd.interfaces]]
+ifname = "bat13"
+[[respondd.interfaces]]
+ifname = "bat14"
+[[respondd.interfaces]]
+ifname = "bat15"
+
+
 # name of interface on which this collector is running
-ifname = "bat8 bat10 bat 13 bat14 bat15"
+# ifname = [ "bat8" , "bat10" , "bat13" , "bat14" , "bat15" ]
 # ip address which is used for sending
 # (optional - without definition used a address of ifname)
 #ip_address = "fd2f:5119:f2d::5"
@@ -37,6 +51,7 @@ ifname = "bat8 bat10 bat 13 bat14 bat15"
 
 # A little build-in webserver, which statically serves a directory.
 # This is useful for testing purposes or for a little standalone installation.
+
 [webserver]
 enable  = true
 bind    = "0.0.0.0:8080"
@@ -46,13 +61,20 @@ webroot = "/opt/freifunk/yanic"
 [nodes]
 # Cache file
 # a json file to cache all data collected directly from respondd
+
 state_path    = "/opt/freifunk/yanic/state.json"
+
 # prune data in RAM, cache-file and output json files (i.e. nodes.json)
 # that were inactive for longer than
+
 prune_after   = "7d"
+
 # Export nodes and graph periodically
+
 save_interval = "5s"
+
 # Set node to offline if not seen within this period
+
 offline_after = "10m"
 
 
@@ -61,6 +83,7 @@ offline_after = "10m"
 #enable = true
 #
 # For each output format there can be set different filters
+
 #[nodes.output.example.filter]
 #
 # WARNING: if it is not set, it will publish contact information of other persons
