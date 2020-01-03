@@ -1,4 +1,5 @@
 common_required_packages:
+  - apache2
   - batctl
   - batman-adv
   - bind9
@@ -9,7 +10,7 @@ common_required_packages:
   - dnsutils
   - ebtables
   - ethtool
-  #- ferm
+  - ferm
   - gcc
   - git
   - htop
@@ -17,6 +18,7 @@ common_required_packages:
   - iproute
   - iptables-persistent
   - isc-dhcp-server
+  - letsencrypt
   - libcap-dev
   - libevent-dev
   - libffi-dev

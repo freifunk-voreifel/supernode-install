@@ -1,0 +1,18 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2020-01-02
+
+# Ab hier muss noch dein Code hinein
+
+apache2_packages:
+  - apache2
+  - libapache2-mod-gnutls
+  - python-certbot-apache
+  
+apache2_modules:
+  - rewrite
+  - socache_dbm
+  - socache_memcache
+  - socache_shmcb
+  - gnutls
+...

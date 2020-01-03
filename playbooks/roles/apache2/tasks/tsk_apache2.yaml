@@ -1,0 +1,19 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2020-01-02
+
+# Neustart des Web-Service apache2
+- name: Install apache2 required packages
+  apt:
+    name: "{{ apache2_packages }}"
+    state: present
+    update_cache: no
+  notify: restart apache2
+  register: apache2_installed
+  
+- name: Enable https with gnutls
+  shell: "a2enmod {{ item }}"
+  notify: restart apache2
+  when: apache2_installed is succeeded
+  loop: "{{ apache2_modules }}"
+...

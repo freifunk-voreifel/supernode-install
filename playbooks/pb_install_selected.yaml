@@ -18,6 +18,7 @@
       include_role:
         name: "{{ required_role }}"
       loop:
+        - apache2
         #- modprobe
         #- netfilter
         #- routing
@@ -31,8 +32,9 @@
         #- bird
         #- dhcpserver
         #- dnsserver
+        - mapserver
         #- ntpserver
-        - respondd
+        #- respondd
         - yanic
       loop_control:
         loop_var: required_role 

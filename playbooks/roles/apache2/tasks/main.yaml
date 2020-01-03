@@ -1,0 +1,10 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2020-01-02
+
+# apache2/tasks/main.yaml
+
+- name: "Configure DHCP Server"
+  include_tasks: tsk_apache2.yaml
+...
+  

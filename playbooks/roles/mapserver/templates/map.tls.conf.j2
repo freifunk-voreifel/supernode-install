@@ -1,0 +1,39 @@
+<VirtualHost *:80>
+ServerName {{ vhost }}
+DocumentRoot "/var/www/vhosts/{{ vhost }}"
+Redirect permanent / https://{{ vhost }}/
+</VirtualHost>
+
+<IfModule mod_gnutls.c>
+<VirtualHost *:443>
+ 
+ DocumentRoot "/var/www/vhosts/{{ vhost }}"
+ ServerName {{ vhost }}
+ ServerAdmin webmaster@byggvir.de
+ 
+ CustomLog /var/log/apache2/vhosts/{{ vhost }}/tls-access_log combined
+ 
+ Options Indexes MultiViews
+ IndexOptions +FancyIndexing +IconsAreLinks NameWidth=*
+ IndexIgnore readme.html header.html robots.txt
+
+ GnuTLSEnable on
+ GnuTLSCertificateFile   /etc/letsencrypt/live/{{ vhost }}/fullchain.pem
+ GnuTLSKeyFile   /etc/letsencrypt/live/{{ vhost }}/privkey.pem
+ GnuTLSPriorities SECURE:!MD5
+ GnuTLSPriorities NORMAL
+
+ <Directory "/var/www/vhosts/{{ vhost }}">
+
+	RewriteEngine On
+	AllowOverride All
+	Require all granted
+
+	DirectoryIndex index.php index.html index.htm
+	HeaderName header.html
+	ReadmeName readme.html
+
+ </Directory>
+
+</VirtualHost>
+</IfModule>

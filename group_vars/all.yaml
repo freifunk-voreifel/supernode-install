@@ -11,3 +11,4 @@ dns_provider:
         nameserver:
             - "1.1.1.1"
             - "8.8.8.8"
+mapserver: "map.ffrhb.de"

@@ -1,0 +1,5 @@
+# mapserver/tasks/main.yaml
+
+- name: "Configure map server"
+  include_tasks: tsk_mapserver.yaml
+...

@@ -1,0 +1,18 @@
+<VirtualHost *:80>
+ DocumentRoot "/var/www/vhosts/{{ vhost }}"
+ Options Indexes MultiViews
+ IndexOptions +FancyIndexing +IconsAreLinks NameWidth=*
+ IndexIgnore readme.html header.html robots.txt
+ ServerName {{ vhost }}
+ CustomLog /var/log/apache2/vhosts/{{ vhost }}/access_log combined
+ ServerAdmin webmaster@{{ mapserver }}
+ <Directory "/var/www/vhosts/{{ vhost }}">
+  RewriteEngine On
+  AllowOverride All
+  Order allow,deny
+  Allow from all
+  DirectoryIndex index.php index.html index.htm
+  HeaderName header.html
+  ReadmeName readme.html
+ </Directory>
+</VirtualHost>

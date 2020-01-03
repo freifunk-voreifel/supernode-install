@@ -1,0 +1,13 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2020-01-02
+
+# Neustart des Web-Service apache2
+
+- name: restart apache2
+  service:
+    name: apache2
+    state: restarted
+    enabled: yes
+  ignore_errors: yes
+...

@@ -1,0 +1,14 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2020-01-03
+
+# Ab hier muss noch dein Code hinein
+
+- name: "Create directory"
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  loop:
+    - "/etc/letsencrypt/live/{{ mapserver }}"
+...

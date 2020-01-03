@@ -19,23 +19,19 @@ collect_interval = "1m"
 ## example
 
 [respondd.sites.ff]
-domains            = ["{{ yanic_domain }}"]
+domains = ["{{ yanic_domain }}"]
 
 # interface that has an IP in your mesh network
-[[respondd.interfaces]]
-ifname = "bat8"
-[[respondd.interfaces]]
-ifname = "bat10"
-[[respondd.interfaces]]
-ifname = "bat13"
-[[respondd.interfaces]]
-ifname = "bat14"
-[[respondd.interfaces]]
-ifname = "bat15"
 
+{% for item in hoods %}
+[[respondd.interfaces]]
+ifname = "{{ hoods[item].mesh.iface }}"
+{% endfor %}
+
+#[[respondd.interfaces]]
 
 # name of interface on which this collector is running
-# ifname = [ "bat8" , "bat10" , "bat13" , "bat14" , "bat15" ]
+#ifname = "bat8"
 # ip address which is used for sending
 # (optional - without definition used a address of ifname)
 #ip_address = "fd2f:5119:f2d::5"
@@ -55,7 +51,7 @@ ifname = "bat15"
 [webserver]
 enable  = true
 bind    = "0.0.0.0:8080"
-webroot = "/opt/freifunk/yanic"
+webroot = "/opt/freifunk/yanic/"
 
 
 [nodes]
@@ -163,8 +159,6 @@ path = "/opt/freifunk/yanic/nodelist.json"
 [nodes.output.nodelist.filter]
 # WARNING: if it is not set, it will publish contact information of other persons
 no_owner = true
-
-
 
 [database]
 # this will send delete commands to the database to prune data

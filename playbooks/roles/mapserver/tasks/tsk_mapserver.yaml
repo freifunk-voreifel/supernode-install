@@ -1,0 +1,39 @@
+# mapserver/tasks/main.yaml
+
+- name: "Create directory"
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  loop:
+    - "/var/www/vhosts"
+    - "/var/www/vhosts/{{ mapserver }}"
+    - "/var/log/apache2/vhosts"
+    - "/var/log/apache2/vhosts/{{ mapserver }}"
+    - "/etc/letsencrypt/live/{{ mapserver }}"
+    
+- name: "map server configuration"
+  template:
+    src: "{{ item }}.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ item }}.conf"
+    owner: "www-data"
+    group: "www-data"
+    mode: 0444
+  vars:
+    vhost: "{{ mapserver }}"
+  loop: 
+    - map
+    - map.tls
+
+- name: a2ensite {{ vhost }} with tls
+  command: "a2ensite {{ item }}"
+  args:
+    creates: "/etc/apache2/sites-enabled/{{ item }}.tls.conf"
+  notify:
+    - restart apache2
+  loop: 
+    - map
+    - map.tls
+    
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
