@@ -18,24 +18,24 @@
       include_role:
         name: "{{ required_role }}"
       loop:
-        - apache2
+        #- apache2
         #- modprobe
         #- netfilter
         #- routing
         #- gre-tunnel
         #- interfaces
         #- tunneldigger
-        #- batman
+        - batman
         #- vrf
         #- firewall
         #- radvd
         #- bird
         #- dhcpserver
         #- dnsserver
-        - mapserver
+        #- mapserver
         #- ntpserver
         #- respondd
-        - yanic
+        #- yanic
       loop_control:
         loop_var: required_role 
 

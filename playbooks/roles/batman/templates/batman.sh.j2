@@ -3,8 +3,10 @@
 # Start batman on bridge of hood 
 
 IP=/sbin/ip
-BATCTL=/usr/sbin/batctl
+BATCTL=/usr/local/sbin/batctl
 EBT=/sbin/ebtables
+
+test -x $BATCTL || BATCTL=/usr/sbin/batctl
 
 ACTION="$1"
 BATDEV="$2"
