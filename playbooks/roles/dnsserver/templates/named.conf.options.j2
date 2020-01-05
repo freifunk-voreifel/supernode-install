@@ -36,15 +36,15 @@ options {
 
         listen-on { 
             any;
-        {% for item in hoods|list %} 
-#          {{ hoods[item].mesh.iface }}; 
+        {% for hooditem in hoods|list %} 
+#          {{ hoods[hooditem].mesh.iface }}; 
         {% endfor %} 
         };
         
         listen-on-v6 { 
             any;
-        {% for item in hoods|list %} 
-#            {{ hoods[item].mesh.iface }}; 
-          {% endfor %} 
+        {% for hooditem in hoods|list %} 
+#            {{ hoods[hooditem].mesh.iface }}; 
+        {% endfor %} 
         };
 };

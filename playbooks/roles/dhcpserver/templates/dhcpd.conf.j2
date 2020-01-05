@@ -35,8 +35,8 @@ key omapi_key {
      secret Xl05rz0Iz6FH7O7Hj8BSGmoiDQ1bgZ60ycJva/be/pMz1Xsqlgph7WqDm7GjBnXrK6c+qsYLQtX6e13ve+AnwA== ;
 }
 
-{% for item in hoods %}
+{% for hooditem in hoods %}
 
-include "/etc/dhcp/dhcpd.conf.d/subnet-hood-{{ hoods[item].namespace }}.conf" ;
+include "/etc/dhcp/dhcpd.conf.d/subnet-hood-{{ hoods[hooditem].namespace }}.conf" ;
 
 {% endfor %} 

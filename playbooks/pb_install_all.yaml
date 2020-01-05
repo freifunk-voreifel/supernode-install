@@ -10,7 +10,7 @@
 # Only needed after first installation
 
 # This step must be started 
-# with -kK and ssh and become password
+# with -k -K and ssh and become password
 
 #- name: Make ansible compatible and install admin accounts
 #  hosts: all
@@ -63,7 +63,8 @@
         - dhcpserver
         - dnsserver
         - ntpserver
-
+        - apache2
+        - mapserver
       loop_control:
         loop_var: required_role 
 

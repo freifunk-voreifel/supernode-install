@@ -73,28 +73,34 @@
 
 - name: Disable services
   service:
-    name: "{{ item }}"
+    name: "{{ netservice }}"
     enabled: no
   ignore_errors: yes
   loop:
     - network
     - NetworkManager
-
+  loop_control:
+    loop_var: netservice
+    
 - name: Enable services
   service:
-    name: "{{ item }}"
+    name: "{{ netservice }}"
     enabled: yes
   loop:
     - systemd-networkd
+  loop_control:
+    loop_var: netservice
 
 # Now we can enable systemd-resolved
 
 - name: Enable services
   service:
-    name: "{{ item }}"
+    name: "{{ netservice }}"
     enabled: yes
   loop:
     - systemd-resolved
+  loop_control:
+    loop_var: netservice
 
 - name: get status of /etc/resolv.conf
   stat: 
@@ -117,6 +123,4 @@
     group: root
     state: link
     force: yes
-
-
 ...

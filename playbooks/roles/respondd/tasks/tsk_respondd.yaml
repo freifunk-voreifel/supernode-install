@@ -46,7 +46,7 @@
     group: root
     mode: 0644
   loop: "{{ hoods|list }}"
-
+    
 - name: Enable respondd service
   command: "systemctl daemon-reload"
   when: get_respondd is succeeded

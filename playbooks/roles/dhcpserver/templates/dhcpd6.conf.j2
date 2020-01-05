@@ -6,13 +6,13 @@ authoritative;
 default-lease-time 300;
 max-lease-time 600;
 
-{% for item in hoods|list %}
+{% for hooditem in hoods|list %}
 
-subnet6 {{ hoods[item].mesh.IPv6.addr }}/64 {
+subnet6 {{ hoods[hooditem].mesh.IPv6.addr }}/64 {
 
-    range6 {{ hoods[item].dhcp.range6 }} temporary;
-    option dhcp6.name-servers {{ hoods[item].dhcp.DNS6 }};
-    option dhcp6.domain-search "{{ hoods[item].namespace }}.ff";
+    range6 {{ hoods[hooditem].dhcp.range6 }} temporary;
+    option dhcp6.name-servers {{ hoods[hooditem].dhcp.DNS6 }};
+    option dhcp6.domain-search "{{ hoods[hooditem].namespace }}.ff";
 
 }
 
