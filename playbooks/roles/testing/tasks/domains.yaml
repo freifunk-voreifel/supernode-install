@@ -1,0 +1,19 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2020-02-02
+
+# Test supernode after installlation
+
+# Test if GRE tunnel is up and running
+
+- name: "Are other domains reachable?"
+  shell: "ping -m 4 -c 4 {{ URL }}"
+  ignore_errors: True
+  loop: 
+    - 'byggvir.de.'
+    - 'google.com'
+  loop_control:
+    loop_var: URL
+  tags:
+    - testing
+...

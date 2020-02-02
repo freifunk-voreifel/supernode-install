@@ -1,63 +1,16 @@
 ---
-# Test supernode after installlation
+# Erstellt von: Thomas Arend
+# Erstellt am:  2020-02-02
 
-# Test if GRE tunnel is up and running
-
-- name: Collect only facts returned by facter
-  setup:
-  tags:
-    - testing
-
-# This step should not be required after the tunneldigger and iptables issue is resolved
-
-#- name: Restart ferm, due to an iptables failure after an initial start of the server
-  #service:
-    #name: ferm
-    #state: restarted
-  #tags:
-    #- testing
-
-- name: "Are the GRE Tunnel endpoints reachable via IPv4?"
-  shell: "ping -4 -c 4 {{ gre[item].peer }}"
-  ignore_errors: True
-  when: gre[item].enabled is defined and gre[item].enabled == true
-  loop: "{{ gre | list }}"
-  tags:
-    - testing
-
-- name: "Are the GRE Tunnel endpoints reachable via IPv6?"
-  shell: "ping -m 4 -6 -c 4 {{ gre[item].peer6 }}"
-  ignore_errors: True
-  when: gre[item].enabled is defined and gre[item].enabled == true
-  loop: "{{ gre | list }}"
-  tags:
-    - testing
-
-# Test external domains are working
-# URL must end with a dot or freifunk-rhein-sieg.net will be added.
-
-- name: "Are other domains reachable?"
-  shell: "ping -m 4 -c 4 {{ URL }}"
-  ignore_errors: True
-  loop: 
-    - 'byggvir.de.'
+- name: "Testing supernode installation"
+  include_tasks: "{{ task_item }}"
+  loop:
+    - ipv4.yaml
+    - ipv6.yaml
+    - domains.yaml
+    - test_script.yaml
   loop_control:
-    loop_var: URL
-  tags:
-    - testing
-
-- name: Create /usr/local/bin
-  file: 
-    path: /usr/local/bin
-    state: directory
-    mode: 0755
-
-- name: "Copy test script to /usr/loacl/bin"
-  copy:
-    src: "supernode-net-test.sh"
-    dest: "/usr/local/bin/supernode-net-test.sh"
-    owner: root
-    group: 
-    mode: 0755
-  tags:
-    - copytest
+    loop_var: task_item
+    
+...
+    

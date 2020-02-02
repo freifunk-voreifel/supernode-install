@@ -3,15 +3,18 @@
 # Thoasm Arend
 # Stand 2019-04-17
 
-- name: "Test supernode"
+- name: Test super node network
   hosts: supernodes
   gather_facts: yes
-  become: yes
+  become: true
+  tags:
+    -supernode
   tasks:
-    - raw: "echo '{{ item.1 }}.j2 + /etc/systemd/network/90-bridge-{{ hoods[item.0].mesh.iface }}.{{ item.1 }}' >>/tmp/itemlist"
-      loop: "{{ hoods|product(devtemplate)| list }}"
-      vars:
-        devtemplate:
-          - netdev
-          - link
+    - name: Test network 
+      include_role:
+        name: "{{ required_role }}"
+      loop:
+        - testing
+      loop_control:
+        loop_var: required_role 
 ...

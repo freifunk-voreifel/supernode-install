@@ -1,0 +1,12 @@
+---
+# Test supernode after installlation
+
+# Test if GRE tunnel is up and running
+
+- name: "Are the GRE Tunnel endpoints reachable via IPv6?"
+  shell: "ping -m 4 -6 -c 4 {{ gre[item].peer6 }}"
+  ignore_errors: True
+  when: gre[item].enabled is defined and gre[item].enabled == true
+  loop: "{{ gre | list }}"
+  tags:
+    - testing

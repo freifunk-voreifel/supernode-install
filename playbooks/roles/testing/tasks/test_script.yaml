@@ -1,0 +1,22 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2020-02-02
+
+# Test supernode after installlation
+
+- name: Create /usr/local/bin
+  file: 
+    path: "/usr/local/bin"
+    state: directory
+    mode: 0755
+
+- name: "Copy test script to /usr/loacl/bin"
+  copy:
+    src: "supernode-net-test.sh"
+    dest: "/usr/local/bin/supernode-net-test.sh"
+    owner: root
+    group: 
+    mode: 0755
+  tags:
+    - copytest
+...

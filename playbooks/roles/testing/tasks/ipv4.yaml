@@ -1,0 +1,19 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2020-02-02
+
+# Test supernode after installlation
+
+- name: Collect only facts returned by facter
+  setup:
+  tags:
+    - testing
+
+- name: "Are the GRE Tunnel endpoints reachable via IPv4?"
+  shell: "ping -4 -c 4 {{ gre[item].peer }}"
+  ignore_errors: True
+  when: gre[item].enabled is defined and gre[item].enabled == true
+  loop: "{{ gre | list }}"
+  tags:
+    - testing
+...
