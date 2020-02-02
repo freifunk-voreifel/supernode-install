@@ -63,7 +63,7 @@ gre:
     asn: 201701
   ber_b:
     description: "Rheinland Backbone Berlin B"
-    enabled: true
+    enabled: false
     remote: '185.66.195.1'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
@@ -78,7 +78,7 @@ gre:
     asn: 201701
   dus_a:
     description: "Rheinland Backbone Duesseldorf A"
-    enabled: true
+    enabled: false
     remote: '185.66.193.0'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
@@ -93,7 +93,7 @@ gre:
     asn: 201701
   dus_b:
     description: "Rheinland Backbone Duesseldorf B"
-    enabled: true
+    enabled: false
     remote: '185.66.193.1'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
@@ -108,7 +108,7 @@ gre:
     asn: 201701
   fra_a:
     description: "Rheinland Backbone Frankfurt A"
-    enabled: true
+    enabled: false
     remote: '185.66.194.0'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
@@ -117,13 +117,13 @@ gre:
     dev: '{{ gre_tunnel_prefix }}fra_a'
     address: '100.64.10.57'
     peer: '100.64.10.56'
-    network: '100.64.10.42/31'
+    network: '100.64.10.56/31'
     inet6: 2a03:2260:0:525::2
     peer6: 2a03:2260:0:525::1
     asn: 201701
   fra_b:
     description: "Rheinland Backbone Frankfurt B"
-    enabled: true
+    enabled: false
     remote: '185.66.194.1'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'

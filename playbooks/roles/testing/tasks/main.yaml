@@ -33,16 +33,16 @@
   tags:
     - testing
 
-
 # Test external domains are working
 # URL must end with a dot or freifunk-rhein-sieg.net will be added.
 
 - name: "Are other domains reachable?"
-  shell: "ping -m 4 -c 4 {{ item }}"
+  shell: "ping -m 4 -c 4 {{ URL }}"
   ignore_errors: True
   loop: 
-    - 't-online.de.'
     - 'byggvir.de.'
+  loop_control:
+    loop_var: URL
   tags:
     - testing
 
@@ -51,7 +51,6 @@
     path: /usr/local/bin
     state: directory
     mode: 0755
-
 
 - name: "Copy test script to /usr/loacl/bin"
   copy:
@@ -62,4 +61,3 @@
     mode: 0755
   tags:
     - copytest
-

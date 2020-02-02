@@ -41,11 +41,13 @@
 - name: Copy resspondd config to /etc/respondd/
   template: 
     src: "respondd.json.j2"
-    dest: "/etc/respondd/{{ hoods[item].mesh.iface }}.conf"
+    dest: "/etc/respondd/{{ hoods[hood_item].mesh.iface }}.conf"
     owner: root
     group: root
     mode: 0644
   loop: "{{ hoods|list }}"
+  loop_control:
+    loop_var: hood_item
     
 - name: Enable respondd service
   command: "systemctl daemon-reload"
@@ -53,10 +55,12 @@
 
 - name: Enable and restart respondd
   service:
-    name: "respondd@{{ hoods[item].mesh.iface }}.service"
+    name: "respondd@{{ hoods[hood_item].mesh.iface }}.service"
     state: restarted
     enabled: yes
   ignore_errors: true
   loop: "{{ hoods|list }}"
+  loop_control:
+    loop_var: hood_item
   when: get_respondd is succeeded
 ...

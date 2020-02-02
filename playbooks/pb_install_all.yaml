@@ -80,10 +80,12 @@
   tasks:
     - name: Install and configure yanic
       include_role:
-        name: "{{ item }}"
+        name: "{{ required_role }}"
       loop:
         - respondd
         - yanic
+      loop_control:
+        loop_var: required_role 
 
 # Stage 03
 #

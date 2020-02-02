@@ -21,16 +21,16 @@
         #- modprobe
         #- netfilter
         #- routing
-        #- gre-tunnel
-        - interfaces
+        - gre-tunnel
+        #- interfaces
         #- tunneldigger
-        - batman
+        #- batman
         #- vrf
         #- firewall
         #- radvd
-        - bird
-        - dhcpserver
-        - dnsserver
+        #- bird
+        #- dhcpserver
+        #- dnsserver
         #- ntpserver
         #- respondd
         #- yanic
