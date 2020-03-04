@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Start ff-routing fix for systemd/networkd 
+
+IP=/sbin/ip
+ACTION="$1"
+
+case $ACTION in
+
+start)
+
+  $IP -4 rule add from all fwmark 0x4 lookup ffrl pref 2001
+  $IP -6 rule add from all fwmark 0x4 lookup ffrl pref 2001
+
+  ;;
+
+stop)
+
+  $IP -4 rule del from all fwmark 0x4 lookup ffrl pref 2001
+  $IP -6 rule del from all fwmark 0x4 lookup ffrl pref 2001
+
+  ;;
+  
+esac

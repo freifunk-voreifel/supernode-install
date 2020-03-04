@@ -10,4 +10,36 @@
     path: /etc/iproute2/rt_tables
     line:  '42 ffrl'
     state: present
+
+- name: Copy ff-routing templates to /etc/freifunk/
+  template: 
+    src: "ff-routing.sh.j2"
+    dest: "/etc/freifunk/ff-routing.sh"
+    owner: root
+    group: root
+    mode: 0755
+ 
+- name: Copy ff-routing.service templates to /etc/systemd/
+  template: 
+    src: "ff-routing.service.j2"
+    dest: "/etc/systemd/system/ff-routing.service"
+    owner: root
+    group: root
+    mode: 0644
+
+# Excute "systemctl daemon-reload" after configs have been changed
+
+- name: Force systemd to re-execute itself
+  systemd:
+    daemon_reexec: yes
+
+- name: Enable and restart ff-routing
+  service:
+    name: "ff-routing.service"
+    state: restarted
+    enabled: yes
+  ignore_errors: true
+
+
+- 
 ...

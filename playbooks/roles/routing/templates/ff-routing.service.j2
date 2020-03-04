@@ -1,0 +1,13 @@
+[Unit]
+Description="Freifunk Routing fix for systemd/networdd"
+Wants=network.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/etc/freifunk/ff-routing.sh start
+ExecStop=/etc/freifunk/ff-routing.sh stop
+
+[Install]
+WantedBy=multi-user.target
