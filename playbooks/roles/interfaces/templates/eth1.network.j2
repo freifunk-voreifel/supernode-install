@@ -3,3 +3,9 @@ Name=ens19
 
 [Address]
 Address={{ ffrl.IPv6.addr }}/48
+
+[Network]
+# define VLAN for X-link of hoods
+{% for item in hoods|list %}
+VLAN=mesh-x.{{ hoods[item].number }}
+{% endfor %}
