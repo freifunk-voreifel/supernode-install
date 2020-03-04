@@ -84,7 +84,7 @@ hoods:
         CIDR: 20
 
   meckenheimold:
-    namespace: "meckenheimold"
+    namespace: "mckold"
     number: 13
     address: "{{ ansible_default_ipv4.address }}"
     interface: "{{ ansible_default_ipv4.alias }}"
@@ -113,7 +113,7 @@ hoods:
         CIDR: 21
 
   rheinbachold: 
-    namespace: "rheinbachold"
+    namespace: "rhbold"
     number: 14
     address: "{{ ansible_default_ipv4.address }}"
     interface: "{{ ansible_default_ipv4.alias }}"
