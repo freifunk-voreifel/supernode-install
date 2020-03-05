@@ -1,4 +1,17 @@
 ---
 # Erstellt von: Thomas Arend
 # Erstellt am:  2019-07-06
+
+td_required_mpackages: 
+    - iproute
+    - bridge-utils
+    - ebtables
+    - libevent-dev
+    - libnetfilter-conntrack-dev
+    - libnfnetlink-dev
+    - libffi-dev
+    - python3
+    - python3-dev
+    - python3-virtualenv
+    - python3-pip
 ...

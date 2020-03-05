@@ -20,14 +20,6 @@
 
 # Install and configure tunneldigger
 
-- name: create tunneldigger directories if they do not exist
-  file:
-    path: "/{{ item }}/tunneldigger"
-    state: directory
-    mode: '0755'
-  loop:
-    - etc
-
 - name: delete /srv/tunneldigger 
   file:
     path: "/{{ item }}/tunneldigger"
@@ -36,12 +28,22 @@
   loop:
     - srv
 
+- name: create tunneldigger directories if they do not exist
+  file:
+    path: "/{{ item }}/tunneldigger"
+    state: directory
+    mode: '0755'
+  loop:
+    - etc
+    - srv
+
+
 # Get tunneldigger from github
 
 - name: get tunneldigger from git
   git: 
     repo: https://github.com/{{ github_user }}/tunneldigger.git
-    dest: /srv/tunneldigger
+    dest: /srv/tunneldigger/tunneldigger
   register: tunneldigger
   tags: 
     - tunneldigger
@@ -49,7 +51,7 @@
 # Install tunneldigger
 
 - name: configure tunneldigger
-  raw: "cd /srv/tunneldigger && virtualenv env_tunneldigger && source env_tunneldigger/bin/activate && cd broker && python setup.py install"
+  raw: "cd /srv/tunneldigger; virtualenv -p /usr/bin/python3 env_tunneldigger; source env_tunneldigger/bin/activate; cd tunneldigger/broker ; python setup.py install"
   ignore_errors: true
   tags:
     - tunneldigger
