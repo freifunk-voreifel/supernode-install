@@ -7,12 +7,12 @@
     mode: 0755
   loop:
     - "/var/www/vhosts"
-    - "/var/www/vhosts/{{ mapserver }}"
+    - "/var/www/vhosts/{{ domain }}"
     - "/var/log/apache2/vhosts"
-    - "/var/log/apache2/vhosts/{{ mapserver }}"
-    - "/etc/letsencrypt/live/{{ mapserver }}"
+    - "/var/log/apache2/vhosts/{{ domain }}"
+    - "/etc/letsencrypt/live/{{ domain }}"
     
-- name: "map server configuration"
+- name: "default server configuration"
   template:
     src: "{{ item }}.conf.j2"
     dest: "/etc/apache2/sites-available/{{ item }}.conf"
@@ -20,10 +20,10 @@
     group: "www-data"
     mode: 0444
   vars:
-    vhost: "{{ mapserver }}"
+    vhost: "{{ domain }}"
   loop: 
-    - map
-    - map.tls
+    - site
+    - site.tls
 
 - name: a2ensite {{ vhost }} with tls
   command: "a2ensite {{ item }}"
@@ -32,8 +32,8 @@
   notify:
     - restart apache2
   loop: 
-    - map
-    - map.tls
+    - site
+    - site.tls
     
 - name: Force all notified handlers to run at this point, not waiting for normal sync points
   meta: flush_handlers
