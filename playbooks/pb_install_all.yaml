@@ -56,7 +56,7 @@
         - tunneldigger
         - batman
         - netfilter    # netfilter erst nach batman konfigurieren, da die devices erst jetzt bestehen 
-        - vrf
+        # - vrf (funktioniert leider nicht)
         - firewall
         - radvd
         - bird
@@ -64,7 +64,7 @@
         - dnsserver
         - ntpserver
         - apache2
-        - mapserver
+        # - mapserver
       loop_control:
         loop_var: required_role 
 

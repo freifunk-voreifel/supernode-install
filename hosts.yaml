@@ -4,10 +4,9 @@ all:
         debian:
             hosts:
                 voreifel[1:2]:
-                voreifel99:
         supernodes:
             hosts:
                 voreifel[1:2]:
-                voreifel99:
+
 ...
 

@@ -18,17 +18,18 @@
       include_role:
         name: "{{ required_role }}"
       loop:
+        #- common
         #- modprobe
-        #- netfilter
         #- routing
         - gre-tunnel
-        #- interfaces
+        - interfaces
         #- tunneldigger
         #- batman
-        #- vrf
+        #- netfilter
+        #- vrf (funktioniert leider nicht)
         #- firewall
         #- radvd
-        #- bird
+        - bird
         #- dhcpserver
         #- dnsserver
         #- ntpserver

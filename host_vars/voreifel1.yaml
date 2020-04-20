@@ -79,7 +79,7 @@ gre:
     asn: 201701
   dus_a:
     description: "Rheinland Backbone Duesseldorf A"
-    enabled: true
+    enabled: false
     remote: '185.66.193.0'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
@@ -94,7 +94,7 @@ gre:
     asn: 201701
   dus_b:
     description: "Rheinland Backbone Duesseldorf B"
-    enabled: true
+    enabled: false
     remote: '185.66.193.1'
     local:  '{{ ansible_default_ipv4.address }}'
     netmask: '255.255.255.254'
