@@ -21,15 +21,15 @@
         #- common
         #- modprobe
         #- routing
-        - gre-tunnel
-        - interfaces
+        #- gre-tunnel
+        #- interfaces
         #- tunneldigger
-        #- batman
+        - batman
         #- netfilter
         #- vrf (funktioniert leider nicht)
         #- firewall
         #- radvd
-        - bird
+        #- bird
         #- dhcpserver
         #- dnsserver
         #- ntpserver

@@ -42,8 +42,9 @@
 
 - name: get tunneldigger from git
   git: 
-    repo: https://github.com/{{ github_user }}/tunneldigger.git
+    repo: https://github.com/wlanslovenija/tunneldigger.git
     dest: /srv/tunneldigger/tunneldigger
+    version: legacy
   register: tunneldigger
   tags: 
     - tunneldigger
