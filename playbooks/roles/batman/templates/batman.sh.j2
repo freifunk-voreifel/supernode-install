@@ -24,11 +24,13 @@ HOOD=${BATDEV:3}
 case $ACTION in
 
 start)
-
+  
+  $BATCTL routing_algo BATMAN_IV
   $BATCTL meshif ${BATDEV} if add mesh-${BATDEV}
   $BATCTL meshif ${BATDEV} if add mesh-x.${HOOD}
-  $BATCTL meshif ${BATDEV} gw_mode server
-
+  $BATCTL meshif ${BATDEV} bridge_loop_avoidance 1
+  $BATCTL meshif ${BATDEV} gw_mode server 1000mbit/1000mbit
+  
   $IP link set up dev mesh-${BATDEV}
   $IP link set address $MAC dev ${BATDEV}
   # $IP link set dev bat15 master vrf-ffrl1
