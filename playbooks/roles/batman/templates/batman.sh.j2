@@ -26,8 +26,7 @@ case $ACTION in
 start)
   
   $BATCTL routing_algo BATMAN_IV
-  $BATCTL meshif ${BATDEV} if add mesh-${BATDEV}
-  $BATCTL meshif ${BATDEV} if add mesh-x.${HOOD}
+  $BATCTL meshif ${BATDEV} if add mesh-${BATDEV} mesh-x.${HOOD}
   $BATCTL meshif ${BATDEV} bridge_loop_avoidance 1
   $BATCTL meshif ${BATDEV} gw_mode server 1000mbit/1000mbit
   
@@ -52,8 +51,7 @@ stop)
   $IP -6 addr del $IPv6 dev ${BATDEV}
   $IP link set down dev ${BATDEV}
   $IP link set down dev mesh-${BATDEV}
-  $BATCTL meshif ${BATDEV} if del mesh-x.${HOOD}
-  $BATCTL meshif ${BATDEV} if del mesh-${BATDEV}
+  $BATCTL meshif ${BATDEV} if del mesh-x.${HOOD} mesh-${BATDEV}
   ;;
   
 esac
