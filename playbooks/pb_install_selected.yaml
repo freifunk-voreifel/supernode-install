@@ -24,7 +24,7 @@
         #- gre-tunnel
         #- interfaces
         #- tunneldigger
-        - batman
+        #- batman
         #- netfilter
         #- vrf (funktioniert leider nicht)
         #- firewall
@@ -33,7 +33,7 @@
         #- dhcpserver
         #- dnsserver
         #- ntpserver
-        #- respondd
+        - respondd
         #- yanic
         #- apache2
         #- mapserver

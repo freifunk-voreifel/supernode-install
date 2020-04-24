@@ -26,8 +26,8 @@ domains = ["{{ yanic_domain }}"]
 {% for item in hoods %}
 [[respondd.interfaces]]
 ifname = "{{ hoods[item].mesh.iface }}"
-{% endfor %}
 multicast_address = "ff02::2:1001"
+{% endfor %}
 
 #[[respondd.interfaces]]
 
