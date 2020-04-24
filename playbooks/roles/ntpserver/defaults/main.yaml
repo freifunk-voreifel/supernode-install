@@ -18,7 +18,7 @@ ntp_server:
     - "192.168.2.1"
   azure:
     - "time.windows.com"
-      ewetel:
+  ewetel:
     - "ntp0.ewetel.de"
     - "ntp1.ewetel.de"
   freenet:
@@ -29,7 +29,6 @@ ntp_server:
   arco:
     - "de.pool.ntp.arcor-ip.net"
   versatel:
-
     - "time.versatel.de"
     - "ntp1.versatel.net"
     - "ntp2.versatel.net"
