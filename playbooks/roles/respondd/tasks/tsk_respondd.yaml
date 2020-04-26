@@ -57,7 +57,7 @@
   service:
     name: "respondd@{{ hoods[hood_item].mesh.iface }}.service"
     state: restarted
-    enabled: yes
+    enabled: no
   ignore_errors: true
   loop: "{{ hoods|list }}"
   loop_control:

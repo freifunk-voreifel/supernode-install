@@ -71,7 +71,7 @@
 - name: copy tunneldigger session-up to add new tunnel to mesh-bat<n> device
   template: 
     src: "session-up.sh.j2"
-    dest: /etc/tunneldigger/session-up-{{ hoods[item].namespace }}.sh
+    dest: /srv/tunneldigger/tunneldigger/broker/scripts/session-up-{{ hoods[item].namespace }}.sh
     owner: root 
     group: root
     mode: 0500
@@ -82,7 +82,7 @@
 - name: copy tunneldigger session-down scripts to delete tunnel from mesh-bat<n>
   template: 
     src: "session-pre-down.sh.j2"
-    dest: /etc/tunneldigger/session-pre-down-{{ hoods[item].namespace }}.sh
+    dest: /srv/tunneldigger/tunneldigger/broker/scripts/session-pre-down-{{ hoods[item].namespace }}.sh
     owner: root 
     group: root
     mode: 0500

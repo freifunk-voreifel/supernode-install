@@ -35,7 +35,7 @@ start)
   $IP link set address $MAC dev ${BATDEV}
   # $IP link set dev bat15 master vrf-ffrl1
   $IP link set up dev ${BATDEV}
- 
+  $EBT -A FORWARD --logical-in mesh-${BATDEV} -j DROP
   $IP -4 addr add $IPv4 broadcast $BRCAST dev ${BATDEV}
   $IP -6 addr add $IPv6 dev ${BATDEV}
   $IP -4 rule add iif ${BATDEV} table 42 pref 3000
@@ -52,6 +52,7 @@ stop)
   $IP -6 addr del $IPv6 dev ${BATDEV}
   $IP link set down dev ${BATDEV}
   $IP link set down dev mesh-${BATDEV}
+  $EBT -D FORWARD --logical-in mesh-${BATDEV} -j DROP
   $BATCTL meshif ${BATDEV} if del mesh-x.${HOOD}
   $BATCTL meshif ${BATDEV} if del mesh-${BATDEV}
   ;;

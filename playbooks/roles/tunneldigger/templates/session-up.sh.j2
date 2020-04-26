@@ -1,8 +1,19 @@
 #!/bin/bash
+TUNNEL_ID="$1"
+SESSION_ID="$2"
 INTERFACE="$3"
-MAC="$8"
-brctl=/sbin/brctl
+MTU="$4"
+ENDPOINT_IP="$5"
+ENDPOINT_PORT="$6"
+LOCAL_PORT="$7"
+UUID="$8"
+LOCAL_BROKER_PORT="$9"
 
-/bin/ip link set up dev $INTERFACE mtu 1312
+. /srv/tunneldigger/tunneldigger/broker/scripts/bridge_functions.sh
 
-$brctl addif mesh-{{ hoods[item].mesh.iface }} $INTERFACE
+# Set the interface to UP state
+ip link set dev $INTERFACE up mtu $MTU
+
+# Add the interface to our bridge
+ensure_bridge mesh-{{ hoods[item].mesh.iface }}
+brctl addif mesh-{{ hoods[item].mesh.iface }} $INTERFACE

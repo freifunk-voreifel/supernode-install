@@ -22,8 +22,8 @@
         #- modprobe
         #- routing
         #- gre-tunnel
-        #- interfaces
-        #- tunneldigger
+        - interfaces
+        - tunneldigger
         - batman
         #- netfilter
         #- vrf (funktioniert leider nicht)
@@ -33,7 +33,7 @@
         #- dhcpserver
         #- dnsserver
         #- ntpserver
-        #- respondd
+        - respondd
         #- yanic
         #- apache2
         #- mapserver

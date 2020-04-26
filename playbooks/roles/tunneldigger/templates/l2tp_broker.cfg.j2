@@ -69,13 +69,13 @@ log_ip_addresses=false
 
 ; Called after the tunnel interface goes up
 
-session.up=/etc/tunneldigger/session-up-{{ hoods[item].namespace }}.sh
+session.up=/srv/tunneldigger/tunneldigger/broker/scripts/session-up-{{ hoods[item].namespace }}.sh
 
 ; Called just before the tunnel interface goes down
 ; (However, due to hooks being asynchonous, the hook may actually execute after the interface was
 ; already removed.)
 
-session.pre-down=/etc/tunneldigger/session-pre-down-{{ hoods[item].namespace }}.sh
+session.pre-down=/srv/tunneldigger/tunneldigger/broker/scripts/session-pre-down-{{ hoods[item].namespace }}.sh
 
 ; Called after the tunnel interface goes down
 
