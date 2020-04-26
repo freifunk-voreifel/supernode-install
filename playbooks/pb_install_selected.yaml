@@ -22,15 +22,9 @@
         #- modprobe
         #- routing
         #- gre-tunnel
-<<<<<<< HEAD
-        - interfaces
-        - tunneldigger
-        - batman
-=======
         #- interfaces
         #- tunneldigger
-        #- batman
->>>>>>> 68ad89c2602cf9ff329127e9a2b13cc5cd4e882e
+        - batman
         #- netfilter
         #- vrf (funktioniert leider nicht)
         #- firewall
@@ -39,7 +33,7 @@
         #- dhcpserver
         #- dnsserver
         #- ntpserver
-        - respondd
+        #- respondd
         #- yanic
         #- apache2
         #- mapserver
@@ -47,10 +41,10 @@
         loop_var: required_role 
 
 
-    - name: Reboot the server finally
-      shell: sleep 2 && shutdown -r now "Ansible updates triggered"
-      async: 1
-      poll: 0
-      ignore_errors: true
+#- name: Reboot the server finally
+   #shell: sleep 2 && shutdown -r now "Ansible updates triggered"
+   #async: 1
+   #poll: 0
+   #ignore_errors: true
 
 ...

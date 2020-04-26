@@ -35,6 +35,7 @@ start)
   # $IP link set dev ${BATDEV} master vrf-ffrl1 # Maybe we can do this later. VRF not working at the moment 
   $IP link set up dev ${BATDEV}
   $EBT -A FORWARD --logical-in mesh-${BATDEV} -j DROP
+  $EBT -A FORWARD --logical-in mesh-x.${HOOD} -j DROP
   # The following must be set here because at startup device does not exists
   echo 0 > /proc/sys/net/ipv4/conf${BATDEV}/rp_filter
   $IP -4 addr add $IPv4 broadcast $BRCAST dev ${BATDEV}
@@ -54,6 +55,7 @@ stop)
   $IP link set down dev ${BATDEV}
   $IP link set down dev mesh-${BATDEV}
   $EBT -D FORWARD --logical-in mesh-${BATDEV} -j DROP
+  $EBT -D FORWARD --logical-in mesh-x.${HOOD} -j DROP
   $BATCTL meshif ${BATDEV} if del mesh-x.${HOOD}
   $BATCTL meshif ${BATDEV} if del mesh-${BATDEV}
   $BATCTL meshif ${BATDEV} if del mesh-x.${HOOD} mesh-${BATDEV}
