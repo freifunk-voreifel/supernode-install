@@ -26,6 +26,7 @@ domains = ["{{ yanic_domain }}"]
 {% for item in hoods %}
 [[respondd.interfaces]]
 ifname = "{{ hoods[item].mesh.iface }}"
+multicast_address = "ff02::2:1001"
 {% endfor %}
 
 #[[respondd.interfaces]]
@@ -90,7 +91,7 @@ offline_after = "10m"
 #blacklist = ["00112233445566", "1337f0badead"]
 #
 # List of site_codes of nodes that should be included in the output
-#sites = ["ffhb"]
+#sites = ["su-rhb"]
 #
 # replace the site_code with the domain_code in this output
 # e.g. site_code='ffhb',domain_code='city' => site_code='city', domain_code=''
@@ -163,7 +164,7 @@ no_owner = true
 [database]
 # this will send delete commands to the database to prune data
 # which is older than:
-delete_after    = "7d"
+delete_after    = "14d"
 # how often run the cleaning
 delete_interval = "1h"
 
@@ -180,7 +181,7 @@ delete_interval = "1h"
 [[database.connection.influxdb]]
 enable   = false
 address  = "http://localhost:8086"
-database = "ffhb"
+database = "ffrhb"
 username = ""
 password = ""
 
@@ -191,7 +192,7 @@ password = ""
 #tagname1 = "tagvalue 1"
 # some useful e.g.:
 #system   = "productive"
-#site     = "ffhb"
+#site     = "ffrhb"
 
 # Graphite settings
 [[database.connection.graphite]]
@@ -213,7 +214,7 @@ enable   = false
 # type of network to create a connection
 type     = "udp6"
 # destination address to connect/send respondd package
-address  = "stats.bremen.freifunk.net:11001"
+address  = "ffrhb.de:11001"
 
 # Logging
 [[database.connection.logging]]

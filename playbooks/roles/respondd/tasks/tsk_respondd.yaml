@@ -41,7 +41,7 @@
 - name: Copy resspondd config to /etc/respondd/
   template: 
     src: "respondd.json.j2"
-    dest: "/etc/respondd/{{ hoods[hood_item].mesh.iface }}.conf"
+    dest: "/etc/respondd/{{ hoods[hood_item].mesh.iface }}.json"
     owner: root
     group: root
     mode: 0644

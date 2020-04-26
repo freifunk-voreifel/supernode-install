@@ -7,6 +7,7 @@ Peer={{ gre[item.0].peer }}/31
 
 [Network]
 Address={{ gre[item.0].inet6 }}/64
+IPForward=yes
 #VRF=vrf-ffrl1
 
 [Route]
@@ -27,4 +28,10 @@ Table=42
 FirewallMark=0x4
 Table=42
 Priority=2001
-Family=both
+Family=ipv4
+
+[RoutingPolicyRule]
+FirewallMark=0x4
+Table=42
+Priority=2001
+Family=ipv6

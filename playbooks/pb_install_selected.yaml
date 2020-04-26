@@ -22,9 +22,15 @@
         #- modprobe
         #- routing
         #- gre-tunnel
+<<<<<<< HEAD
         - interfaces
         - tunneldigger
         - batman
+=======
+        #- interfaces
+        #- tunneldigger
+        #- batman
+>>>>>>> 68ad89c2602cf9ff329127e9a2b13cc5cd4e882e
         #- netfilter
         #- vrf (funktioniert leider nicht)
         #- firewall

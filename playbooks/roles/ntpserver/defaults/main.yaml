@@ -29,7 +29,6 @@ ntp_server:
   arco:
     - "de.pool.ntp.arcor-ip.net"
   versatel:
-
     - "time.versatel.de"
     - "ntp1.versatel.net"
     - "ntp2.versatel.net"
