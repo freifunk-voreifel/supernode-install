@@ -39,6 +39,7 @@
 
 
 # Get tunneldigger from github
+# With Linux kernel 4.9.x need the legacy branch
 
 - name: get tunneldigger from git
   git: 
@@ -89,6 +90,18 @@
   loop: "{{ hoods | list }}"
   tags: 
     - tunneldigger
+
+- name: copy tunneldigger bridge_functions scripts to replace example
+  template: 
+    src: "bridge_functions.sh.j2"
+    dest: /srv/tunneldigger/tunneldigger/broker/scripts/bridge_functions.sh
+    owner: root 
+    group: root
+    mode: 0500
+  loop: "{{ hoods | list }}"
+  tags: 
+    - tunneldigger
+
 
 - name: Copy tunneldigger service template
   template: 

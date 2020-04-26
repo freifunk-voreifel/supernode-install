@@ -32,14 +32,11 @@ start)
   $IP link set up dev mesh-${BATDEV}
   $IP link set address $MAC dev ${BATDEV}
   $IP link set mtu 1468 dev ${BATDEV}
- # $IP link set dev bat15 master vrf-ffrl1
+  # $IP link set dev ${BATDEV} master vrf-ffrl1 # Maybe we can do this later. VRF not working at the moment 
   $IP link set up dev ${BATDEV}
-<<<<<<< HEAD
   $EBT -A FORWARD --logical-in mesh-${BATDEV} -j DROP
-=======
-  echo 0 > /proc/sys/net/ipv4/conf/bat13/rp_filter
- 
->>>>>>> 68ad89c2602cf9ff329127e9a2b13cc5cd4e882e
+  # The following must be set here because at startup device does not exists
+  echo 0 > /proc/sys/net/ipv4/conf${BATDEV}/rp_filter
   $IP -4 addr add $IPv4 broadcast $BRCAST dev ${BATDEV}
   $IP -6 addr add $IPv6 dev ${BATDEV}
   $IP -4 rule add iif ${BATDEV} table 42 pref 3000
@@ -56,13 +53,10 @@ stop)
   $IP -6 addr del $IPv6 dev ${BATDEV}
   $IP link set down dev ${BATDEV}
   $IP link set down dev mesh-${BATDEV}
-<<<<<<< HEAD
   $EBT -D FORWARD --logical-in mesh-${BATDEV} -j DROP
   $BATCTL meshif ${BATDEV} if del mesh-x.${HOOD}
   $BATCTL meshif ${BATDEV} if del mesh-${BATDEV}
-=======
   $BATCTL meshif ${BATDEV} if del mesh-x.${HOOD} mesh-${BATDEV}
->>>>>>> 68ad89c2602cf9ff329127e9a2b13cc5cd4e882e
   ;;
   
 esac
