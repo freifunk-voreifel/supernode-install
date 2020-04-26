@@ -1,8 +1,0 @@
-#!/bin/bash
-INTERFACE="$3"
-MAC="$8"
-brctl=/sbin/brctl
-
-/bin/ip link set dev $INTERFACE up mtu 1312
-
-$brctl addif mesh-nodes{{ hoods[item].number}} $INTERFACE
