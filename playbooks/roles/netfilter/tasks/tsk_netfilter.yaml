@@ -62,14 +62,18 @@
     state: present
     reload: no
 
+# The following isn't working during because devices are not defined
+
 - name: Set netfilter rules in sysctl.conf for bat devices
   sysctl:
     name: "net.ipv4.conf.{{ hoods[item].mesh.iface }}.rp_filter"
     value: "0"
     sysctl_set: no
-    state: present
+    state: absent
     reload: no
   loop: "{{ hoods|list }}"
+
+# Finaly set kernel.panic and restart
 
 - name: Set kernel.panic
   sysctl:
@@ -78,4 +82,4 @@
     sysctl_set: yes
     state: present
     reload: yes
-
+...
