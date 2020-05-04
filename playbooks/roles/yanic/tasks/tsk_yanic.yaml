@@ -10,26 +10,18 @@
 # Install yanic
 #
 
-- name: Create /opt/freifunk directory
-  file: 
-    path: /opt/freifunk
-    state: directory
-    mode: 0755
-
-- name: Stop a running yanic service
-  service:
-    name: "yanic.service"
-    state: stopped
-  ignore_errors: True
-  tags: 
-    - yannic
-    
 - name: Create Yanic user
   user:
     name: yanic
     comment: "Yanic service user"
   tags:
     - yanic
+
+- name: Create /opt/freifunk directory
+  file: 
+    path: /opt/freifunk
+    state: directory
+    mode: 0755
 
 - name: Create Yanic folder
   file: 
@@ -41,6 +33,14 @@
   tags:
     - yanic
 
+- name: Stop a running yanic service
+  service:
+    name: "yanic.service"
+    state: stopped
+  ignore_errors: True
+  tags: 
+    - yannic
+    
 - name: Copy yanic config template
   template:
     src: yanic.conf.j2
@@ -70,7 +70,7 @@
   tags: 
     - tunneldigger
 
-- name: Enable and restart service yannic
+- name: Enable and restart service yanic
   service:
     name: "yanic.service"
     enabled: yes
