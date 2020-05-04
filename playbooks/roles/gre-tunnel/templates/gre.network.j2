@@ -24,6 +24,9 @@ Gateway={{ gre[item.0].peer6 }}
 Destination=::0/0
 Table=42
 
+## The following settings don't work with the current used networkd
+## Option Family is not recognized.
+
 [RoutingPolicyRule]
 FirewallMark=0x4
 Table=42
