@@ -1,0 +1,19 @@
+---
+# Stand: 2019-06-18
+#
+# Super node 1
+
+dhcp:
+    name: failover-partner
+    type: primary
+    address: "{{ ansible_default_ipv4.address }}"
+    port: 519
+    peer_address: "{{ hostvars['voreifel2'].ansible_default_ipv4.address }}"
+    peer_port: 520
+    max_response_delay: 60
+    max_unacked_updates: 10
+    mclt: 3600
+    split: 128
+    load_balance_max_seconds: 3
+
+...

@@ -1,14 +1,23 @@
 dns_provider:
-    hetzner: 
-        nameserver:
-            - "1.1.1.1"
-            - "8.8.8.8"
+  hetzner: 
+    nameserver:
 # Original hetzern führen zu einem Fehler
+      - "1.1.1.1"
+      - "8.8.8.8"
+#      - 213.133.98.98
+#      - 213.133.99.99
+#      - 213.133.100.100
 #            - "2a01:4f8:0:1::add:1010"
 #            - "2a01:4f8:0:1::add:9999"
 #            - "2a01:4f8:0:1::add:9898"
-    other:
-        nameserver:
-            - "1.1.1.1"
-            - "8.8.8.8"
+  strato: 
+    nameserver:
+      - 85.214.7.22
+      - 81.169.163.106
+      - 81.169.148.34
+  other:
+    nameserver:
+      - "1.1.1.1"
+      - "8.8.8.8"
+      
 mapserver: "map.ffrhb.de"

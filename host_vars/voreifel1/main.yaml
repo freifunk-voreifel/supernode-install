@@ -1,0 +1,27 @@
+---
+# Stand: 2019-06-18
+#
+# Super node 1
+
+ansible_host: "{{inventory_hostname_short}}.freifunk-rhein-sieg.net"
+
+provider: 'hetzner'
+
+supernode:
+    number: 1
+    hostname: "{{inventory_hostname_short}}"
+    fqdn: "ff"
+    asn: 65201
+
+ffrl:
+    iface: "ffrl_uplink"
+    ASN: 201701
+    IPv4: 
+      addr: 185.66.193.126
+    IPv6: 
+      prefix48: 2a03:2260:301a
+      addr: "2a03:2260:301a::{{ supernode.number }}"
+      net: 2a03:2260:301a::/48
+
+ul_mesh_MAC: a2:8c:ae:6f:f7:10
+...

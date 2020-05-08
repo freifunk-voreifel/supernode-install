@@ -2,21 +2,15 @@
 
 Erstellt von **Thomas Arend** am *2019-07-11*
 
-# Achtung, dies ist ein **Muster!**
-
-*(Bitte eine Beschreibung einfügen! Weil: Gute Doku hilft!)*
-
 # Kurzbeschreibung
 
-Mit dieser Rolle wird ...
+Mit dieser Rolle wird das Freifung Routing mittels eines Dienstes eingerichtet.
 
 ## Voraussetzungen
 
 Die Rolle setzt voraus, dass
 
-- Erstens
-- Zweitens
-- ...
+- eingehende Pakete aus den L2TP Tunnel über die GRE-Tunnel zum Freifunk Rheinland geleitet werden sollen.
 
 ## Unterverzeichnisse
 
@@ -60,8 +54,8 @@ Templates im *j2* werden durch Ansible anhand der Varibalen und des Programmcode
 
 Die Rolle routing nutzt folgende Templates in *templates*:
 
-- A.j2
-- B.j2
+- ff-routing.service.j2
+- ff-routing.sh.j2
 - ...
 
 **Näheres** zu den *defaults* und *variablen* findest du **im README.md** im Verzeichnis *defaults* / *handlers*.

@@ -15,7 +15,7 @@ common_required_packages:
   - git
   - htop
   - iftop
-  - iproute
+#  - iproute veraltet
   - iptables-persistent
   - isc-dhcp-server
   - letsencrypt

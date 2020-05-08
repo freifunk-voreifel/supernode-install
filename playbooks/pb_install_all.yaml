@@ -1,6 +1,6 @@
 ---
 # Playbook to install all components via roles!
-# Thoasm Arend
+# Thomas Arend
 # Stand 2019-07-08
 
 # Stage 01
@@ -45,7 +45,7 @@
   tags:
     - supernode
   tasks:
-    - name: Configure modprobe 
+    - name: Apply all roles
       include_role:
         name: "{{ required_role }}"
       loop:
@@ -70,7 +70,7 @@
 
 # Stage 03
 #
-# Additionals components for suopernodes, for routing not required
+# Additionals components for supernodes, for routing not required
 
 - name: Install misc
   hosts: supernodes

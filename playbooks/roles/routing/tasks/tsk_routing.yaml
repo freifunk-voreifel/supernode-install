@@ -1,10 +1,15 @@
 ---
-# supernode/tasks/tsk_interfaces.yaml
+# supernode/tasks/tsk_routing.yaml
 
-# Configure LAN Interfaces in /etc/network/interfaces.conf
+# Create temporary directory for testing Ansible
 
-# Create temprary directory for testing Ansible
-
+- name: Create Freifunk directory if it does not exist
+  file:
+    path: "/etc/freifunk"
+    state: directory
+    mode: '0755'
+  ignore_errors: true
+  
 - name: Set route 42
   lineinfile:
     path: /etc/iproute2/rt_tables
@@ -39,6 +44,5 @@
     state: restarted
     enabled: yes
   ignore_errors: true
-
 
 ...
