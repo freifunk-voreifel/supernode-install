@@ -1,39 +1,7 @@
 ---
 # Stand: 2019-06-18
 #
-# Super node 1
-
-ansible_host: "{{inventory_hostname_short}}.freifunk-rhein-sieg.net"
-
-provider: 'hetzner'
-
-supernode:
-    number: 1
-    hostname: "{{inventory_hostname_short}}"
-    fqdn: "ff"
-    asn: 65201
-
-ffrl:
-    iface: "ffrl_uplink"
-    IPv4: 
-      addr: 185.66.193.126
-    IPv6: 
-      prefix48: 2a03:2260:301a
-      addr: "2a03:2260:301a::{{ supernode.number }}"
-      net: 2a03:2260:301a::/48
-
-dhcp:
-    name: failover-partner
-    type: primary
-    address: "{{ ansible_default_ipv4.address }}"
-    port: 519
-    peer_address: "{{ hostvars['voreifel2'].ansible_default_ipv4.address }}"
-    peer_port: 520
-    max_response_delay: 60
-    max_unacked_updates: 10
-    mclt: 3600
-    split: 128
-    load_balance_max_seconds: 3
+# Super node 2
 
 ## GRE Tunnel definition
 
@@ -45,7 +13,6 @@ dhcp:
     # bb-b.ix.dus 185.66.193.1
     # bb-a.fra3.fra 185.66.194.0
     # bb-b.fra3.fra 185.66.194.1
-
 gre:
   ber_a:
     description: "Rheinland Backbone Berlin A"
@@ -55,12 +22,12 @@ gre:
     netmask: '255.255.255.254'
     mtu: 1400
     ttl: 64
-    dev: '{{ gre_tunnel_prefix }}ber_a' # Used for Bird, '-' not allowed
-    address: '100.64.10.43'
-    peer: '100.64.10.42'
-    network: '100.64.10.42/31'
-    inet6: '2a03:2260:0:51e::2'
-    peer6: '2a03:2260:0:51e::1'
+    dev: '{{ gre_tunnel_prefix }}ber_a'
+    address: '100.64.10.55'
+    peer: '100.64.10.54'
+    network: '100.64.10.54/31'
+    inet6: 2a03:2260:0:524::2
+    peer6: 2a03:2260:0:524::1
     asn: 201701
   ber_b:
     description: "Rheinland Backbone Berlin B"
@@ -71,11 +38,11 @@ gre:
     mtu: 1400
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}ber_b'
-    address: '100.64.10.49'
-    peer: '100.64.10.48'
-    network: '100.64.10.48/31'
-    inet6: '2a03:2260:0:521::2'
-    peer6: '2a03:2260:0:521::1'
+    address: '100.64.10.61'
+    peer: '100.64.10.60'
+    network: '100.64.10.60/31'
+    inet6: 2a03:2260:0:527::2
+    peer6: 2a03:2260:0:527::1
     asn: 201701
   dus_a:
     description: "Rheinland Backbone Duesseldorf A"
@@ -86,11 +53,11 @@ gre:
     mtu: 1400
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}dus_a'
-    address: '100.64.10.47'
-    peer: '100.64.10.46'
-    network: '100.64.10.46/31'
-    inet6: '2a03:2260:0:520::2'
-    peer6: '2a03:2260:0:520::1'
+    address: '100.64.10.59'
+    peer: '100.64.10.58'
+    network: '100.64.10.58/31'
+    inet6: 2a03:2260:0:526::2
+    peer6: 2a03:2260:0:526::1
     asn: 201701
   dus_b:
     description: "Rheinland Backbone Duesseldorf B"
@@ -101,11 +68,11 @@ gre:
     mtu: 1400
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}dus_b'
-    address: '100.64.10.53'
-    peer: '100.64.10.52'
-    network: '100.64.10.52/31'
-    inet6: '2a03:2260:0:523::2'
-    peer6: '2a03:2260:0:523::1'
+    address: '100.64.10.65'
+    peer: '100.64.10.64'
+    network: '100.64.10.64/31'
+    inet6: 2a03:2260:0:529::2
+    peer6: 2a03:2260:0:529::1
     asn: 201701
   fra_a:
     description: "Rheinland Backbone Frankfurt A"
@@ -116,11 +83,11 @@ gre:
     mtu: 1400
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}fra_a'
-    address: '100.64.10.45'
-    peer: '100.64.10.44'
-    network: '100.64.10.44/31'
-    inet6: '2a03:2260:0:51f::2'
-    peer6: '2a03:2260:0:51f::1'
+    address: '100.64.10.57'
+    peer: '100.64.10.56'
+    network: '100.64.10.56/31'
+    inet6: 2a03:2260:0:525::2
+    peer6: 2a03:2260:0:525::1
     asn: 201701
   fra_b:
     description: "Rheinland Backbone Frankfurt B"
@@ -131,12 +98,11 @@ gre:
     mtu: 1400
     ttl: 64
     dev: '{{ gre_tunnel_prefix }}fra_b'
-    address: '100.64.10.51'
-    peer: '100.64.10.50'
-    network: '100.64.10.50/31'
-    inet6: '2a03:2260:0:522::2'
-    peer6: '2a03:2260:0:522::1'
+    address: '100.64.10.63'
+    peer: '100.64.10.62'
+    network: '100.64.10.62/31'
+    inet6: 2a03:2260:0:528::2
+    peer6: 2a03:2260:0:528::1
     asn: 201701
 
-ul_mesh_MAC: a2:8c:ae:6f:f7:10
 ...
