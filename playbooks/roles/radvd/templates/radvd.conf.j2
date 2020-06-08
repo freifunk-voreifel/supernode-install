@@ -12,7 +12,7 @@ interface {{ hoods[item].mesh.iface }} {
         
         {};
         
-	prefix {{ hoods[item].mesh.IPv6.net }} {
+	prefix {{ hoods[item].mesh.IPv6.net }}/64 {
                 AdvOnLink on;
                 AdvAutonomous on;
                 AdvRouterAddr on;

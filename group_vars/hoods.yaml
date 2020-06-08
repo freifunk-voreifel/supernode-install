@@ -26,7 +26,7 @@ hoods:
       MAC: "a2:8c:ae:6f:08:0{{ supernode.number }}"
       IPv6:
         addr: "{{ ffrl.IPv6.prefix48 }}:0800::{{ supernode.number + 1 }}"
-        net: "{{ ffrl.IPv6.prefix48 }}:0800::/64"   # Prefix für radvd
+        net: "{{ ffrl.IPv6.prefix48 }}:0800::"   # Prefix für radvd
       IPv4:
         addr: "10.152.64.{{ supernode.number + 1 }}"
         brcast: 10.152.79.255
@@ -55,7 +55,7 @@ hoods:
       MAC: "a2:8c:ae:6f:10:0{{ supernode.number }}"
       IPv6:
         addr: "{{ ffrl.IPv6.prefix48 }}:1000::{{ supernode.number + 1 }}"
-        net: "{{ ffrl.IPv6.prefix48 }}:1000::/64"   # Prefix für radvd
+        net: "{{ ffrl.IPv6.prefix48 }}:1000::"   # Prefix für radvd
       IPv4:
         addr: "10.152.80.{{ supernode.number + 1 }}"
         brcast: 10.152.95.255
@@ -84,7 +84,7 @@ hoods:
       MAC: a2:8c:ae:6f:13:0{{ supernode.number }}
       IPv6:
         addr: "{{ ffrl.IPv6.prefix48 }}:1300::{{ supernode.number + 1 }}"
-        net: "{{ ffrl.IPv6.prefix48 }}:1300::/64"   # Prefix für radvd
+        net: "{{ ffrl.IPv6.prefix48 }}:1300::"   # Prefix für radvd
       IPv4:
         addr: "10.152.104.{{ supernode.number + 1 }}"
         brcast: 10.152.111.255
@@ -113,7 +113,7 @@ hoods:
       MAC: "a2:8c:ae:6f:14:0{{ supernode.number }}"
       IPv6:
         addr: "{{ ffrl.IPv6.prefix48 }}:1400::{{ supernode.number + 1 }}"
-        net: "{{ ffrl.IPv6.prefix48 }}:1400::/64"   # Prefix für radvd
+        net: "{{ ffrl.IPv6.prefix48 }}:1400::"   # Prefix für radvd
       IPv4:
         addr: "10.152.112.{{ supernode.number + 1 }}"
         brcast: 10.152.119.255
@@ -142,7 +142,7 @@ hoods:
       MAC: "a2:8c:ae:6f:15:0{{ supernode.number }}"
       IPv6:
         addr: "{{ ffrl.IPv6.prefix48 }}:1500::{{ supernode.number + 1 }}"
-        net: "{{ ffrl.IPv6.prefix48 }}:1500::/64"   # Prefix für radvd
+        net: "{{ ffrl.IPv6.prefix48 }}:1500::"   # Prefix für radvd
       IPv4:
         addr: "10.152.120.{{ supernode.number + 1 }}"
         brcast: 10.152.127.255

@@ -24,7 +24,7 @@
         #- gre-tunnel
         #- interfaces
         #- tunneldigger
-        #- batman
+        - batman
         #- netfilter
         #- vrf (funktioniert leider nicht)
         #- firewall
@@ -35,7 +35,7 @@
         #- dnsserver
         #- ntpserver
         #- respondd
-        - yanic
+        #- yanic
         #- apache2
         #- mapserver
       loop_control:

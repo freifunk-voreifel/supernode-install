@@ -56,7 +56,7 @@
         - tunneldigger
         - batman
         - netfilter    # netfilter erst nach batman konfigurieren, da die devices erst jetzt bestehen 
-        # - vrf (funktioniert leider nicht)
+        #- vrf          # funktioniert leider nicht
         - firewall
         - radvd
         - bird

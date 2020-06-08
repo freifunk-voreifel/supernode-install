@@ -37,9 +37,10 @@ start)
   $EBT -A FORWARD --logical-in mesh-${BATDEV} -j DROP
   #$EBT -A FORWARD --logical-in mesh-x.${HOOD} -j DROP
   # The following must be set here because at startup device does not exists
-  echo 0 > /proc/sys/net/ipv4/conf${BATDEV}/rp_filter
+  echo 0 > /proc/sys/net/ipv4/conf/${BATDEV}/rp_filter
   $IP -4 addr add $IPv4 broadcast $BRCAST dev ${BATDEV}
   $IP -6 addr add $IPv6 dev ${BATDEV}
+  $IP -6 route add ${IPv6Net} dev ${BATDEV} proto kernel metric 100 pref high
   $IP -4 rule add iif ${BATDEV} table 42 pref 3000
   $IP -6 rule add iif ${BATDEV} table 42 pref 3000
 
