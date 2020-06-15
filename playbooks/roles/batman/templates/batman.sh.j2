@@ -41,6 +41,7 @@ start)
   $IP -4 addr add $IPv4 broadcast $BRCAST dev ${BATDEV}
   $IP -6 addr add $IPv6 dev ${BATDEV}
   $IP -6 route add ${IPv6Net} dev ${BATDEV} proto kernel metric 100 pref high
+  $IP -6 route add ${IPv6Net} dev ${BATDEV} table 42 proto kernel metric 100 pref high
   $IP -4 rule add iif ${BATDEV} table 42 pref 3000
   $IP -6 rule add iif ${BATDEV} table 42 pref 3000
 

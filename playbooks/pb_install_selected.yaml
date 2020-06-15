@@ -24,10 +24,10 @@
         #- gre-tunnel
         #- interfaces
         #- tunneldigger
-        - batman
+        #- batman
         #- netfilter
         #- vrf (funktioniert leider nicht)
-        #- firewall
+        - firewall
         #- radvd
         #- bird
         #- routing

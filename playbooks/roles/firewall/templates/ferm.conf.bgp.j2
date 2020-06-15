@@ -2,8 +2,8 @@ domain (ip ip6) {
     table filter {
         chain INPUT {
             policy ACCEPT;
-            mod state state INVALID DROP;
-            mod state state (ESTABLISHED RELATED) ACCEPT;
+            # mod state state INVALID DROP;
+            # mod state state (ESTABLISHED RELATED) ACCEPT;
             interface ( ens+ ) proto udp dport 1001 DROP;
             proto ( icmp esp udp ) ACCEPT;
             # allow ssh
@@ -25,12 +25,12 @@ domain (ip ip6) {
             outerface {{ ansible_default_ipv4.alias }} daddr 10.0.0.0/8 DROP;
             outerface {{ ansible_default_ipv4.alias }} daddr 172.16.0.0/12 DROP; 
             outerface {{ ansible_default_ipv4.alias }} daddr 192.168.0.0/16 DROP; 
-            mod state state (ESTABLISHED RELATED) ACCEPT;
+            # mod state state (ESTABLISHED RELATED) ACCEPT;
         }
         chain FORWARD {
             policy ACCEPT;
-            mod state state INVALID DROP;
-            mod state state (ESTABLISHED RELATED) ACCEPT;
+            # mod state state INVALID DROP;
+            # mod state state (ESTABLISHED RELATED) ACCEPT;
         }
     }
     table mangle {
