@@ -27,14 +27,14 @@
         #- batman
         #- netfilter
         #- vrf (funktioniert leider nicht)
-        - firewall
+        #- firewall
         #- radvd
         #- bird
         #- routing
         #- dhcpserver
         #- dnsserver
         #- ntpserver
-        #- respondd
+        - respondd
         #- yanic
         #- apache2
         #- mapserver
