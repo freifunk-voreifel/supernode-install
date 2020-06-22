@@ -1,4 +1,5 @@
 common_required_packages:
+  - alfred
   - apache2
   - batctl
   - batman-adv

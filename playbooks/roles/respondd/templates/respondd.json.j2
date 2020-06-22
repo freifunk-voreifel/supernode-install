@@ -1,11 +1,36 @@
 {
 	"directory"	: "./providers",
-	"group"	: "ff05::2:1001",
+	"link_group"	: "ff05::2:1001",
+	"site_group"  : "ff02::2:1001",
 	"port"	: 1001,
-	"mcast_ifaces"	: ["{{ hoods[hood_item].mesh.iface }}"],
-	"batadv_iface"	: "{{ hoods[hood_item].mesh.iface }}",
-	"mesh_ipv4"	: "{{ hoods[hood_item].mesh.IPv4.addr }}",
+	"mcast_ifaces"	: [
+		{% for hood in hoods %}
+    {% if loop.index == 1 %}
+        "{{ hoods[hood].mesh.iface }}"
+    {% else %}
+        , "{{ hoods[hood].mesh.iface }}"
+    {% endif %}
+    {% endfor %}
+    ],
+	"batadv_ifaces"	: [
+	{% for hood in hoods %}
+    {% if loop.index == 1 %}
+        "{{ hoods[hood].mesh.iface }}"
+    {% else %}
+        , "{{ hoods[hood].mesh.iface }}"
+    {% endif %}
+    {% endfor %}
+    ],
+	"mesh_ipv4"	: "",
 	"site_code"	: "su-rhb",
-	"domain_code"	: "dom{{ hoods[hood_item].number}}",
-	"node_id"	: "{{ hoods[hood_item].mesh.MAC | replace(':','')}}"
+	"domain_code"	: "dom15",
+	"domaincodes" : {
+	{% for hood in hoods %}
+    {% if loop.index == 1 %}
+        "{{ hoods[hood].mesh.iface }}" : "dom{{ hoods[hood].number }}"
+    {% else %}
+        , "{{ hoods[hood].mesh.iface }}" : "dom{{ hoods[hood].number }}"
+    {% endif %}
+    {% endfor %}
+    }
 }

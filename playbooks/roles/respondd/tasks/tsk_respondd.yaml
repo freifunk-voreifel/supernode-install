@@ -15,12 +15,23 @@
     enabled: no
     state: stopped
   ignore_errors: True
-
+  
+- name: Stop and disable respondd on hoods
+  service:
+    name: "respondd@{{ hoods[hood_item].mesh.iface }}.service"
+    state: stopped
+    enabled: no
+  ignore_errors: true
+  loop: "{{ hoods|list }}"
+  loop_control:
+    loop_var: hood_item
+    
 - name: Get respondd
   git: 
 #    repo: "https://github.comg/{{ github_user }}/mesh-announce.git"
     repo: "https://github.com/Byggvir/mesh-announce.git"
     dest: "/opt/mesh-announce"
+    force: yes
   register: get_respondd
 
 - name: Create respondd config dir in /etc
@@ -41,13 +52,14 @@
 - name: Copy resspondd config to /etc/respondd/
   template: 
     src: "respondd.json.j2"
-    dest: "/etc/respondd/{{ hoods[hood_item].mesh.iface }}.json"
+    dest: "/etc/respondd/respondd.json"
     owner: root
     group: root
     mode: 0644
-  loop: "{{ hoods|list }}"
-  loop_control:
-    loop_var: hood_item
+# deprecated - we use only one insatnce 
+#  loop: "{{ hoods|list }}"
+#  loop_control:
+#    loop_var: hood_item
     
 - name: Enable respondd service
   command: "systemctl daemon-reload"
@@ -55,12 +67,12 @@
 
 - name: Enable and restart respondd
   service:
-    name: "respondd@{{ hoods[hood_item].mesh.iface }}.service"
+    name: "respondd@respondd.service"
     state: restarted
-    enabled: no
+    enabled: yes
   ignore_errors: true
-  loop: "{{ hoods|list }}"
-  loop_control:
-    loop_var: hood_item
+#  loop: "{{ hoods|list }}"
+#  loop_control:
+#    loop_var: hood_item
   when: get_respondd is succeeded
 ...
