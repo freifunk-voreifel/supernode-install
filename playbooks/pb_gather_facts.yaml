@@ -1,0 +1,25 @@
+---
+# Playbook to install all components via roles!
+# Thomas Arend
+# Stand 2019-07-08
+
+# Stage 01
+#
+# Install common Linux components (for all servers)
+
+# Only needed after first installation
+
+# This step must be started 
+# with -k -K and ssh and become password
+
+- name: Make ansible compatible and install admin accounts
+  hosts: all
+  gather_facts: yes
+  become: true
+  tags:
+    - ansible-compatible
+  tasks:
+    - name:  Basic installation for all servers
+      include_role:
+        name: ansible-compatible    # common components for all servers
+...
