@@ -4,8 +4,8 @@
 # Super node 1
 
 dhcp:
-    name: failover-partner
-    type: primary
+    name: "failover-partner"
+    type: "primary"
     address: "{{ ansible_default_ipv4.address }}"
     port: 519
     peer_address: "{{ hostvars['voreifel2'].ansible_default_ipv4.address }}"

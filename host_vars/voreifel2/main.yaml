@@ -3,6 +3,8 @@
 #
 # Super node 2
 
+# ansible_ssh_private_key_file: "/home/thomas/git/Freifunk/supernode-install/playbooks/roles/ansible-compatible/files/thomas.pub"
+
 ansible_host: "{{inventory_hostname_short}}.freifunk-rhein-sieg.net"
 
 provider: 'hetzner'
